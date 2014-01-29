@@ -68,20 +68,17 @@ module.exports = function(grunt) {
        ]   
       }
     },
-    zip: {
-      '<%= dirs.dest %>/<%= pkg.name %>.zip': ['<%= dirs.dest %>/*.js', '<%= dirs.dest %>/*.css', '<%= dirs.dest %>/*.less']
-    },
     bowerInstall: {
         install: {
         }
     },
     html2js: {
-      dist: {
+      angularwizard: {
         options: {
           base: 'src'
         },
         src: [ 'src/*.html' ],
-        dest: '<%= dirs.dest %>/<%= pkg.name %>.tpls.js'
+        dest: 'src/<%= pkg.name %>.tpls.js'
       },
     },
     uglify: {
@@ -91,10 +88,6 @@ module.exports = function(grunt) {
       dist: {
         src: ['<%= concat.dist.dest %>'],
         dest: '<%= dirs.dest %>/<%= pkg.name %>.min.js'
-      },
-      templates: {
-        src: ['<%= html2js.dist.dest %>'],
-        dest: '<%= dirs.dest %>/<%= pkg.name %>.tpls.min.js'
       }
     },
     karma: {
@@ -136,8 +129,6 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-conventional-changelog');
 
-  grunt.loadNpmTasks('grunt-zip');
-
   grunt.loadNpmTasks('grunt-recess');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
@@ -154,11 +145,10 @@ module.exports = function(grunt) {
     'bowerInstall', 
     'copy',
     'recess',
-    'concat', 
     'html2js',
+    'concat', 
     'uglify', 
-    'karma:build', 
-    'zip']);
+    'karma:build']);
 
   grunt.registerTask('test', ['build']);
   
