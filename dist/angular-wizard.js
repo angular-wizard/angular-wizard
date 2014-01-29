@@ -92,7 +92,9 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             $scope.goTo = function(step) {
                 unselectAll();
                 $scope.selectedStep = step;
-                $scope.currentStep = step.title;
+                if ($scope.currentStep) {
+                    $scope.currentStep = step.title;    
+                }
                 step.selected = true;
             }
             
