@@ -15,7 +15,7 @@ module.exports = function(config) {
       'http://code.angularjs.org/1.1.4/angular-resource.js',
       'http://code.angularjs.org/1.1.4/angular-mocks.js',
       'http://cdnjs.cloudflare.com/ajax/libs/lodash.js/1.2.0/lodash.min.js',
-      'src/restangular.js',
+      'dist/*.js',
       'test/*.js'
     ],
 

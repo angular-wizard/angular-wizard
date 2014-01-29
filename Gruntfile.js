@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 
 module.exports = function(grunt) {
 
@@ -13,12 +13,15 @@ module.exports = function(grunt) {
                 ' * @link <%= pkg.homepage %>',
                 ' * @author <%= pkg.author %>',
                 ' * @license MIT License, http://www.opensource.org/licenses/MIT',
-                ' */'
+                ' */\n'
               ].join('\n')
     },
     dirs: {
       dest: 'dist'
     },
+    clean: [ 
+      '<%= dirs.dest %>'
+    ],
     concat: {
       options: {
         banner: '<%= meta.banner %>'
@@ -28,12 +31,58 @@ module.exports = function(grunt) {
         dest: '<%= dirs.dest %>/<%= pkg.name %>.js'
       }
     },
+    recess: {
+      build: {
+        src: [ 'src/angular-wizard.less' ],
+        dest: '<%= dirs.dest %>/<%= pkg.name %>.css',
+        options: {
+          compile: true,
+          compress: false,
+          noUnderscores: false,
+          noIDs: false,
+          zeroUnits: false
+        }
+      },
+      compile: {
+        src: [ 'src/angular-wizard.less' ],
+        dest: '<%= dirs.dest %>/<%= pkg.name %>.min.css',
+        options: {
+          compile: true,
+          compress: true,
+          noUnderscores: false,
+          noIDs: false,
+          zeroUnits: false
+        }
+      }
+    },
+    copy: {
+      less_files: {
+        files: [
+          { 
+            src: [ 'src/angular-wizard.less' ],
+            dest: '<%= dirs.dest %>',
+            cwd: '.',
+            expand: true,
+            flatten: true
+          }
+       ]   
+      }
+    },
     zip: {
-      '<%= dirs.dest %>/restangular.zip': ['<%= dirs.dest %>/<%= pkg.name %>.js', '<%= dirs.dest %>/<%= pkg.name %>.min.js']
+      '<%= dirs.dest %>/<%= pkg.name %>.zip': ['<%= dirs.dest %>/*.js', '<%= dirs.dest %>/*.css', '<%= dirs.dest %>/*.less']
     },
     bowerInstall: {
         install: {
         }
+    },
+    html2js: {
+      dist: {
+        options: {
+          base: 'src'
+        },
+        src: [ 'src/*.html' ],
+        dest: '<%= dirs.dest %>/<%= pkg.name %>.tpls.js'
+      },
     },
     uglify: {
       options: {
@@ -42,29 +91,10 @@ module.exports = function(grunt) {
       dist: {
         src: ['<%= concat.dist.dest %>'],
         dest: '<%= dirs.dest %>/<%= pkg.name %>.min.js'
-      }
-    },
-    jshint: {
-      files: ['Gruntfile.js', 'src/*.js'],
-      options: {
-        curly: false,
-        browser: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true,
-        expr: true,
-        node: true,
-        globals: {
-          exports: true,
-          angular: false,
-          $: false
-        }
+      },
+      templates: {
+        src: ['<%= html2js.dist.dest %>'],
+        dest: '<%= dirs.dest %>/<%= pkg.name %>.tpls.min.js'
       }
     },
     karma: {
@@ -80,17 +110,6 @@ module.exports = function(grunt) {
         autoWatch: false,
         browsers: ['Firefox']
       },
-      travisUnderscore: {
-        singleRun: true,
-        autoWatch: false,
-        browsers: ['Firefox'],
-        configFile: 'karma.underscore.conf.js',
-      },
-      buildUnderscore: {
-        configFile: 'karma.underscore.conf.js',
-        singleRun: true,
-        autoWatch: false
-      },
       dev: {
         autoWatch: true
       }
@@ -101,9 +120,6 @@ module.exports = function(grunt) {
       }
     }
   });
-
-  // Load the plugin that provides the "jshint" task.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Load the plugin that provides the "concat" task.
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -116,21 +132,37 @@ module.exports = function(grunt) {
   grunt.renameTask("bower", "bowerInstall");
 
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-karma');
 
   grunt.loadNpmTasks('grunt-conventional-changelog');
 
   grunt.loadNpmTasks('grunt-zip');
+
+  grunt.loadNpmTasks('grunt-recess');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-ngmin');
+  grunt.loadNpmTasks('grunt-html2js');
 
 
   // Default task.
   grunt.registerTask('default', ['build']);
 
   // Build task.
-  grunt.registerTask('build', ['bowerInstall', 'karma:build', 'karma:buildUnderscore', 'concat', 'uglify', 'zip']);
+  grunt.registerTask('build', [
+    'clean',
+    'bowerInstall', 
+    'copy',
+    'recess',
+    'concat', 
+    'html2js',
+    'uglify', 
+    'karma:build', 
+    'zip']);
 
-  grunt.registerTask('test', ['karma:build', 'karma:buildUnderscore']);
+  grunt.registerTask('test', ['build']);
   
-  grunt.registerTask('travis', ['karma:travis', 'karma:travisUnderscore']);
+  grunt.registerTask('travis', ['build']);
 
   // Provides the "bump" task.
   grunt.registerTask('bump', 'Increment version number', function() {
