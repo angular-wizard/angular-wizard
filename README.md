@@ -10,7 +10,7 @@ You can download this by:
 * Downloading it manually by getting the files from the dist folder
 * Using JsDelivr CDN files:
 
-````js
+````html
 <!-- Use LATEST folder to always get the latest version-->
 <script type="text/javascript" src="http://cdn.jsdelivr.net/angular-wizard/latest/angular-wizard.js"></script>
 <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular-wizard/latest/angular-wizard.css">
@@ -129,6 +129,10 @@ The navigation bar shown below works in the following way:
 * You can click in any completed step to go back to that step. You can't click in the current step nor in the future ones unless you've already completed a future step before (for example in EditMode all steps are completed by default)
 
 All of those colors are variables in the `angular-wizard.less`. You can easily change them by changing the colors in that file
+
+# Contributors
+
+@sebazelonka helped me with all fo the styles of the Wizard.
 
 # Releases Notes
 Releases notes are together with releases in GitHub at: https://github.com/mgonto/angular-wizard/releases
