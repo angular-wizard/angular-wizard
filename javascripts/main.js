@@ -9,6 +9,6 @@ angular.module('wizard-sample', ['mgo-angular-wizard'])
         }
 
         $scope.goBack = function() {
-            WizardHandler.goTo(0);
+            WizardHandler.wizard().goTo(0);
         }
     });
