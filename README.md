@@ -1,6 +1,6 @@
 # Angular-Wizard
 
-Angular-wizard is a component that will make it easy for you to create wizards in your app. You can check an example of the wizard [by clicking here](http://www.google.com)
+Angular-wizard is a component that will make it easy for you to create wizards in your app. You can check a running example of the wizard [by clicking here](http://mgonto.github.io/angular-wizard/)
 
 # How do I add this to my project?
 You can download this by:
@@ -133,6 +133,10 @@ All of those colors are variables in the `angular-wizard.less`. You can easily c
 # Contributors
 
 @sebazelonka helped me with all fo the styles of the Wizard.
+
+# Live sample
+
+You can check out a live sample of the Wizard [clicking here](http://mgonto.github.io/angular-wizard/)
 
 # Releases Notes
 Releases notes are together with releases in GitHub at: https://github.com/mgonto/angular-wizard/releases
