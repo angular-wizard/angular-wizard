@@ -64,7 +64,7 @@ Now, in some HTML for a controller, you can just add a wizard as follows:
 
 This will look like the following when you're in the second step:
 
-[![Looks like](http://f.cl.ly/items/183r1H3o0c30442t3B2O/Screen%20Shot%202014-01-29%20at%205.08.58%20PM.png)](http://f.cl.ly/items/183r1H3o0c30442t3B2O/Screen%20Shot%202014-01-29%20at%205.08.58%20PM.png)
+[![Looks like](http://f.cl.ly/items/2J0X0l2e3u3Q0R0q2C1Z/Screen%20Shot%202014-01-29%20at%206.14.29%20PM.png)](http://f.cl.ly/items/2J0X0l2e3u3Q0R0q2C1Z/Screen%20Shot%202014-01-29%20at%206.14.29%20PM.png)
 
 Let's go step by step to see how this works.
 
