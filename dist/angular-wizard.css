@@ -82,6 +82,7 @@
   color: #808080;
   text-decoration: none;
   text-transform: uppercase;
+  cursor: pointer;
   transition: 0.25s;
 }
 
@@ -135,6 +136,10 @@
 
 .steps-indicator.steps-10 li {
   width: calc(10%);
+}
+
+.steps-indicator.steps-11 li {
+  width: calc(9.090909090909092%);
 }
 
 .steps-indicator li.default {
