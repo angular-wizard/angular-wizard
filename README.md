@@ -48,16 +48,16 @@ Now, in some HTML for a controller, you can just add a wizard as follows:
     <step title="Starting">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
-        <input type="submit" next value="Continue" />
+        <input type="submit" wz-next value="Continue" />
     </step>
     <step title="Continuing">
         <h1>Continuing</h1>
         <p>You have continued here!</p>
-        <input type="submit" next value="Go on" />
+        <input type="submit" wz-next value="Go on" />
     </step>
     <step title="More steps">
         <p>Even more steps!!</p>
-        <input type="submit" next value="Finish now" />
+        <input type="submit" wz-next value="Finish now" />
     </step>
 </wizard>
 ````
@@ -77,15 +77,15 @@ Let's go step by step to see how this works.
 
 2) Inside the wizard, we can have as many steps as we want. Each step MUST have a title which is going to be used to identify it. Inside each step, we can put whatever we want. Other directives, bindings, controls, forms, etc.
 
-3) Inside the step, we now see a button which has a `next` attribute. That means that clicking that button will send the user to the next step of wizard. Similar to `next`, we have the following attributes:
-* **previous**: Goes to the previous step
-* **cancel**: Goes back to the first step
-* **finish**: Finishes the wizard and calls the on-finish later on. It's important to note that if we're in the last step and we put `next` it'll be the same as putting `finish` as the wizard will know we're at the last screen.
+3) Inside the step, we now see a button which has a `wz-next` attribute. That means that clicking that button will send the user to the next step of wizard. Similar to `wz-next`, we have the following attributes:
+* **wz-previous**: Goes to the previous step
+* **wz-cancel**: Goes back to the first step
+* **wz-finish**: Finishes the wizard and calls the on-finish later on. It's important to note that if we're in the last step and we put `wz-next` it'll be the same as putting `wz-finish` as the wizard will know we're at the last screen.
 
 All of this attributes can receive an optional function to be called before changing the step. Something like:
 
 ````html
-<input type="button" next="setMode(mode)" value="Next" />
+<input type="button" wz-next="setMode(mode)" value="Next" />
 ````
 
 In this case, the `setMode` function will be called before going to the next step.
