@@ -12,7 +12,7 @@ function wizardButtonDirective(action) {
                         $scope.$apply(function() {
                             var fn = $parse($attrs[action]);
                             fn && fn();
-                            wizard[action]();
+                            wizard[action.replace("wz", "").toLowerCase()]();
                         });
                     });
                 }
