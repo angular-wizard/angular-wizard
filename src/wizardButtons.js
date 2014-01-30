@@ -20,8 +20,8 @@ function wizardButtonDirective(action) {
             }]);
 }
 
-wizardButtonDirective('next');
-wizardButtonDirective('previous');
-wizardButtonDirective('finish');
-wizardButtonDirective('cancel');
+wizardButtonDirective('wzNext');
+wizardButtonDirective('wzPrevious');
+wizardButtonDirective('wzFinish');
+wizardButtonDirective('wzCancel');
 
