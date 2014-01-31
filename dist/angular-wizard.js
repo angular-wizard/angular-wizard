@@ -146,7 +146,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 });
 function wizardButtonDirective(action) {
     angular.module('mgo-angular-wizard')
-        .directive(action, ['$parse', function($parse) {
+        .directive(action, function() {
             return {
                 restrict: 'A',
                 replace: false,
@@ -163,7 +163,7 @@ function wizardButtonDirective(action) {
                     });
                 }
             }
-            }]);
+            });
 }
 
 wizardButtonDirective('wzNext');
