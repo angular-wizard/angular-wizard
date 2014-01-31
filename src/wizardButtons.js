@@ -10,8 +10,7 @@ function wizardButtonDirective(action) {
                     $element.on("click", function(e) {
                         e.preventDefault();
                         $scope.$apply(function() {
-                            var fn = $scope.$eval($attrs[action]);
-                            fn && fn();
+                            $scope.$eval($attrs[action]);
                             wizard[action.replace("wz", "").toLowerCase()]();
                         });
                     });
