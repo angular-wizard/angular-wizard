@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.2.0 - 2014-01-30 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.2.0 - 2014-01-31 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -156,7 +156,7 @@ function wizardButtonDirective(action) {
                     $element.on("click", function(e) {
                         e.preventDefault();
                         $scope.$apply(function() {
-                            var fn = $parse($attrs[action]);
+                            var fn = $scope.$eval($attrs[action]);
                             fn && fn();
                             wizard[action.replace("wz", "").toLowerCase()]();
                         });

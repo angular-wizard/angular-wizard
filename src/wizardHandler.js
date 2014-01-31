@@ -9,7 +9,7 @@ angular.module('mgo-angular-wizard').factory('WizardHandler', function() {
        wizards[name] = wizard;
    }
    
-   service.deleteWizard = function(name) {
+   service.removeWizard = function(name) {
        delete wizards[name];
    }
    

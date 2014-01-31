@@ -1,6 +1,6 @@
 function wizardButtonDirective(action) {
     angular.module('mgo-angular-wizard')
-        .directive(action, ['$parse', function($parse) {
+        .directive(action, function() {
             return {
                 restrict: 'A',
                 replace: false,
@@ -10,14 +10,14 @@ function wizardButtonDirective(action) {
                     $element.on("click", function(e) {
                         e.preventDefault();
                         $scope.$apply(function() {
-                            var fn = $parse($attrs[action]);
+                            var fn = $scope.$eval($attrs[action]);
                             fn && fn();
                             wizard[action.replace("wz", "").toLowerCase()]();
                         });
                     });
                 }
             }
-            }]);
+            });
 }
 
 wizardButtonDirective('wzNext');
