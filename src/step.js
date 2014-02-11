@@ -1,6 +1,6 @@
 angular.module('mgo-angular-wizard').directive('step', function() {
     return {
-        restrict: 'E',
+        restrict: 'EA',
         replace: true,
         transclude: true,
         scope: {
