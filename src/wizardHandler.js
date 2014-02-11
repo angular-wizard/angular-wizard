@@ -7,11 +7,11 @@ angular.module('mgo-angular-wizard').factory('WizardHandler', function() {
    
    service.addWizard = function(name, wizard) {
        wizards[name] = wizard;
-   }
+   };
    
    service.removeWizard = function(name) {
        delete wizards[name];
-   }
+   };
    
    service.wizard = function(name) {
        var nameToUse = name;
@@ -20,7 +20,7 @@ angular.module('mgo-angular-wizard').factory('WizardHandler', function() {
        }
        
        return wizards[nameToUse];
-   } 
+   };
    
    return service;
 });

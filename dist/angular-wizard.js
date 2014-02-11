@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.2.1 - 2014-01-31 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.2.1 - 2014-02-11 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -25,9 +25,10 @@ angular.module("wizard.html", []).run(["$templateCache", function($templateCache
 }]);
 
 angular.module('mgo-angular-wizard', ['templates-angularwizard']);
+
 angular.module('mgo-angular-wizard').directive('step', function() {
     return {
-        restrict: 'E',
+        restrict: 'EA',
         replace: true,
         transclude: true,
         scope: {
@@ -40,9 +41,10 @@ angular.module('mgo-angular-wizard').directive('step', function() {
         }
     }
 });
+
 angular.module('mgo-angular-wizard').directive('wizard', function() {
     return {
-        restrict: 'E',
+        restrict: 'EA',
         replace: true,
         transclude: true,
         scope: {
@@ -87,7 +89,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 if ($scope.steps.length === 1) {
                     $scope.goTo($scope.steps[0]);
                 }
-            }
+            };
             
             $scope.goTo = function(step) {
                 unselectAll();
@@ -96,7 +98,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     $scope.currentStep = step.title;    
                 }
                 step.selected = true;
-            }
+            };
             
             function unselectAll() {
                 _.each($scope.steps, function (step) {
@@ -115,7 +117,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 } else {
                     $scope.goTo($scope.steps[index + 1]);
                 }
-            }
+            };
             
             this.goTo = function(step) {
                 var stepTo;
@@ -125,11 +127,11 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     stepTo = _.find($scope.steps, {title: step});
                 }
                 $scope.goTo(stepTo);
-            }
+            };
             
             this.finish = function() {
                 $scope.onFinish && $scope.onFinish(); 
-            }
+            };
             
             this.cancel = this.previous = function() {
                 var index = _.indexOf($scope.steps , $scope.selectedStep);
@@ -144,6 +146,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
         }]
     }
 });
+
 function wizardButtonDirective(action) {
     angular.module('mgo-angular-wizard')
         .directive(action, function() {
@@ -170,7 +173,6 @@ wizardButtonDirective('wzPrevious');
 wizardButtonDirective('wzFinish');
 wizardButtonDirective('wzCancel');
 
-
 angular.module('mgo-angular-wizard').factory('WizardHandler', function() {
    var service = {};
    
@@ -180,11 +182,11 @@ angular.module('mgo-angular-wizard').factory('WizardHandler', function() {
    
    service.addWizard = function(name, wizard) {
        wizards[name] = wizard;
-   }
+   };
    
    service.removeWizard = function(name) {
        delete wizards[name];
-   }
+   };
    
    service.wizard = function(name) {
        var nameToUse = name;
@@ -193,7 +195,7 @@ angular.module('mgo-angular-wizard').factory('WizardHandler', function() {
        }
        
        return wizards[nameToUse];
-   } 
+   };
    
    return service;
 });

@@ -1,6 +1,6 @@
 angular.module('mgo-angular-wizard').directive('wizard', function() {
     return {
-        restrict: 'E',
+        restrict: 'EA',
         replace: true,
         transclude: true,
         scope: {
@@ -45,7 +45,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 if ($scope.steps.length === 1) {
                     $scope.goTo($scope.steps[0]);
                 }
-            }
+            };
             
             $scope.goTo = function(step) {
                 unselectAll();
@@ -54,7 +54,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     $scope.currentStep = step.title;    
                 }
                 step.selected = true;
-            }
+            };
             
             function unselectAll() {
                 _.each($scope.steps, function (step) {
@@ -73,7 +73,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 } else {
                     $scope.goTo($scope.steps[index + 1]);
                 }
-            }
+            };
             
             this.goTo = function(step) {
                 var stepTo;
@@ -83,11 +83,11 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     stepTo = _.find($scope.steps, {title: step});
                 }
                 $scope.goTo(stepTo);
-            }
+            };
             
             this.finish = function() {
                 $scope.onFinish && $scope.onFinish(); 
-            }
+            };
             
             this.cancel = this.previous = function() {
                 var index = _.indexOf($scope.steps , $scope.selectedStep);
