@@ -50,7 +50,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             $scope.goTo = function(step) {
                 unselectAll();
                 $scope.selectedStep = step;
-                if ($scope.currentStep) {
+                if (!_.isUndefined($scope.currentStep)) {
                     $scope.currentStep = step.title;    
                 }
                 step.selected = true;
