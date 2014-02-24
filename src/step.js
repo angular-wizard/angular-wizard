@@ -1,4 +1,4 @@
-angular.module('mgo-angular-wizard').directive('step', function() {
+angular.module('mgo-angular-wizard').directive('wzStep', function() {
     return {
         restrict: 'EA',
         replace: true,
