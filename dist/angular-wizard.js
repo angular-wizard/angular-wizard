@@ -37,7 +37,6 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         require: '^wizard',
         templateUrl: 'step.html',
         link: function($scope, $element, $attrs, wizard) {
-            console.log('found scope step', $scope);
             wizard.addStep($scope);
         }
     }
@@ -86,7 +85,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             }, true);
             
             this.addStep = function(step) {
-                console.log('adding step', step);
                 $scope.steps.push(step);
                 if ($scope.steps.length === 1) {
                     $scope.goTo($scope.steps[0]);
