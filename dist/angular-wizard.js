@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.2.2 - 2014-02-13 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.2.2 - 2014-02-24 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -26,7 +26,7 @@ angular.module("wizard.html", []).run(["$templateCache", function($templateCache
 
 angular.module('mgo-angular-wizard', ['templates-angularwizard']);
 
-angular.module('mgo-angular-wizard').directive('step', function() {
+angular.module('mgo-angular-wizard').directive('wzStep', function() {
     return {
         restrict: 'EA',
         replace: true,
@@ -37,6 +37,7 @@ angular.module('mgo-angular-wizard').directive('step', function() {
         require: '^wizard',
         templateUrl: 'step.html',
         link: function($scope, $element, $attrs, wizard) {
+            console.log('found scope step', $scope);
             wizard.addStep($scope);
         }
     }
@@ -85,6 +86,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             }, true);
             
             this.addStep = function(step) {
+                console.log('adding step', step);
                 $scope.steps.push(step);
                 if ($scope.steps.length === 1) {
                     $scope.goTo($scope.steps[0]);

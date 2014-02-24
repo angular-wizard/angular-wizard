@@ -49,20 +49,20 @@ Now, in some HTML for a controller, you can just add a wizard as follows:
 
 ````html
 <wizard on-finish="finishedWizard()"> 
-    <step title="Starting">
+    <wz-step title="Starting">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
         <input type="submit" wz-next value="Continue" />
-    </step>
-    <step title="Continuing">
+    </wz-step>
+    <wz-step title="Continuing">
         <h1>Continuing</h1>
         <p>You have continued here!</p>
         <input type="submit" wz-next value="Go on" />
-    </step>
-    <step title="More steps">
+    </wz-step>
+    <wz-step title="More steps">
         <p>Even more steps!!</p>
         <input type="submit" wz-next value="Finish now" />
-    </step>
+    </wz-step>
 </wizard>
 ````
 
@@ -102,9 +102,9 @@ For those cases, we can inject the `WizardHandler` to our controller.
 The main function of this service is the `wizard(name)` which will let you get the wizard to manipulate it. If you have just one wizard in the screen and you didn't set a name to it, you can just call it as `wizard()`. Let's see an example:
 
 ````html
-<step title="Cool step">
+<wz-step title="Cool step">
     <input type="submit" ng-click="changeLabelAndGoNext()" />
-</step>
+</wz-step>
 ````
 
 ````js
