@@ -78,7 +78,7 @@ Let's go step by step to see how this works.
 * **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed byt he can modify any of them now. Defaults to false.
 * **hide-indicators**: If set to true, the indicators in the bottom of the page showing the current page and allowing navigation for the wizard will be hidden. Defaults to false.
 * **current-step**: You need to set here a property from your scope (similar to `ng-model`) and that property will always have the name of the current step being shown on the screen.
-* **templatel**: Path to a custom template.
+* **template**: Path to a custom template.
 
 2) Inside the wizard, we can have as many steps as we want. Each step MUST have a title which is going to be used to identify it. Inside each step, we can put whatever we want. Other directives, bindings, controls, forms, etc.
 
