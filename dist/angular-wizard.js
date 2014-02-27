@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.3.0 - 2014-02-24 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.3.1 - 2014-02-27 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -35,7 +35,9 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
             title: '@'
         },
         require: '^wizard',
-        templateUrl: 'step.html',
+        templateUrl: function(element, attributes) {
+          return attributes.template || "step.html";
+        },
         link: function($scope, $element, $attrs, wizard) {
             wizard.addStep($scope);
         }
@@ -54,7 +56,9 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             editMode: '=',
             name: '@'
         },
-        templateUrl: 'wizard.html',
+        templateUrl: function(element, attributes) {
+          return attributes.template || "wizard.html";
+        },
         controller: ['$scope', '$element', 'WizardHandler', function($scope, $element, WizardHandler) {
             
             WizardHandler.addWizard($scope.name || WizardHandler.defaultName, this);

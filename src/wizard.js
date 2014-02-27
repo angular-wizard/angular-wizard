@@ -10,7 +10,9 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             editMode: '=',
             name: '@'
         },
-        templateUrl: 'wizard.html',
+        templateUrl: function(element, attributes) {
+          return attributes.template || "wizard.html";
+        },
         controller: ['$scope', '$element', 'WizardHandler', function($scope, $element, WizardHandler) {
             
             WizardHandler.addWizard($scope.name || WizardHandler.defaultName, this);

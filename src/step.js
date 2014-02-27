@@ -7,7 +7,9 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
             title: '@'
         },
         require: '^wizard',
-        templateUrl: 'step.html',
+        templateUrl: function(element, attributes) {
+          return attributes.template || "step.html";
+        },
         link: function($scope, $element, $attrs, wizard) {
             wizard.addStep($scope);
         }
