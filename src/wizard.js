@@ -41,12 +41,17 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     });
                 }
             }, true);
-            
+
             this.addStep = function(step) {
                 $scope.steps.push(step);
                 if ($scope.steps.length === 1) {
                     $scope.goTo($scope.steps[0]);
                 }
+
+                if (typeof step.init !== 'undefined' && step.init){
+                    eval('$scope.$parent.'+step.init)
+                }
+
             };
             
             $scope.goTo = function(step) {

@@ -4,7 +4,8 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         replace: true,
         transclude: true,
         scope: {
-            title: '@'
+            title: '@',
+            init: '@'
         },
         require: '^wizard',
         templateUrl: function(element, attributes) {
