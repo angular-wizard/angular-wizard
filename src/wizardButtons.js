@@ -6,7 +6,7 @@ function wizardButtonDirective(action) {
                 replace: false,
                 require: '^wizard',
                 link: function($scope, $element, $attrs, wizard) {
-                    
+
                     $element.on("click", function(e) {
                         e.preventDefault();
                         $scope.$apply(function() {
@@ -15,8 +15,8 @@ function wizardButtonDirective(action) {
                         });
                     });
                 }
-            }
-            });
+            };
+        });
 }
 
 wizardButtonDirective('wzNext');
