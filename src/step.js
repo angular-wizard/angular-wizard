@@ -4,6 +4,7 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         replace: true,
         transclude: true,
         scope: {
+            wzTitle: '@',
             title: '@'
         },
         require: '^wizard',
@@ -11,6 +12,7 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
           return attributes.template || "step.html";
         },
         link: function($scope, $element, $attrs, wizard) {
+            $scope.title = $scope.title || $scope.wzTitle;
             wizard.addStep($scope);
         }
     }
