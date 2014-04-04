@@ -7,6 +7,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             currentStep: '=',
             onFinish: '&',
             hideIndicators: '=',
+            validateOnlyToAdvance: '@',
             editMode: '=',
             name: '@'
         },
@@ -14,6 +15,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
           return attributes.template || "wizard.html";
         },
         controller: ['$scope', '$element', 'WizardHandler', function($scope, $element, WizardHandler) {
+
+            var validateOnlyToAdvance = _.isUndefined($scope.validateOnlyToAdvance) ? true : $scope.validateOnlyToAdvance === 'true';
             
             WizardHandler.addWizard($scope.name || WizardHandler.defaultName, this);
             $scope.$on('$destroy', function() {
@@ -50,12 +53,27 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             };
             
             $scope.goTo = function(step) {
+                if (!$scope.validateGoTo(step)) return;
                 unselectAll();
                 $scope.selectedStep = step;
                 if (!_.isUndefined($scope.currentStep)) {
-                    $scope.currentStep = step.title;    
+                    $scope.currentStep = step.title;
                 }
                 step.selected = true;
+            };
+
+            $scope.validateGoTo = function(nextStep) {
+                var indexNextStep = _.indexOf($scope.steps , nextStep);
+                var indexCurrentStep = _.indexOf($scope.steps, $scope.selectedStep);
+                if (indexNextStep == -1 || indexCurrentStep == -1) {
+                    // if the next step is invalid, it won't change the step
+                    // if the current step is invalid, there is nothing to validate.
+                    return true;
+                }
+                if (validateOnlyToAdvance && indexNextStep < indexCurrentStep)
+                    return true;
+                else
+                    return $scope.selectedStep.validateStep();
             };
             
             function unselectAll() {

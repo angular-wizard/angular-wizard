@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.3.0 - 2014-04-02 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.3.0 - 2014-04-03 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -32,13 +32,17 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         replace: true,
         transclude: true,
         scope: {
-            title: '@'
+            title: '@',
+            validateStep: '&'
         },
         require: '^wizard',
         templateUrl: function(element, attributes) {
           return attributes.template || "step.html";
         },
         link: function($scope, $element, $attrs, wizard) {
+            // If the validateStep isn't passed, the validate function must return true
+            if (_.isUndefined($attrs['validateStep']))
+                $scope.validateStep = function() { return true; };
             wizard.addStep($scope);
         }
     }
@@ -53,6 +57,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             currentStep: '=',
             onFinish: '&',
             hideIndicators: '=',
+            validateOnlyToAdvance: '@',
             editMode: '=',
             name: '@'
         },
@@ -60,6 +65,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
           return attributes.template || "wizard.html";
         },
         controller: ['$scope', '$element', 'WizardHandler', function($scope, $element, WizardHandler) {
+
+            var validateOnlyToAdvance = _.isUndefined($scope.validateOnlyToAdvance) ? true : $scope.validateOnlyToAdvance === 'true';
             
             WizardHandler.addWizard($scope.name || WizardHandler.defaultName, this);
             $scope.$on('$destroy', function() {
@@ -96,12 +103,27 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             };
             
             $scope.goTo = function(step) {
+                if (!$scope.validateGoTo(step)) return;
                 unselectAll();
                 $scope.selectedStep = step;
                 if (!_.isUndefined($scope.currentStep)) {
-                    $scope.currentStep = step.title;    
+                    $scope.currentStep = step.title;
                 }
                 step.selected = true;
+            };
+
+            $scope.validateGoTo = function(nextStep) {
+                var indexNextStep = _.indexOf($scope.steps , nextStep);
+                var indexCurrentStep = _.indexOf($scope.steps, $scope.selectedStep);
+                if (indexNextStep == -1 || indexCurrentStep == -1) {
+                    // if the next step is invalid, it won't change the step
+                    // if the current step is invalid, there is nothing to validate.
+                    return true;
+                }
+                if (validateOnlyToAdvance && indexNextStep < indexCurrentStep)
+                    return true;
+                else
+                    return $scope.selectedStep.validateStep();
             };
             
             function unselectAll() {
