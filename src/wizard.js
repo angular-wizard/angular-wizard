@@ -26,7 +26,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 if (!step) return;
                 
                 if ($scope.selectedStep && $scope.selectedStep.title !== $scope.currentStep) {
-                    $scope.goTo(_.find($scope.steps, {title: $scope.currentStep}));
+                    $scope.goTo(_.findWhere($scope.steps, {title: $scope.currentStep}));
                 }
                 
             });
@@ -82,7 +82,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 if (_.isNumber(step)) {
                     stepTo = $scope.steps[step];
                 } else {
-                    stepTo = _.find($scope.steps, {title: step});
+                    stepTo = _.findWhere($scope.steps, {title: step});
                 }
                 $scope.goTo(stepTo);
             };
