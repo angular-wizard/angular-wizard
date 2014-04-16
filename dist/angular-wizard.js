@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.3.0 - 2014-04-03 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.3.0 - 2014-04-16 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -18,10 +18,11 @@ angular.module("wizard.html", []).run(["$templateCache", function($templateCache
     "    <div class=\"steps\" ng-transclude></div>\n" +
     "    <ul class=\"steps-indicator steps-{{steps.length}}\" ng-if=\"!hideIndicators\">\n" +
     "      <li ng-class=\"{default: !step.completed && !step.selected, current: step.selected && !step.completed, done: step.completed && !step.selected, editing: step.selected && step.completed}\" ng-repeat=\"step in steps\">\n" +
-    "        <a ng-click=\"goTo(step)\">{{step.title}}</a>\n" +
+    "        <a ng-click=\"goTo(step)\">{{step.title || step.wzTitle}}</a>\n" +
     "      </li>\n" +
     "    </ul>\n" +
-    "</div>");
+    "</div>\n" +
+    "");
 }]);
 
 angular.module('mgo-angular-wizard', ['templates-angularwizard']);
@@ -32,6 +33,7 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         replace: true,
         transclude: true,
         scope: {
+            wzTitle: '@',
             title: '@',
             validateStep: '&'
         },
@@ -40,6 +42,7 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
           return attributes.template || "step.html";
         },
         link: function($scope, $element, $attrs, wizard) {
+            $scope.title = $scope.title || $scope.wzTitle;
             // If the validateStep isn't passed, the validate function must return true
             if (_.isUndefined($attrs['validateStep']))
                 $scope.validateStep = function() { return true; };
@@ -72,36 +75,36 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             $scope.$on('$destroy', function() {
                 WizardHandler.removeWizard($scope.name || WizardHandler.defaultName);
             });
-            
+
             $scope.steps = [];
-            
+
             $scope.$watch('currentStep', function(step) {
                 if (!step) return;
-                
+
                 if ($scope.selectedStep && $scope.selectedStep.title !== $scope.currentStep) {
                     $scope.goTo(_.find($scope.steps, {title: $scope.currentStep}));
                 }
-                
+
             });
-            
+
             $scope.$watch('[editMode, steps.length]', function() {
                 var editMode = $scope.editMode;
                 if (_.isUndefined(editMode) || _.isNull(editMode)) return;
-                
+
                 if (editMode) {
                     _.each($scope.steps, function(step) {
                         step.completed = true;
                     });
                 }
             }, true);
-            
+
             this.addStep = function(step) {
                 $scope.steps.push(step);
                 if ($scope.steps.length === 1) {
                     $scope.goTo($scope.steps[0]);
                 }
             };
-            
+
             $scope.goTo = function(step) {
                 if (!$scope.validateGoTo(step)) return;
                 unselectAll();
@@ -132,7 +135,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 });
                 $scope.selectedStep = null;
             }
-            
+
             this.next = function(draft) {
                 var index = _.indexOf($scope.steps , $scope.selectedStep);
                 if (!draft) {
@@ -144,7 +147,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     $scope.goTo($scope.steps[index + 1]);
                 }
             };
-            
+
             this.goTo = function(step) {
                 var stepTo;
                 if (_.isNumber(step)) {
@@ -154,11 +157,13 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 }
                 $scope.goTo(stepTo);
             };
-            
+
             this.finish = function() {
-                $scope.onFinish && $scope.onFinish(); 
+                if ($scope.onFinish) {
+                    $scope.onFinish();
+                }
             };
-            
+
             this.cancel = this.previous = function() {
                 var index = _.indexOf($scope.steps , $scope.selectedStep);
                 if (index === 0) {
@@ -166,11 +171,9 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 } else {
                     $scope.goTo($scope.steps[index - 1]);
                 }
-            }
-            
-            
+            };
         }]
-    }
+    };
 });
 
 function wizardButtonDirective(action) {
@@ -181,7 +184,7 @@ function wizardButtonDirective(action) {
                 replace: false,
                 require: '^wizard',
                 link: function($scope, $element, $attrs, wizard) {
-                    
+
                     $element.on("click", function(e) {
                         e.preventDefault();
                         $scope.$apply(function() {
@@ -190,8 +193,8 @@ function wizardButtonDirective(action) {
                         });
                     });
                 }
-            }
-            });
+            };
+        });
 }
 
 wizardButtonDirective('wzNext');
