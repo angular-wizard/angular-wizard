@@ -12,10 +12,11 @@ describe( 'Validations for the step changes', function() {
 	 * Create the view with wizard to test
 	 * @param  {Scope} scope 				A scope to bind to
 	 * @param  {String} validators 			Name of validators for each step
-	 * @param  {Boolean} validateOnlyToAdvance 	Boolean value to set validate-only-to-advance
+	 * @param  {Boolean} validateAlways 	Boolean value to set validate-always
+	 * @param  {Boolean} undoSteps 	Boolean value to set undo-steps
 	 * @return {[DOM element]} 					A DOM element compiled
 	 */
-	function createView(scope, validators, validateOnlyToAdvance) {
+	function createView(scope, validators, validateAlways, undoSteps) {
 
 		// Check the name of validators and generate attributes
 		var attrValidators = [];
@@ -27,14 +28,19 @@ describe( 'Validations for the step changes', function() {
 			attrValidators[index] = _.isUndefined(name) ? '' : 'validate-step="' + name + '"';
 		});
 
-		if (_.isBoolean(validateOnlyToAdvance))
-			attrValidateOnlyToAdvance = 'validate-only-to-advance="' + validateOnlyToAdvance.toString() + '"';
+		if (_.isBoolean(validateAlways))
+			attrValidateAlways = 'validate-always="' + validateAlways.toString() + '"';
 		else
-			attrValidateOnlyToAdvance = '';
+			attrValidateAlways = '';
+
+		if (_.isBoolean(undoSteps))
+			attrUndoSteps = 'undo-steps="' + undoSteps.toString() + '"';
+		else
+			attrUndoSteps = '';
 
 		scope.referenceCurrentStep = null;
 		
-		var element = angular.element('<wizard on-finish="finishedWizard()" current-step="referenceCurrentStep" ng-init="msg = 14" ' + attrValidateOnlyToAdvance + ' >'
+		var element = angular.element('<wizard on-finish="finishedWizard()" current-step="referenceCurrentStep" ng-init="msg = 14" ' + attrValidateAlways + ' ' + attrUndoSteps + ' >'
 				+ '	<wz-step title="Starting" ' + attrValidators[0] + ' >'
 				+ '		<h1>This is the first step</h1>'
 				+ '		<p>Here you can use whatever you want. You can use other directives, binding, etc.</p>'
@@ -99,9 +105,9 @@ describe( 'Validations for the step changes', function() {
 		$rootScope.$digest();
 		expect(scope.referenceCurrentStep).toEqual('Starting');
 	});
-	it( "should not allow to return to a previous step if the current step isn't valid and the attribute validateOnlyToAdvance is false", function() {
+	it( "should not allow to return to a previous step if the current step isn't valid and the attribute validateAlways is true", function() {
 		var scope = $rootScope.$new();
-		var view = createView(scope, [undefined, 'false'], false);
+		var view = createView(scope, [undefined, 'false'], true);
 		expect(scope.referenceCurrentStep).toEqual('Starting');
 		WizardHandler.wizard().next();
 		$rootScope.$digest();
@@ -128,5 +134,23 @@ describe( 'Validations for the step changes', function() {
 		WizardHandler.wizard().previous();
 		$rootScope.$digest();
 		expect(scope.referenceCurrentStep).toEqual('Continuing');
+	});
+	it( "should undo the completed steps if the attribute 'undo-steps' is defined", function() {
+		var scope = $rootScope.$new();
+		scope.validateSecondStep = true;
+		var view = createView(scope, [undefined, undefined, undefined], undefined, true);
+		expect(scope.referenceCurrentStep).toEqual('Starting');
+		WizardHandler.wizard().next();
+		$rootScope.$digest();
+		expect(scope.referenceCurrentStep).toEqual('Continuing');
+		WizardHandler.wizard().next();
+		$rootScope.$digest();
+		expect(scope.referenceCurrentStep).toEqual('More steps');
+		WizardHandler.wizard().goTo(0);
+		$rootScope.$digest();
+		expect(scope.referenceCurrentStep).toEqual('Starting');
+		expect(angular.element(view).find('ul.steps-indicator li:eq(0)').hasClass('current')).toBeTruthy();
+		expect(angular.element(view).find('ul.steps-indicator li:eq(1)').hasClass('default')).toBeTruthy();
+		expect(angular.element(view).find('ul.steps-indicator li:eq(2)').hasClass('default')).toBeTruthy();
 	});
 });
