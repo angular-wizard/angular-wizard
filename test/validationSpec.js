@@ -55,7 +55,7 @@ describe( 'Validations for the step changes', function() {
 		return elementCompiled;
 	}
 
-	it('should correctly create the wizard', function() {
+	it("should correctly create the wizard", function() {
 		var scope = $rootScope.$new();
 		var view = createView(scope);
 		expect(WizardHandler).toBeTruthy();
@@ -64,53 +64,68 @@ describe( 'Validations for the step changes', function() {
 		expect(scope.referenceCurrentStep).toEqual('Starting');
 	});
 
-	it( 'should allow to go to the next step when there is not passed a function to validate', function() {
+	it( "should allow to go to the next step when there isn't a function passed to validate", function() {
 		var scope = $rootScope.$new();
 		var view = createView(scope);
 		expect(scope.referenceCurrentStep).toEqual('Starting');
-		WizardHandler.wizard().goTo('Continuing');
+		WizardHandler.wizard().next();
 		$rootScope.$digest();
 		expect(scope.referenceCurrentStep).toEqual('Continuing');
 	});
-	it( 'should allow to go to the next step when the current step is valid', function() {
+	it( "should allow to go to the next step when the current step is valid", function() {
 		var scope = $rootScope.$new();
-		scope.validateSuccessfully = function() { return true; };
-		var view = createView(scope, ['validateSuccessfully()']);
+		var view = createView(scope, ['true']);
 		expect(scope.referenceCurrentStep).toEqual('Starting');
-		WizardHandler.wizard().goTo('Continuing');
+		WizardHandler.wizard().next();
 		$rootScope.$digest();
 		expect(scope.referenceCurrentStep).toEqual('Continuing');
 	});
-	it( 'should not allow to go to the next step if the current step is not valid', function() {
+	it( "should not allow to go to the next step if the current step isn't valid", function() {
 		var scope = $rootScope.$new();
-		scope.validateUnsuccessfully = function() { return false; };
-		var view = createView(scope, ['validateUnsuccessfully()']);
+		var view = createView(scope, ['false']);
 		expect(scope.referenceCurrentStep).toEqual('Starting');
-		WizardHandler.wizard().goTo('Continuing');
+		WizardHandler.wizard().next();
 		$rootScope.$digest();
 		expect(scope.referenceCurrentStep).toEqual('Starting');
 	});
-	it( 'should allow to return to a previous step although the current step is not valid', function() {
+	it( "should allow to return to a previous step if the current step isn't valid and isn't complete", function() {
 		var scope = $rootScope.$new();
-		scope.validateUnsuccessfully = function() { return false; };
-		var view = createView(scope, [undefined, 'validateUnsuccessfully()']);
+		var view = createView(scope, [undefined, 'false']);
 		expect(scope.referenceCurrentStep).toEqual('Starting');
-		WizardHandler.wizard().goTo('Continuing');
+		WizardHandler.wizard().next();
 		$rootScope.$digest();
 		expect(scope.referenceCurrentStep).toEqual('Continuing');
-		WizardHandler.wizard().goTo('Starting');
+		WizardHandler.wizard().previous();
 		$rootScope.$digest();
 		expect(scope.referenceCurrentStep).toEqual('Starting');
 	});
-	it( 'should not allow to return to a previous step if the current step is not valid and the attribute validateOnlyToAdvance is false', function() {
+	it( "should not allow to return to a previous step if the current step isn't valid and the attribute validateOnlyToAdvance is false", function() {
 		var scope = $rootScope.$new();
-		scope.validateUnsuccessfully = function() { return false; };
-		var view = createView(scope, [undefined, 'validateUnsuccessfully()'], false);
+		var view = createView(scope, [undefined, 'false'], false);
 		expect(scope.referenceCurrentStep).toEqual('Starting');
-		WizardHandler.wizard().goTo('Continuing');
+		WizardHandler.wizard().next();
 		$rootScope.$digest();
 		expect(scope.referenceCurrentStep).toEqual('Continuing');
-		WizardHandler.wizard().goTo('Starting');
+		WizardHandler.wizard().previous();
+		$rootScope.$digest();
+		expect(scope.referenceCurrentStep).toEqual('Continuing');
+	});
+	it( "should not allow to return to a previous step if the current step is completed and isn't valid", function() {
+		var scope = $rootScope.$new();
+		scope.validateSecondStep = true;
+		var view = createView(scope, [undefined, 'validateSecondStep', undefined]);
+		expect(scope.referenceCurrentStep).toEqual('Starting');
+		WizardHandler.wizard().next();
+		$rootScope.$digest();
+		expect(scope.referenceCurrentStep).toEqual('Continuing');
+		WizardHandler.wizard().next();
+		$rootScope.$digest();
+		expect(scope.referenceCurrentStep).toEqual('More steps');
+		WizardHandler.wizard().previous();
+		$rootScope.$digest();
+		expect(scope.referenceCurrentStep).toEqual('Continuing');
+		scope.validateSecondStep = false;
+		WizardHandler.wizard().previous();
 		$rootScope.$digest();
 		expect(scope.referenceCurrentStep).toEqual('Continuing');
 	});

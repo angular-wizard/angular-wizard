@@ -6,7 +6,7 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         scope: {
             wzTitle: '@',
             title: '@',
-            validateStep: '&'
+            validate: '&validateStep'
         },
         require: '^wizard',
         templateUrl: function(element, attributes) {
@@ -14,10 +14,7 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         },
         link: function($scope, $element, $attrs, wizard) {
             $scope.title = $scope.title || $scope.wzTitle;
-            // If the validateStep isn't passed, the validate function must return true
-            if (_.isUndefined($attrs['validateStep']))
-                $scope.validateStep = function() { return true; };
             wizard.addStep($scope);
         }
-    }
+    };
 });

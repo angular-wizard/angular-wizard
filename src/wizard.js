@@ -16,7 +16,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
         },
         controller: ['$scope', '$element', 'WizardHandler', function($scope, $element, WizardHandler) {
 
-            var validateOnlyToAdvance = _.isUndefined($scope.validateOnlyToAdvance) ? true : $scope.validateOnlyToAdvance === 'true';
+            this.validateOnlyToAdvance = _.isUndefined($scope.validateOnlyToAdvance) ? true : $scope.$eval($scope.validateOnlyToAdvance);
             
             WizardHandler.addWizard($scope.name || WizardHandler.defaultName, this);
             $scope.$on('$destroy', function() {
@@ -53,7 +53,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             };
 
             $scope.goTo = function(step) {
-                if (!$scope.validateGoTo(step)) return;
                 unselectAll();
                 $scope.selectedStep = step;
                 if (!_.isUndefined($scope.currentStep)) {
@@ -62,18 +61,9 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 step.selected = true;
             };
 
-            $scope.validateGoTo = function(nextStep) {
-                var indexNextStep = _.indexOf($scope.steps , nextStep);
-                var indexCurrentStep = _.indexOf($scope.steps, $scope.selectedStep);
-                if (indexNextStep == -1 || indexCurrentStep == -1) {
-                    // if the next step is invalid, it won't change the step
-                    // if the current step is invalid, there is nothing to validate.
-                    return true;
-                }
-                if (validateOnlyToAdvance && indexNextStep < indexCurrentStep)
-                    return true;
-                else
-                    return $scope.selectedStep.validateStep();
+            $scope.validStep = function(nextStep) {
+                var validation = $scope.selectedStep.validate();
+                return _.isUndefined(validation) || validation;
             };
             
             function unselectAll() {
@@ -84,6 +74,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             }
 
             this.next = function(draft) {
+                if (!$scope.validStep($scope.selectedStep))
+                    return;
                 var index = _.indexOf($scope.steps , $scope.selectedStep);
                 if (!draft) {
                     $scope.selectedStep.completed = true;
@@ -97,6 +89,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             this.goTo = function(step) {
                 var stepTo;
+                if ($scope.selectedStep.completed && !$scope.validStep($scope.selectedStep))
+                    return;
                 if (_.isNumber(step)) {
                     stepTo = $scope.steps[step];
                 } else {
@@ -106,12 +100,16 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             };
 
             this.finish = function() {
+                if (!$scope.validStep($scope.selectedStep))
+                    return;
                 if ($scope.onFinish) {
                     $scope.onFinish();
                 }
             };
 
             this.cancel = this.previous = function() {
+                if ((!this.validateOnlyToAdvance || $scope.selectedStep.completed) && !$scope.validStep($scope.selectedStep))
+                    return;
                 var index = _.indexOf($scope.steps , $scope.selectedStep);
                 if (index === 0) {
                     throw new Error("Can't go back. It's already in step 0");
