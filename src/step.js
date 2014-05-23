@@ -15,5 +15,5 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
             $scope.title = $scope.title || $scope.wzTitle;
             wizard.addStep($scope);
         }
-    }
+    };
 });
