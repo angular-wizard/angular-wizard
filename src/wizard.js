@@ -50,6 +50,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             };
 
             $scope.goTo = function(step) {
+                if (!isSelectedStepValid()) return;
+
                 unselectAll();
                 $scope.selectedStep = step;
                 if (!_.isUndefined($scope.currentStep)) {
@@ -70,7 +72,22 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 $scope.selectedStep = null;
             }
 
+            function isSelectedStepValid() {
+                if (!$scope.selectedStep) return true;
+
+                var wzForms = $scope.selectedStep.Forms;
+                if (!wzForms) return true;
+
+                for (var i = 0; i < wzForms.length; i++) {
+                    if (wzForms[i] && wzForms[i].$invalid && wzForms[i].$dirty) return false;
+                }
+
+                return true;
+            };
+
             this.next = function(draft) {
+                if (!isSelectedStepValid()) return;
+
                 var index = _.indexOf($scope.steps , $scope.selectedStep);
                 if (!draft) {
                     $scope.selectedStep.completed = true;
