@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.4.0 - 2014-07-10 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.4.0 - 2014-09-13 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -75,17 +75,23 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 if (!step) return;
                 var stepTitle = $scope.selectedStep.title || $scope.selectedStep.wzTitle;
                 if ($scope.selectedStep && stepTitle !== $scope.currentStep) {
-                    $scope.goTo(_.findWhere($scope.steps, {title: $scope.currentStep}));
+                    var foundStep = null;
+                    angular.forEach($scope.steps, function(step) {
+                      if (step.title === $scope.currentStep) {
+                        foundStep = step;
+                      }
+                    });
+                    $scope.goTo(foundStep);
                 }
 
             });
 
             $scope.$watch('[editMode, steps.length]', function() {
                 var editMode = $scope.editMode;
-                if (_.isUndefined(editMode) || _.isNull(editMode)) return;
+                if (angular.isUndefined(editMode) || (editMode === null)) return;
 
                 if (editMode) {
-                    _.each($scope.steps, function(step) {
+                    angular.forEach($scope.steps, function(step) {
                         step.completed = true;
                     });
                 }
@@ -101,7 +107,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             $scope.goTo = function(step) {
                 unselectAll();
                 $scope.selectedStep = step;
-                if (!_.isUndefined($scope.currentStep)) {
+                if (!angular.isUndefined($scope.currentStep)) {
                     $scope.currentStep = step.title || step.wzTitle;
                 }
                 step.selected = true;
@@ -110,10 +116,10 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             
             $scope.currentStepNumber = function() {
                 return _.indexOf($scope.steps , $scope.selectedStep) + 1;
-            }
+            };
 
             function unselectAll() {
-                _.each($scope.steps, function (step) {
+                angular.forEach($scope.steps, function (step) {
                     step.selected = false;
                 });
                 $scope.selectedStep = null;
@@ -133,7 +139,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             this.goTo = function(step) {
                 var stepTo;
-                if (_.isNumber(step)) {
+                if (angular.isNumber(step)) {
                     stepTo = $scope.steps[step];
                 } else {
                     stepTo = _.findWhere($scope.steps, {title: step});
