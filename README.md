@@ -1,6 +1,6 @@
 ### Forkers Notes
 
-> I forked this projcet to remove the lodash dependency. The use of lodash could either be replaced with angular helpers (angular.forEach, etc) or one or two functions local to this directive.
+> I forked this project to remove the lodash dependency. The use of lodash could either be replaced with angular helpers (angular.forEach, etc) or one or two functions local to this directive.
 
 
 # Angular-Wizard
