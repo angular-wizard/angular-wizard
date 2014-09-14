@@ -71,16 +71,33 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             $scope.steps = [];
 
+            var stepIdx = function(step) {
+                var idx = 0;
+                var res = -1;
+                angular.forEach($scope.steps, function(currStep) {
+                  if (currStep === step) {
+                    res = idx;
+                  }
+                  idx++;
+                });
+                return res;
+            };
+
+            var stepByTitle = function(titleToFind) {
+              var foundStep = null;
+              angular.forEach($scope.steps, function(step) {
+                if (step.title === titleToFind) {
+                  foundStep = step;
+                }
+              });
+              return foundStep;
+            };
+
             $scope.$watch('currentStep', function(step) {
                 if (!step) return;
                 var stepTitle = $scope.selectedStep.title || $scope.selectedStep.wzTitle;
                 if ($scope.selectedStep && stepTitle !== $scope.currentStep) {
-                    var foundStep = null;
-                    angular.forEach($scope.steps, function(step) {
-                      if (step.title === $scope.currentStep) {
-                        foundStep = step;
-                      }
-                    });
+                    var foundStep = stepByTitle($scope.currentStep);
                     $scope.goTo(foundStep);
                 }
 
@@ -111,11 +128,11 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     $scope.currentStep = step.title || step.wzTitle;
                 }
                 step.selected = true;
-                $scope.$emit('wizard:stepChanged', {step: step, index: _.indexOf($scope.steps , step)});
+                $scope.$emit('wizard:stepChanged', {step: step, index: stepIdx(step)});
             };
             
             $scope.currentStepNumber = function() {
-                return _.indexOf($scope.steps , $scope.selectedStep) + 1;
+                return stepIdx($scope.selectedStep) + 1;
             };
 
             function unselectAll() {
@@ -126,7 +143,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             }
 
             this.next = function(draft) {
-                var index = _.indexOf($scope.steps , $scope.selectedStep);
+                var index = stepIdx($scope.selectedStep);
                 if (!draft) {
                     $scope.selectedStep.completed = true;
                 }
@@ -142,7 +159,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 if (angular.isNumber(step)) {
                     stepTo = $scope.steps[step];
                 } else {
-                    stepTo = _.findWhere($scope.steps, {title: step});
+                    stepTo = stepByTitle(step);
                 }
                 $scope.goTo(stepTo);
             };
@@ -154,7 +171,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             };
 
             this.cancel = this.previous = function() {
-                var index = _.indexOf($scope.steps , $scope.selectedStep);
+                var index = stepIdx($scope.selectedStep);
                 if (index === 0) {
                     throw new Error("Can't go back. It's already in step 0");
                 } else {
