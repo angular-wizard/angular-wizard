@@ -137,7 +137,7 @@ All of those colors are variables in the `angular-wizard.less`. You can easily c
 
 # Contributors
 
-@sebazelonka helped me with all fo the styles of the Wizard.
+@sebazelonka helped me with all of the styles of the Wizard.
 
 # Live sample
 
