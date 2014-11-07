@@ -75,6 +75,15 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 return _.indexOf($scope.steps, step) + 1;
             };
 
+            this.removeStep = function(step) {
+                if(step > 0) {
+                  $scope.steps.splice(step, 1);
+                  if ($scope.steps.length === 1) {
+                      $scope.goTo($scope.steps[0]);
+                  }
+                }
+            };
+
             $scope.goTo = function(step) {
                 //if this is the first time the wizard is loading it bi-passes step validation
                 if(firstRun){

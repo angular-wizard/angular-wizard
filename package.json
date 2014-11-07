@@ -8,7 +8,7 @@
   "author": "Martin Gontovnikas <martin@gon.to>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mgonto/angular-wizard.git"
+    "url": "git://github.com/engineyard/angular-wizard.git"
   },
   "engines": {
     "node": ">= 0.9"
