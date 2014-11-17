@@ -61,7 +61,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             
             $scope.currentStepNumber = function() {
                 return _.indexOf($scope.steps , $scope.selectedStep) + 1;
-            }
+            };
 
             function unselectAll() {
                 _.each($scope.steps, function (step) {
