@@ -79,7 +79,7 @@ module.exports = function(grunt) {
         },
         src: [ 'src/*.html' ],
         dest: 'src/<%= pkg.name %>.tpls.js'
-      },
+      }
     },
     uglify: {
       options: {
@@ -132,7 +132,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-recess');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-ngmin');
+  grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-html2js');
 
 
