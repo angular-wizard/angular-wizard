@@ -75,7 +75,7 @@ Let's go step by step to see how this works.
 1) You need to declare a master `wizard` directive. This wizard directive, has the following options as attributes:
 * **on-finish**: Here you can put a function to be called when the wizard is finished. The syntax here is very similar to `ng-click`
 * **name**: The name of the wizard. By default, it's called "Default wizard". It's used for the `WizardHandler` which we'll explain later.
-* **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed byt he can modify any of them now. Defaults to false.
+* **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed and the user can now navigate to and modify any step. Defaults to false.
 * **hide-indicators**: If set to true, the indicators in the bottom of the page showing the current page and allowing navigation for the wizard will be hidden. Defaults to false.
 * **current-step**: You need to set here a property from your scope (similar to `ng-model`) and that property will always have the name of the current step being shown on the screen.
 * **template**: Path to a custom template.
@@ -137,7 +137,7 @@ All of those colors are variables in the `angular-wizard.less`. You can easily c
 
 # Contributors
 
-@sebazelonka helped me with all fo the styles of the Wizard.
+@sebazelonka helped me with all of the styles in the Wizard.
 
 # Live sample
 
@@ -150,7 +150,7 @@ Releases notes are together with releases in GitHub at: https://github.com/mgont
 # License
 The MIT License
 
-Copyright (c) 2013 Martin Gontovnikas http://www.gon.to/
+Copyright (c) 2013-2014 Martin Gontovnikas http://www.gon.to/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
