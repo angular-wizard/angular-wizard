@@ -80,6 +80,26 @@ describe( 'AngularWizard', function() {
         $rootScope.$digest();
         expect(scope.referenceCurrentStep).toEqual('More steps');
     });
+    it( "should go to next step becasue callback is truthy", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next(function(){
+            return true
+        });
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+    });
+    it( "should NOT go to next step becasue callback is falsey", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next(function(){
+            return false
+        });
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+    });
     it( "should finish", function() {
         var scope = $rootScope.$new();
         var flag = false;
