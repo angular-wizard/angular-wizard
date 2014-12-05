@@ -61,7 +61,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             name: '@'
         },
         templateUrl: function(element, attributes) {
-            return attributes.template || "wizardDirective.html";
+            return attributes.template || "wizard.html";
         },
 
         //controller for wizard directive, treat this just like an angular controller
@@ -153,7 +153,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             //method used for next button within step
             //TODO How is the callback in the directive, i.e. wz-next="callback()" get called!
             this.next = function(callback) {
-                $log.log('wizard.next invoked, ', callback, $scope.steps, $scope.selectedStep);
                 //setting variable equal to step  you were on when next() was invoked
                 var index = _.indexOf($scope.steps , $scope.selectedStep);
                 //checking to see if callback is a function
@@ -165,19 +164,20 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                             //invoking goTo() with step number next in line
                             $scope.goTo($scope.steps[index + 1]);
                         }
+                   } else {
+                        return;
                    }
-                }else if (!callback) {
-                    $log.log('no callback function called!');
+                }
+                if (!callback) {
                     //completed property set on scope which is used to add class/remove class from progress bar
                     $scope.selectedStep.completed = true;
+                }
+                //checking to see if this is the last step.  If it is next behaves the same as finish()
+                if (index === $scope.steps.length - 1) {
+                    this.finish();
                 } else {
-                    //checking to see if this is the last step.  If it is next behaves the same as finish()
-                    if (index === $scope.steps.length - 1) {
-                        this.finish();
-                    } else {
-                        //invoking goTo() with step number next in line
-                        $scope.goTo($scope.steps[index + 1]);
-                    }
+                    //invoking goTo() with step number next in line
+                    $scope.goTo($scope.steps[index + 1]);
                 }
                 
             };
