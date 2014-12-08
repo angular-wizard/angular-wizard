@@ -17,7 +17,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
         //controller for wizard directive, treat this just like an angular controller
         controller: ['$scope', '$element', '$log', 'WizardHandler', function($scope, $element, $log, WizardHandler) {
-
+            //this variable allows directive to load without having to pass any step validation
+            var firstRun = true;
             //creating instance of wizard, passing this as second argument allows access to functions attached to this via Service
             WizardHandler.addWizard($scope.name || WizardHandler.defaultName, this);
 
@@ -27,6 +28,9 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             //steps array where all the scopes of each step are added
             $scope.steps = [];
+
+            //access to context object for step validation
+            $scope.context = {};
 
             //watching changes to currentStep
             $scope.$watch('currentStep', function(step) {
@@ -66,18 +70,59 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             };
 
             $scope.goTo = function(step) {
-                //deselect all steps so you can set fresh below
-                unselectAll();
-                //set the selected step to $scope of directive of that step
-                $scope.selectedStep = step;
-                //making sure current step is not undefined
-                if (!_.isUndefined($scope.currentStep)) {
-                    $scope.currentStep = step.title || step.wzTitle;
+                //if this is the first time the wizard is loading it bi-passes step validation
+                if(firstRun){
+                    //deselect all steps so you can set fresh below
+                    unselectAll();
+                    $scope.selectedStep = step;
+                    //making sure current step is not undefined
+                    if (!_.isUndefined($scope.currentStep)) {
+                        $scope.currentStep = step.title || step.wzTitle;
+                    }
+                    //setting selected step to argument passed into goTo()
+                    step.selected = true;
+                    //emit event upwards with data on goTo() invoktion
+                    $scope.$emit('wizard:stepChanged', {step: step, index: _.indexOf($scope.steps , step)});
+                    //setting variable to false so all other step changes must pass validation
+                    firstRun = false;
+                } else {
+                    //createing variables to capture current state that goTo() was invoked from and allow booleans
+                    var thisStep;
+                    var exitallowed = false;
+                    var enterallowed = false;
+                    //getting data for step you are transitioning out of
+                    if($scope.currentStepNumber() > 0){
+                        thisStep = $scope.currentStepNumber() - 1;
+                    } else if ($scope.currentStepNumber() === 0){
+                        thisStep = 0;
+                    }
+                    console.log('steps[thisStep] Data: ', $scope.steps[thisStep].canexit);
+                    if(typeof($scope.steps[thisStep].canexit) === 'undefined' || $scope.steps[thisStep].canexit($scope.context) === true){
+                        exitallowed = true;
+                    }
+                    if(exitallowed && step.canenter === undefined || exitallowed && step.canenter($scope.context) === true){
+                        enterallowed = true;
+                    }
+
+                    if(exitallowed && enterallowed){
+                        //deselect all steps so you can set fresh below
+                        unselectAll();
+
+                        //console.log('value for canExit argument: ', $scope.currentStep.canexit);
+                        $scope.selectedStep = step;
+                        //making sure current step is not undefined
+                        if (!_.isUndefined($scope.currentStep)) {
+                            $scope.currentStep = step.title || step.wzTitle;
+                        }
+                        //setting selected step to argument passed into goTo()
+                        step.selected = true;
+                        //emit event upwards with data on goTo() invoktion
+                        $scope.$emit('wizard:stepChanged', {step: step, index: _.indexOf($scope.steps , step)});
+                        console.log('current step number: ', $scope.currentStepNumber());
+                    } else {
+                        return;
+                    }
                 }
-                //setting selected step to argument passed into goTo()
-                step.selected = true;
-                //emit event upwards with data on goTo() invoktion
-                $scope.$emit('wizard:stepChanged', {step: step, index: _.indexOf($scope.steps , step)});
             };
 
             $scope.currentStepNumber = function() {
