@@ -95,6 +95,44 @@ All of this attributes can receive an optional function to be called before chan
 
 In this case, the `setMode` function will be called before going to the next step.
 
+## Wizard Step Validation
+The wzStep directive has the following options as attributes:
+* **canexit**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move to the next step.  If it is ommitted no validation will be required.
+* **canenter**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move into this step.  If it is ommitted no validation will be required.
+
+ **Example**
+ 
+HTML
+````html
+<wizard on-finish="finishedWizard()"> 
+    <wz-step title="Starting" canexit="exitValidation">
+        <h1>This is the first step</h1>
+        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
+        <input type="submit" wz-next value="Continue" />
+    </wz-step>
+    <wz-step title="Continuing" canenter="enterValidation">
+        <h1>Continuing</h1>
+        <p>You have continued here!</p>
+        <input type="submit" wz-next value="Go on" />
+    </wz-step>
+    <wz-step title="More steps">
+        <p>Even more steps!!</p>
+        <input type="submit" wz-next value="Finish now" />
+    </wz-step>
+</wizard>
+````
+Controller
+````javascript
+$scope.enterValidation = function(){
+    return true;
+};
+
+$scope.exitValidation = function(){
+    return true;
+};
+````
+If a step requires information from a previous step to populate itself you can access this information through the `context` object.  The context object is automatically passed in as an argument into your canexit and canenter methods.  You can access the context objext from your controller via: `WizardHandler.wizard().context`
+
 ## Manipulating the wizard from a service
 There're some times where we actually want to manipulate the wizard from the controller instead of from the HTML.
 
@@ -122,6 +160,7 @@ The functions available in the `wizard()` are:
 * **previous**: Goes to the previous step
 * **finish**: Finishes the wizard.
 * **goTo(number|title)**: This goes to the indicated step. It can receive either the number of the step (starting from 0) or the title of the step to go to.
+* **currentStepNumber()**: This returns a Number which is the current step number you are on.
 
 ## Navigation bar
 
@@ -137,7 +176,20 @@ All of those colors are variables in the `angular-wizard.less`. You can easily c
 
 # Contributors
 
-@sebazelonka helped me with all fo the styles of the Wizard.
+* [@sebazelonka](https://github.com/sebazelonka) helped me with all fo the styles of the Wizard.
+* [@cristianspinetta](https://github.com/cristianspinetta)
+* [@tanepiper](https://github.com/tanepiper)
+* [@stevecd](https://github.com/stevecd)
+* [@kamshak](https://github.com/Kamshak)
+* [@rtucker88](https://github.com/rtucker88)
+* [@starr0stealer](https://github.com/starr0stealer)
+* [@bitdeli-chef](https://github.com/bitdeli-chef)
+* [@brendan6](https://github.com/brendan6)
+* [@raykin](https://github.com/raykin)
+* [@TylerLH](https://github.com/TylerLH)
+* [@prem-prakash](https://github.com/prem-prakash)
+* [@esteinborn](https://github.com/esteinborn)
+* [@jacobscarter](https://github.com/jacobscarter)
 
 # Live sample
 
