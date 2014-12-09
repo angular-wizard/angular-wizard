@@ -69,6 +69,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 }
             };
 
+            this.context = $scope.context;
+
             $scope.goTo = function(step) {
                 //if this is the first time the wizard is loading it bi-passes step validation
                 if(firstRun){
