@@ -177,19 +177,6 @@ All of those colors are variables in the `angular-wizard.less`. You can easily c
 # Contributors
 
 * [@sebazelonka](https://github.com/sebazelonka) helped me with all fo the styles of the Wizard.
-* [@cristianspinetta](https://github.com/cristianspinetta)
-* [@tanepiper](https://github.com/tanepiper)
-* [@stevecd](https://github.com/stevecd)
-* [@kamshak](https://github.com/Kamshak)
-* [@rtucker88](https://github.com/rtucker88)
-* [@starr0stealer](https://github.com/starr0stealer)
-* [@bitdeli-chef](https://github.com/bitdeli-chef)
-* [@brendan6](https://github.com/brendan6)
-* [@raykin](https://github.com/raykin)
-* [@TylerLH](https://github.com/TylerLH)
-* [@prem-prakash](https://github.com/prem-prakash)
-* [@esteinborn](https://github.com/esteinborn)
-* [@jacobscarter](https://github.com/jacobscarter)
 
 # Live sample
 
