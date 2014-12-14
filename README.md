@@ -1,3 +1,8 @@
+### Forkers Notes
+
+> I forked this project to remove the lodash dependency. The use of lodash could either be replaced with angular helpers (angular.forEach, etc) or one or two functions local to this directive.
+
+
 # Angular-Wizard
 
 [![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=martin%40gon%2eto&lc=US&item_name=Martin%20Gontovnikas&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted "Donate once-off to this project using Paypal")
