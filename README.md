@@ -49,20 +49,20 @@ Now, in some HTML for a controller, you can just add a wizard as follows:
 
 ````html
 <wizard on-finish="finishedWizard()"> 
-    <wz-step title="Starting">
+    <step title="Starting">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
         <input type="submit" wz-next value="Continue" />
-    </wz-step>
-    <wz-step title="Continuing">
+    </step>
+    <step title="Continuing">
         <h1>Continuing</h1>
         <p>You have continued here!</p>
         <input type="submit" wz-next value="Go on" />
-    </wz-step>
-    <wz-step title="More steps">
+    </step>
+    <step title="More steps">
         <p>Even more steps!!</p>
         <input type="submit" wz-next value="Finish now" />
-    </wz-step>
+    </step>
 </wizard>
 ````
 
