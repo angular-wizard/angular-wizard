@@ -75,7 +75,7 @@ Let's go step by step to see how this works.
 1) You need to declare a master `wizard` directive. This wizard directive, has the following options as attributes:
 * **on-finish**: Here you can put a function to be called when the wizard is finished. The syntaxis here is very similar to `ng-click`
 * **name**: The name of the wizard. By default, it's called "Default wizard". It's used for the `WizardHandler` which we'll explain later.
-* **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed byt he can modify any of them now. Defaults to false.
+* **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed but he can modify any of them now. Defaults to false.
 * **hide-indicators**: If set to true, the indicators in the bottom of the page showing the current page and allowing navigation for the wizard will be hidden. Defaults to false.
 * **current-step**: You need to set here a property from your scope (similar to `ng-model`) and that property will always have the name of the current step being shown on the screen.
 * **template**: Path to a custom template.
@@ -94,6 +94,44 @@ All of this attributes can receive an optional function to be called before chan
 ````
 
 In this case, the `setMode` function will be called before going to the next step.
+
+## Wizard Step Validation
+The wzStep directive has the following options as attributes:
+* **canexit**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move to the next step.  If it is ommitted no validation will be required.
+* **canenter**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move into this step.  If it is ommitted no validation will be required.
+
+ **Example**
+ 
+HTML
+````html
+<wizard on-finish="finishedWizard()"> 
+    <wz-step title="Starting" canexit="exitValidation">
+        <h1>This is the first step</h1>
+        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
+        <input type="submit" wz-next value="Continue" />
+    </wz-step>
+    <wz-step title="Continuing" canenter="enterValidation">
+        <h1>Continuing</h1>
+        <p>You have continued here!</p>
+        <input type="submit" wz-next value="Go on" />
+    </wz-step>
+    <wz-step title="More steps">
+        <p>Even more steps!!</p>
+        <input type="submit" wz-next value="Finish now" />
+    </wz-step>
+</wizard>
+````
+Controller
+````javascript
+$scope.enterValidation = function(){
+    return true;
+};
+
+$scope.exitValidation = function(){
+    return true;
+};
+````
+If a step requires information from a previous step to populate itself you can access this information through the `context` object.  The context object is automatically passed in as an argument into your canexit and canenter methods.  You can access the context objext from your controller via: `WizardHandler.wizard().context`
 
 ## Manipulating the wizard from a service
 There're some times where we actually want to manipulate the wizard from the controller instead of from the HTML.
@@ -122,6 +160,7 @@ The functions available in the `wizard()` are:
 * **previous**: Goes to the previous step
 * **finish**: Finishes the wizard.
 * **goTo(number|title)**: This goes to the indicated step. It can receive either the number of the step (starting from 0) or the title of the step to go to.
+* **currentStepNumber()**: This returns a Number which is the current step number you are on.
 
 ## Navigation bar
 
@@ -137,7 +176,9 @@ All of those colors are variables in the `angular-wizard.less`. You can easily c
 
 # Contributors
 
-@sebazelonka helped me with all fo the styles of the Wizard.
+* @sebazelonka helped me with all fo the styles of the Wizard.
+* [@jacobscarter](https://github.com/jacobscarter) is helping with manteinance, PRS merging and adding new features
+
 
 # Live sample
 
