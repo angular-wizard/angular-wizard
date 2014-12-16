@@ -228,7 +228,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     //invoking goTo() with step number next in line
                     $scope.goTo($scope.steps[index + 1]);
                 }
-                
             };
 
             //used to traverse to any step, step number placed as argument
