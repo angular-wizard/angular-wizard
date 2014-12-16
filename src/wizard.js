@@ -56,12 +56,18 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     $scope.currentStep = step.title || step.wzTitle;
                 }
                 step.selected = true;
-                $scope.$emit('wizard:stepChanged', {step: step, index: _.indexOf($scope.steps , step)});
+                $scope.$emit('wizard:stepChanged', {step: step, index: _.indexOf($scope.getEnabledSteps() , step)});
             };
             
             $scope.currentStepNumber = function() {
                 return _.indexOf($scope.steps , $scope.selectedStep) + 1;
-            }
+            };
+
+            $scope.getEnabledSteps = function() {
+                return _.filter($scope.steps, function(step){
+                    return step.disabled !== 'true';
+                });
+            };
 
             function unselectAll() {
                 _.each($scope.steps, function (step) {
@@ -71,23 +77,25 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             }
 
             this.next = function(draft) {
-                var index = _.indexOf($scope.steps , $scope.selectedStep);
+                var enabledSteps = $scope.getEnabledSteps();
+                var index = _.indexOf(enabledSteps , $scope.selectedStep);
                 if (!draft) {
                     $scope.selectedStep.completed = true;
                 }
-                if (index === $scope.steps.length - 1) {
+                if (index === enabledSteps.length - 1) {
                     this.finish();
                 } else {
-                    $scope.goTo($scope.steps[index + 1]);
+                    $scope.goTo(enabledSteps[index + 1]);
                 }
             };
 
             this.goTo = function(step) {
+                var enabledSteps = $scope.getEnabledSteps();
                 var stepTo;
                 if (_.isNumber(step)) {
-                    stepTo = $scope.steps[step];
+                    stepTo = enabledSteps[step];
                 } else {
-                    stepTo = _.findWhere($scope.steps, {title: step});
+                    stepTo = _.findWhere(enabledSteps, {title: step});
                 }
                 $scope.goTo(stepTo);
             };
@@ -99,11 +107,12 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             };
 
             this.cancel = this.previous = function() {
-                var index = _.indexOf($scope.steps , $scope.selectedStep);
+                var enabledSteps = $scope.getEnabledSteps();
+                var index = _.indexOf(enabledSteps , $scope.selectedStep);
                 if (index === 0) {
                     throw new Error("Can't go back. It's already in step 0");
                 } else {
-                    $scope.goTo($scope.steps[index - 1]);
+                    $scope.goTo(enabledSteps[index - 1]);
                 }
             };
         }]

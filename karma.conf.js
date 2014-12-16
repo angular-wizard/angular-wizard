@@ -11,6 +11,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'https://code.jquery.com/jquery-2.1.1.min.js',
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.6/angular.js',
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.6/angular-mocks.js',
       'http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js',
@@ -68,7 +69,9 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false
+    singleRun: false,
+
+    browserNoActivityTimeout: 60000
 
   });
 };

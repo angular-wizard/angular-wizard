@@ -26,6 +26,11 @@ describe( 'AngularWizard', function() {
                 + '        <p>You have continued here!</p>'
                 + '        <input type="submit" wz-next value="Go on" />'
                 + '    </wz-step>'
+                + '    <wz-step title="Dynamic" wz-disabled="{{dynamicStepDisabled == \'Y\'}}">'
+                + '        <h1>Dynamic {{dynamicStepDisabled}}</h1>'
+                + '        <p>You have continued here!</p>'
+                + '        <input type="submit" wz-next value="Go on" />'
+                + '    </wz-step>'
                 + '    <wz-step title="More steps">'
                 + '        <p>Even more steps!!</p>'
                 + '        <input type="submit" wz-next value="Finish now" />'
@@ -40,7 +45,7 @@ describe( 'AngularWizard', function() {
         var scope = $rootScope.$new();
         var view = createView(scope);
         expect(WizardHandler).toBeTruthy();
-        expect(view.find('section').length).toEqual(3);
+        expect(view.find('section').length).toEqual(4);
         // expect the currect step to be desirable one
         expect(scope.referenceCurrentStep).toEqual('Starting');
     });
@@ -76,6 +81,23 @@ describe( 'AngularWizard', function() {
         var scope = $rootScope.$new();
         var view = createView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().goTo(2);
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Dynamic');
+    });
+    it( "should render only those steps which are enabled", function() {
+        var scope = $rootScope.$new();
+        scope.dynamicStepDisabled = 'Y';
+        var view = createView(scope);
+        expect(WizardHandler).toBeTruthy();
+        expect(view.find('ul.steps-indicator li').length).toEqual(3);
+    });
+    it( "should enable or disable dynamic steps based on conditions", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        scope.dynamicStepDisabled = 'Y';
+        $rootScope.$digest();
         WizardHandler.wizard().goTo(2);
         $rootScope.$digest();
         expect(scope.referenceCurrentStep).toEqual('More steps');
