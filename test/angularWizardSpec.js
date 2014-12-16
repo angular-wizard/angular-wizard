@@ -230,6 +230,18 @@ describe( 'AngularWizard', function() {
         $rootScope.$digest();
         expect(scope.referenceCurrentStep).toEqual('More steps');
     });
+    it( "should remove a step", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        WizardHandler.wizard().goTo(1);
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+        WizardHandler.wizard().removeStep(1);
+        $rootScope.$digest();
+        WizardHandler.wizard().goTo(1);
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('More steps');
+    });
     it( "should finish", function() {
         var scope = $rootScope.$new();
         var flag = false;

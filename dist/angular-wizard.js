@@ -141,6 +141,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             };
 
             $scope.goTo = function(step) {
+<<<<<<< HEAD
                 //if this is the first time the wizard is loading it bi-passes step validation
                 if(firstRun){
                     //deselect all steps so you can set fresh below
@@ -184,6 +185,13 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                             //$log.log('current step number: ', $scope.currentStepNumber());
                         }
                     });
+=======
+              console.log('scope.goTo');
+                unselectAll();
+                $scope.selectedStep = step;
+                if (!_.isUndefined($scope.currentStep)) {
+                    $scope.currentStep = step.title || step.wzTitle;
+>>>>>>> add test for remove method
                 }
             };
 
@@ -287,6 +295,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             //used to traverse to any step, step number placed as argument
             this.goTo = function(step) {
+              console.log('goTo');
                 var stepTo;
                 //checking that step is a Number
                 if (_.isNumber(step)) {
