@@ -2,6 +2,8 @@ describe( 'AngularWizard', function() {
     var $compile, $rootScope, WizardHandler;
 
     beforeEach(module('mgo-angular-wizard'));
+
+
     beforeEach(inject(function(_$compile_, _$rootScope_, _WizardHandler_) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
@@ -21,12 +23,12 @@ describe( 'AngularWizard', function() {
                 + '        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>'
                 + '        <input type="submit" wz-next value="Continue" />'
                 + '    </wz-step>'
-                + '    <wz-step title="Continuing">'
+                + '    <wz-step title="Continuing" canexit="stepValidation">'
                 + '        <h1>Continuing</h1>'
                 + '        <p>You have continued here!</p>'
                 + '        <input type="submit" wz-next value="Go on" />'
                 + '    </wz-step>'
-                + '    <wz-step title="More steps">'
+                + '    <wz-step title="More steps" canenter="enterValidation">'
                 + '        <p>Even more steps!!</p>'
                 + '        <input type="submit" wz-next value="Finish now" />'
                 + '    </wz-step>'
@@ -79,6 +81,90 @@ describe( 'AngularWizard', function() {
         WizardHandler.wizard().goTo(2);
         $rootScope.$digest();
         expect(scope.referenceCurrentStep).toEqual('More steps');
+    });
+    it( "should go to next step becasue callback is truthy", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next(function(){
+            return true
+        });
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+    });
+    it( "should NOT go to next step because callback is falsey", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next(function(){
+            return false
+        });
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+    });
+    it( "should go to next step because CANEXIT is UNDEFINED", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+    });
+    it( "should go to next step because CANEXIT is TRUE", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        scope.stepValidation = function(){
+            return true;
+        };
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('More steps');
+    });
+    it( "should NOT go to next step because CANEXIT is FALSE", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        scope.stepValidation = function(){
+            return false;
+        };
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+    });
+    it( "should go to next step because CANENTER is TRUE", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        scope.enterValidation = function(){
+            return true;
+        };
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('More steps');
+    });
+    it( "should NOT go to next step because CANENTER is TRUE", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        scope.enterValidation = function(){
+            return false;
+        };
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
     });
     it( "should finish", function() {
         var scope = $rootScope.$new();
