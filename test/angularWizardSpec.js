@@ -152,7 +152,7 @@ describe( 'AngularWizard', function() {
         $rootScope.$digest();
         expect(scope.referenceCurrentStep).toEqual('More steps');
     });
-    it( "should NOT go to next step because CANENTER is TRUE", function() {
+    it( "should NOT go to next step because CANENTER is FALSE", function() {
         var scope = $rootScope.$new();
         var view = createView(scope);
         scope.enterValidation = function(){
