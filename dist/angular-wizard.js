@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.4.0 - 2014-12-09 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.4.0 - 2014-12-30 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -149,7 +149,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     } else if ($scope.currentStepNumber() === 0){
                         thisStep = 0;
                     }
-                    console.log('steps[thisStep] Data: ', $scope.steps[thisStep].canexit);
+                    //$log.log('steps[thisStep] Data: ', $scope.steps[thisStep].canexit);
                     if(typeof($scope.steps[thisStep].canexit) === 'undefined' || $scope.steps[thisStep].canexit($scope.context) === true){
                         exitallowed = true;
                     }
@@ -161,7 +161,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                         //deselect all steps so you can set fresh below
                         unselectAll();
 
-                        //console.log('value for canExit argument: ', $scope.currentStep.canexit);
+                        //$log.log('value for canExit argument: ', $scope.currentStep.canexit);
                         $scope.selectedStep = step;
                         //making sure current step is not undefined
                         if (!_.isUndefined($scope.currentStep)) {
@@ -171,7 +171,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                         step.selected = true;
                         //emit event upwards with data on goTo() invoktion
                         $scope.$emit('wizard:stepChanged', {step: step, index: _.indexOf($scope.steps , step)});
-                        console.log('current step number: ', $scope.currentStepNumber());
+                        //$log.log('current step number: ', $scope.currentStepNumber());
                     } else {
                         return;
                     }
@@ -200,7 +200,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 return $scope.currentStepNumber();
             };
             //method used for next button within step
-            //TODO How is the callback in the directive, i.e. wz-next="callback()" get called!
             this.next = function(callback) {
                 //setting variable equal to step  you were on when next() was invoked
                 var index = _.indexOf($scope.steps , $scope.selectedStep);
@@ -228,6 +227,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     //invoking goTo() with step number next in line
                     $scope.goTo($scope.steps[index + 1]);
                 }
+                
             };
 
             //used to traverse to any step, step number placed as argument
