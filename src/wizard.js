@@ -89,7 +89,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     firstRun = false;
                 } else {
                     //createing variables to capture current state that goTo() was invoked from and allow booleans
-                    var thisStep;
+                    var thisStep, jumpStep;
                     var exitallowed = false;
                     var enterallowed = false;
                     //getting data for step you are transitioning out of
@@ -98,11 +98,12 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     } else if ($scope.currentStepNumber() === 0){
                         thisStep = 0;
                     }
+                    jumpStep = $scope.getStepNumber(step) - 1;
                     //$log.log('steps[thisStep] Data: ', $scope.steps[thisStep].canexit);
-                    if(typeof($scope.steps[thisStep].canexit) === 'undefined' || $scope.steps[thisStep].canexit($scope.context) === true){
+                    if(typeof($scope.steps[thisStep].canexit) === 'undefined' || $scope.steps[thisStep].canexit($scope.context, jumpStep - thisStep) === true){
                         exitallowed = true;
                     }
-                    if(exitallowed && step.canenter === undefined || exitallowed && step.canenter($scope.context) === true){
+                    if(exitallowed && step.canenter === undefined || exitallowed && step.canenter($scope.context, jumpStep - thisStep) === true){
                         enterallowed = true;
                     }
 
@@ -127,9 +128,14 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 }
             };
 
+            $scope.getStepNumber = function(step) {
+                //retreive step number by step object
+                return _.indexOf($scope.steps, step) + 1;
+            };
+
             $scope.currentStepNumber = function() {
                 //retreive current step number
-                return _.indexOf($scope.steps , $scope.selectedStep) + 1;
+                return $scope.getStepNumber($scope.selectedStep);
             };
 
             //unSelect All Steps
