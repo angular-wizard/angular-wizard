@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.4.1 - 2014-12-30 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.4.2 - 2015-01-01 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -122,6 +122,10 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             this.context = $scope.context;
 
+            $scope.getStepNumber = function(step) {
+                return _.indexOf($scope.steps, step) + 1;
+            };
+
             $scope.goTo = function(step) {
                 //if this is the first time the wizard is loading it bi-passes step validation
                 if(firstRun){
@@ -151,6 +155,9 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     }
                     //$log.log('steps[thisStep] Data: ', $scope.steps[thisStep].canexit);
                     if(typeof($scope.steps[thisStep].canexit) === 'undefined' || $scope.steps[thisStep].canexit($scope.context) === true){
+                        exitallowed = true;
+                    }
+                    if($scope.getStepNumber(step) < $scope.currentStepNumber()){
                         exitallowed = true;
                     }
                     if(exitallowed && step.canenter === undefined || exitallowed && step.canenter($scope.context) === true){
