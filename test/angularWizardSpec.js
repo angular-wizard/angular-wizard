@@ -18,7 +18,7 @@ describe( 'AngularWizard', function() {
     function createView(scope) {
         scope.referenceCurrentStep = null;
         var element = angular.element('<wizard on-finish="finishedWizard()" current-step="referenceCurrentStep" ng-init="msg = 14" >'
-                + '    <wz-step title="Starting">'
+                + '    <wz-step title="Starting" canenter="enterValidation">'
                 + '        <h1>This is the first step</h1>'
                 + '        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>'
                 + '        <input type="submit" wz-next value="Continue" />'
@@ -165,6 +165,37 @@ describe( 'AngularWizard', function() {
         WizardHandler.wizard().next();
         $rootScope.$digest();
         expect(scope.referenceCurrentStep).toEqual('Continuing');
+    });
+    it( "should NOT return to a previous step. Although CANEXIT is false and we are heading to a previous state, the can enter validation is false", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        scope.stepValidation = function(){
+            return false;
+        };
+        scope.enterValidation = function(){
+            return false;
+        };
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+        WizardHandler.wizard().previous();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+    });
+    it( "should return to a previous step even though CANEXIT is false", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        scope.stepValidation = function(){
+            return false;
+        };
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+        WizardHandler.wizard().previous();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Starting');
     });
     it( "should finish", function() {
         var scope = $rootScope.$new();
