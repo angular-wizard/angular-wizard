@@ -1,8 +1,7 @@
 # Angular-Wizard
 
-[![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=martin%40gon%2eto&lc=US&item_name=Martin%20Gontovnikas&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted "Donate once-off to this project using Paypal")
-[![Donate on Gittip](http://badgr.co/gittip/mgonto.png)](https://www.gittip.com/mgonto/)
-
+[![PayPal donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=martin%40gon%2eto&lc=US&item_name=Martin%20Gontovnikas&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted "Donate once-off to this project using PayPal")
+[![Donate on Gratipay](http://img.shields.io/gratipay/mgonto.svg)](https://gratipay.com/mgonto/)
 
 Angular-wizard is a component that will make it easy for you to create wizards in your app. You can check a running example of the wizard [by clicking here](http://mgonto.github.io/angular-wizard/)
 
@@ -73,9 +72,9 @@ This will look like the following when you're in the second step:
 Let's go step by step to see how this works.
 
 1) You need to declare a master `wizard` directive. This wizard directive, has the following options as attributes:
-* **on-finish**: Here you can put a function to be called when the wizard is finished. The syntaxis here is very similar to `ng-click`
+* **on-finish**: Here you can put a function to be called when the wizard is finished. The syntax here is very similar to `ng-click`
 * **name**: The name of the wizard. By default, it's called "Default wizard". It's used for the `WizardHandler` which we'll explain later.
-* **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed but he can modify any of them now. Defaults to false.
+* **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed and the user can now navigate to and modify any step. Defaults to false.
 * **hide-indicators**: If set to true, the indicators in the bottom of the page showing the current page and allowing navigation for the wizard will be hidden. Defaults to false.
 * **current-step**: You need to set here a property from your scope (similar to `ng-model`) and that property will always have the name of the current step being shown on the screen.
 * **template**: Path to a custom template.
@@ -134,7 +133,7 @@ $scope.exitValidation = function(){
 If a step requires information from a previous step to populate itself you can access this information through the `context` object.  The context object is automatically passed in as an argument into your canexit and canenter methods.  You can access the context objext from your controller via: `WizardHandler.wizard().context`
 
 ## Manipulating the wizard from a service
-There're some times where we actually want to manipulate the wizard from the controller instead of from the HTML.
+There are some times where we actually want to manipulate the wizard from the controller instead of from the HTML.
 
 For those cases, we can inject the `WizardHandler` to our controller.
 
@@ -176,9 +175,8 @@ All of those colors are variables in the `angular-wizard.less`. You can easily c
 
 # Contributors
 
-* @sebazelonka helped me with all fo the styles of the Wizard.
+* @sebazelonka helped me with all of the styles in the Wizard.
 * [@jacobscarter](https://github.com/jacobscarter) is helping with manteinance, PRS merging and adding new features
-
 
 # Live sample
 
@@ -191,7 +189,7 @@ Releases notes are together with releases in GitHub at: https://github.com/mgont
 # License
 The MIT License
 
-Copyright (c) 2013 Martin Gontovnikas http://www.gon.to/
+Copyright (c) 2013-2014 Martin Gontovnikas http://www.gon.to/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

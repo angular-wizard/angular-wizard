@@ -43,7 +43,7 @@ describe( 'AngularWizard', function() {
         var view = createView(scope);
         expect(WizardHandler).toBeTruthy();
         expect(view.find('section').length).toEqual(3);
-        // expect the currect step to be desirable one
+        // expect the correct step to be desirable one
         expect(scope.referenceCurrentStep).toEqual('Starting');
     });
 
