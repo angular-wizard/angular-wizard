@@ -1,4 +1,4 @@
-angular.module('mgo-angular-wizard').directive('wzStep', function() {
+angular.module('mgo-angular-wizard').directive('wzStep', ['$rootScope', function($rootScope) {
     return {
         restrict: 'EA',
         replace: true,
@@ -7,7 +7,8 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
             wzTitle: '@',
             title: '@',
             canenter : '=',
-            canexit : '='
+            canexit : '=',
+            orderIndex:'@'
         },
         require: '^wizard',
         templateUrl: function(element, attributes) {
@@ -15,7 +16,16 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         },
         link: function($scope, $element, $attrs, wizard) {
             $scope.title = $scope.title || $scope.wzTitle;
-            wizard.addStep($scope);
+
+            //for nested wizards. Add step when tempate for wizard is ready.
+            if (wizard.transcluded){
+                wizard.addStep($scope);
+            }
+            else {
+                $rootScope.$on('mgo-angular-wizard.transcluded', function($event, wzName){
+                    if (wizard.name==wzName)  wizard.addStep($scope);
+                });
+            }
         }
     };
-});
+}]);
