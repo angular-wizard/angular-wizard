@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.4.2 - 2015-01-01 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.4.2 - 2015-03-27 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -17,7 +17,7 @@ angular.module("wizard.html", []).run(["$templateCache", function($templateCache
     "<div>\n" +
     "    <div class=\"steps\" ng-transclude></div>\n" +
     "    <ul class=\"steps-indicator steps-{{steps.length}}\" ng-if=\"!hideIndicators\">\n" +
-    "      <li ng-class=\"{default: !step.completed && !step.selected, current: step.selected && !step.completed, done: step.completed && !step.selected, editing: step.selected && step.completed}\" ng-repeat=\"step in steps\">\n" +
+    "      <li ng-class=\"{default: !step.completed && !step.selected, current: step.selected && !step.completed, done: step.completed && !step.selected, editing: step.selected && step.completed}\" ng-repeat=\"step in steps | filter: step\">\n" +
     "        <a ng-click=\"goTo(step)\">{{step.title || step.wzTitle}}</a>\n" +
     "      </li>\n" +
     "    </ul>\n" +
@@ -27,7 +27,7 @@ angular.module("wizard.html", []).run(["$templateCache", function($templateCache
 
 angular.module('mgo-angular-wizard', ['templates-angularwizard']);
 
-angular.module('mgo-angular-wizard').directive('wzStep', function() {
+angular.module('mgo-angular-wizard').directive('wzStep', ['$rootScope', function($rootScope) {
     return {
         restrict: 'EA',
         replace: true,
@@ -36,7 +36,8 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
             wzTitle: '@',
             title: '@',
             canenter : '=',
-            canexit : '='
+            canexit : '=',
+            orderIndex:'@'
         },
         require: '^wizard',
         templateUrl: function(element, attributes) {
@@ -44,13 +45,22 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         },
         link: function($scope, $element, $attrs, wizard) {
             $scope.title = $scope.title || $scope.wzTitle;
-            wizard.addStep($scope);
+
+            //for nested wizards. Add step when tempate for wizard is ready.
+            if (wizard.transcluded){
+                wizard.addStep($scope);
+            }
+            else {
+                $rootScope.$on('mgo-angular-wizard.transcluded', function($event, wzName){
+                    if (wizard.name==wzName)  wizard.addStep($scope);
+                });
+            }
         }
     };
-});
+}]);
 
 //wizard directive
-angular.module('mgo-angular-wizard').directive('wizard', function() {
+angular.module('mgo-angular-wizard').directive('wizard',['$rootScope', function($rootScope) {
     return {
         restrict: 'EA',
         replace: true,
@@ -66,19 +76,63 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             return attributes.template || "wizard.html";
         },
 
+        link: function($scope, $element, $attributes){
+
+            var get_stepnodes = function (parent)
+                {
+                  var matchingElements = [];
+                  var allElements = parent[0].getElementsByTagName('*');
+                  for (var i = 0, n = allElements.length; i < n; i++)
+                  {
+                    var current = allElements[i],
+                        $current = angular.element(current);
+
+                    if (!_.isUndefined($current.attr('wz-step')) || current.nodeName.toLowerCase()=='wz-step' || $current.hasClass('step'))
+                    {
+                      // Element exists with attribute. Add to array.
+                      matchingElements.push($current.attr('title') || $current.attr('wz-title'));
+                    }
+                  }
+                  return matchingElements;
+                };
+
+            //Determination ordering steps from DOM
+            $scope.steps_ordering = get_stepnodes($element);
+
+            $scope.steps_count = $scope.steps_ordering.length;
+
+            //steps array where all the scopes of each step are added
+            $scope.steps = new Array($scope.steps_count);
+
+            //nested wizards hack
+            $scope.transcluded = true;
+            $rootScope.$broadcast('mgo-angular-wizard.transcluded', $scope.name);
+
+        },
         //controller for wizard directive, treat this just like an angular controller
         controller: ['$scope', '$element', '$log', 'WizardHandler', function($scope, $element, $log, WizardHandler) {
             //this variable allows directive to load without having to pass any step validation
             var firstRun = true;
+
+            this.name = $scope.name || WizardHandler.defaultName;
+
+            $scope.name = this.name;
+
             //creating instance of wizard, passing this as second argument allows access to functions attached to this via Service
-            WizardHandler.addWizard($scope.name || WizardHandler.defaultName, this);
+            WizardHandler.addWizard(this.name, this);
 
             $scope.$on('$destroy', function() {
                 WizardHandler.removeWizard($scope.name || WizardHandler.defaultName);
             });
 
-            //steps array where all the scopes of each step are added
-            $scope.steps = [];
+            //nested wizards hack
+            this.transcluded = $scope.transcluded || false;
+
+            var thisModule = this;
+
+            $scope.$watch('transcluded', function(val){
+                if (val) thisModule.transcluded = true;
+            });
 
             //access to context object for step validation
             $scope.context = {};
@@ -86,10 +140,10 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             //watching changes to currentStep
             $scope.$watch('currentStep', function(step) {
                 //checking to make sure currentStep is truthy value
-                if (!step) return;
+                if (!step || _.isUndefined($scope.selectedStep)) return;
                 //setting stepTitle equal to current step title or default title
                 var stepTitle = $scope.selectedStep.title || $scope.selectedStep.wzTitle;
-                if ($scope.selectedStep && stepTitle !== $scope.currentStep) {
+                if (stepTitle !== $scope.currentStep) {
                     //invoking goTo() with step title as argument
                     $scope.goTo(_.findWhere($scope.steps, {title: $scope.currentStep}));
                 }
@@ -104,17 +158,30 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
                 if (editMode) {
                     _.each($scope.steps, function(step) {
-                        step.completed = true;
+                        if (!_.isUndefined(step)) step.completed = true;
                     });
                 }
             }, true);
 
             //called each time step directive is loaded
             this.addStep = function(step) {
-                //pushing the scope of directive onto step array
-                $scope.steps.push(step);
+
+                step.selected = false;
+                //Determination of the sequence number step.
+                var index;
+                if (!_.isUndefined(step.orderIndex)) {
+                    index = step.orderIndex;
+                }
+                else {
+                    index = _.indexOf($scope.steps_ordering , step.title);
+                }
+
+                //inserting the scope of directive onto step array in view of the order
+                $scope.steps[index] = step;
+
+
                 //if this is first step being pushed then goTo that first step
-                if ($scope.steps.length === 1) {
+                if (index === 0) {
                     //goTo first step
                     $scope.goTo($scope.steps[0]);
                 }
@@ -194,7 +261,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             function unselectAll() {
                 //traverse steps array and set each "selected" property to false
                 _.each($scope.steps, function (step) {
-                    step.selected = false;
+                    if (step) step.selected = false;
                 });
                 //set selectedStep variable to null
                 $scope.selectedStep = null;
@@ -234,7 +301,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     //invoking goTo() with step number next in line
                     $scope.goTo($scope.steps[index + 1]);
                 }
-                
+
             };
 
             //used to traverse to any step, step number placed as argument
@@ -272,7 +339,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             };
         }]
     };
-});
+}]);
 function wizardButtonDirective(action) {
     angular.module('mgo-angular-wizard')
         .directive(action, function() {
