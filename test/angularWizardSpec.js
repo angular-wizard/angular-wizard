@@ -1,12 +1,14 @@
 describe( 'AngularWizard', function() {
-    var $compile, $rootScope, WizardHandler;
+    var $compile, $q, $rootScope, $timeout, WizardHandler;
 
     beforeEach(module('mgo-angular-wizard'));
 
 
-    beforeEach(inject(function(_$compile_, _$rootScope_, _WizardHandler_) {
+    beforeEach(inject(function(_$compile_, _$q_, _$rootScope_, _$timeout_, _WizardHandler_) {
         $compile = _$compile_;
+        $q = _$q_;
         $rootScope = _$rootScope_;
+        $timeout = _$timeout_;
         WizardHandler = _WizardHandler_;
     }));
 
@@ -196,6 +198,37 @@ describe( 'AngularWizard', function() {
         WizardHandler.wizard().previous();
         $rootScope.$digest();
         expect(scope.referenceCurrentStep).toEqual('Starting');
+    });
+    it( "should go to the next step because the promise that CANENTER returns resolves to true", function(done) {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        scope.enterValidation = function(){
+            var deferred = $q.defer();
+            $timeout(function () {
+                deferred.resolve(true);
+                done();
+            });
+            return deferred.promise;
+        };
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+        WizardHandler.wizard().next();
+        $timeout.flush();
+        expect(scope.referenceCurrentStep).toEqual('More steps');
+    });
+    it( "should go to the next step because CANEXIT is set to true", function() {
+        var scope = $rootScope.$new();
+        var view = createView(scope);
+        scope.exitValidation = true;
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('More steps');
     });
     it( "should finish", function() {
         var scope = $rootScope.$new();
