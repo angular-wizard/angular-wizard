@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.4.3 - 2015-04-21 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.4.4 - 2015-04-21 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -206,6 +206,7 @@ angular.module('mgo-angular-wizard').directive('wizard', ['$q',function($q) {
                         } else {
                             return;
                         }
+                    }).finally(function(){
                         calls = [];
                     });
                 }
@@ -328,27 +329,27 @@ wizardButtonDirective('wzCancel');
 
 angular.module('mgo-angular-wizard').factory('WizardHandler', function() {
    var service = {};
-
+   
    var wizards = {};
-
+   
    service.defaultName = "defaultWizard";
-
+   
    service.addWizard = function(name, wizard) {
        wizards[name] = wizard;
    };
-
+   
    service.removeWizard = function(name) {
        delete wizards[name];
    };
-
+   
    service.wizard = function(name) {
        var nameToUse = name;
        if (!name) {
            nameToUse = service.defaultName;
        }
-
+       
        return wizards[nameToUse];
    };
-
+   
    return service;
 });
