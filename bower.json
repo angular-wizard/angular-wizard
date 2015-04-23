@@ -1,7 +1,7 @@
 {
   "name": "angular-wizard",
   "version": "0.4.3",
-  "main": "./dist/angular-wizard.js",
+  "main": ["./dist/angular-wizard.js", "./dist/angular-wizard.css"],
   "description": "Easy to use Wizard library for AngularJS",
   "repository": {
     "type": "git",
