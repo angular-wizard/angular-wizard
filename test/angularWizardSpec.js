@@ -208,7 +208,7 @@ describe( 'AngularWizard', function() {
         $rootScope.$digest();
     });
 
-    it( "should invoke on-enter", function() {
+    it( "should invoke on-enter with correct parameters", function() {
         var scope = $rootScope.$new();
         var invocationCount = 0;
 
@@ -217,7 +217,7 @@ describe( 'AngularWizard', function() {
             expect(step).not.toBeUndefined();
             invocationCount++;};
 
-        var view = createView(scope); // first view
+        var view = createView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().next(); // open second view
         $rootScope.$digest();
