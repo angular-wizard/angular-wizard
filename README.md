@@ -38,7 +38,7 @@ Angular-wizard depends on Angular and Lodash (or Underscore).
 
 The first thing we need to do is add a dependency to angular-wizard module which is called `mgo-angular-wizard`.
 
-We can do this simply by doing: 
+We can do this simply by doing:
 
 ````js
 angular.module('your-app', ['mgo-angular-wizard']);
@@ -47,7 +47,7 @@ angular.module('your-app', ['mgo-angular-wizard']);
 Now, in some HTML for a controller, you can just add a wizard as follows:
 
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard()">
     <wz-step title="Starting">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
@@ -78,6 +78,7 @@ Let's go step by step to see how this works.
 * **hide-indicators**: If set to true, the indicators in the bottom of the page showing the current page and allowing navigation for the wizard will be hidden. Defaults to false.
 * **current-step**: You need to set here a property from your scope (similar to `ng-model`) and that property will always have the name of the current step being shown on the screen.
 * **template**: Path to a custom template.
+* **on-enter**: callback function that gets invoked right before a new step is displayed. this can be used to fetch data. It may take three arguments (context,transition,step) this function may return a promise
 
 2) Inside the wizard, we can have as many steps as we want. Each step MUST have a title which is going to be used to identify it. Inside each step, we can put whatever we want. Other directives, bindings, controls, forms, etc.
 
@@ -96,14 +97,14 @@ In this case, the `setMode` function will be called before going to the next ste
 
 ## Wizard Step Validation
 The wzStep directive has the following options as attributes:
-* **canexit**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move to the next step.  If it is ommitted no validation will be required.
-* **canenter**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move into this step.  If it is ommitted no validation will be required.
+* **canexit**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move to the next step.  If it is ommitted no validation will be required. The function may return a promise
+* **canenter**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move into this step.  If it is ommitted no validation will be required. The function may return a promise
 
  **Example**
- 
+
 HTML
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard()">
     <wz-step title="Starting" canexit="exitValidation">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
