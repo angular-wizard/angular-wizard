@@ -113,6 +113,9 @@ angular.module('mgo-angular-wizard').directive('wizard', ['$q',function($q) {
                         $scope.$emit('wizard:stepChanged', {step: step, index: _.indexOf($scope.steps , step)});
                         //setting variable to false so all other step changes must pass validation
                         firstRun = false;
+                    },function(err){
+                        $log.log('error in onEnter function while changing step', err);
+                        return;
                     });
 
                 } else {
@@ -179,7 +182,7 @@ angular.module('mgo-angular-wizard').directive('wizard', ['$q',function($q) {
                                 $scope.$emit('wizard:stepChanged', {step: step, index: _.indexOf($scope.steps, step)});
                                 //$log.log('current step number: ', $scope.currentStepNumber());
                             },function(err){
-                                $log.log('error in onEnter function while changing step',err);
+                                $log.log('error in onEnter function while changing step', err);
                                 return;
                             });
 

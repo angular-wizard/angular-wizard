@@ -1,5 +1,5 @@
 describe( 'AngularWizard', function() {
-    var $compile, $rootScope, WizardHandler;
+    var $compile, $rootScope, WizardHandler
 
     beforeEach(module('mgo-angular-wizard'));
 
@@ -17,7 +17,7 @@ describe( 'AngularWizard', function() {
      */
     function createView(scope) {
         scope.referenceCurrentStep = null;
-        var element = angular.element('<wizard on-finish="finishedWizard()" current-step="referenceCurrentStep" ng-init="msg = 14" >'
+        var element = angular.element('<wizard on-finish="finishedWizard()" current-step="referenceCurrentStep" on-enter="onEnter" ng-init="msg = 14" >'
                 + '    <wz-step title="Starting" canenter="enterValidation">'
                 + '        <h1>This is the first step</h1>'
                 + '        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>'
@@ -206,5 +206,22 @@ describe( 'AngularWizard', function() {
         WizardHandler.wizard().finish();
         expect(flag).toBeTruthy();
         $rootScope.$digest();
+    });
+
+    it( "should invoke on-enter", function() {
+        var scope = $rootScope.$new();
+        var invocationCount = 0;
+
+        scope.onEnter = function(context, transition, step) {
+            expect(transition).not.toBeUndefined();
+            expect(step).not.toBeUndefined();
+            invocationCount++;};
+
+        var view = createView(scope); // first view
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next(); // open second view
+        $rootScope.$digest();
+        expect(invocationCount).toBe(2); // we should have exactly 2 invocations
+
     });
 });
