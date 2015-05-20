@@ -15,9 +15,9 @@ describe( 'AngularWizard', function() {
      * @param  {Scope} scope         A scope to bind to
      * @return {[DOM element]}       A DOM element compiled
      */
-    function createView(scope) {
+    function createView(scope, element) {
         scope.referenceCurrentStep = null;
-        var element = angular.element('<wizard on-finish="finishedWizard()" current-step="referenceCurrentStep" ng-init="msg = 14" >'
+        var element = element || angular.element('<wizard on-finish="finishedWizard()" current-step="referenceCurrentStep" ng-init="msg = 14" >'
                 + '    <wz-step title="Starting" canenter="enterValidation">'
                 + '        <h1>This is the first step</h1>'
                 + '        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>'
@@ -206,5 +206,14 @@ describe( 'AngularWizard', function() {
         WizardHandler.wizard().finish();
         expect(flag).toBeTruthy();
         $rootScope.$digest();
+    });
+    it( "should not throw when currentStep changes and there is no selectedStep", function() {
+        var scope = $rootScope.$new();
+        var element = angular.element('<wizard current-step="referenceCurrentStep"></wizard>');
+        var view = createView(scope, element);
+        scope.referenceCurrentStep = 'anything';
+        expect(function() {
+            $rootScope.$digest();
+        }).not.toThrow();
     });
 });
