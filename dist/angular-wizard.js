@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.4.3 - 2015-04-11 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.4.3 - 2015-05-27 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -152,7 +152,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                         thisStep = 0;
                     }
                     //$log.log('steps[thisStep] Data: ', $scope.steps[thisStep].canexit);
-                    $q.all([canEnterStep(step), canExitStep($scope.steps[thisStep], step)]).then(function(data) {
+                    $q.all([canExitStep($scope.steps[thisStep], step), canEnterStep(step)]).then(function(data) {
                         if(data[0] && data[1]){
                             //deselect all steps so you can set fresh below
                             unselectAll();
@@ -185,7 +185,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     return step.canenter;
                 }
                 //Check to see if the canenter function is a promise which needs to be returned
-                canEnter = step.canenter();
+                canEnter = step.canenter($scope.context);
                 if(angular.isFunction(canEnter.then)){
                     defer = $q.defer();
                     canEnter.then(function(response){
@@ -208,7 +208,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     return step.canexit;
                 }
                 //Check to see if the canexit function is a promise which needs to be returned
-                canExit = step.canexit();
+                canExit = step.canexit($scope.context);
                 if(angular.isFunction(canExit.then)){
                     defer = $q.defer();
                     canExit.then(function(response){
