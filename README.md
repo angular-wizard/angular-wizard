@@ -96,8 +96,8 @@ In this case, the `setMode` function will be called before going to the next ste
 
 ## Wizard Step Validation
 The wzStep directive has the following options as attributes:
-* **canexit**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move to the next step.  If it is ommitted no validation will be required.
-* **canenter**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move into this step.  If it is ommitted no validation will be required.
+* **canexit**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move to the next step. Promises are supported but must resolve with a thruthy value.  If it is ommitted no validation will be required.
+* **canenter**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move into this step.   Promises are supported but must resolve with a thruthy value.  If it is ommitted no validation will be required.
 
  **Example**
  
@@ -129,6 +129,18 @@ $scope.enterValidation = function(){
 $scope.exitValidation = function(){
     return true;
 };
+//example using context object
+$scope.exitValidation = function(context){
+    return context.firstName === "Jacob";
+}
+//example using promises
+$scope.exitValidation = function(){
+    var d = $q.defer()
+    $timeout(function(){
+        return d.resolve(true);
+    }, 2000);
+    return d.promise;
+}
 ````
 If a step requires information from a previous step to populate itself you can access this information through the `context` object.  The context object is automatically passed in as an argument into your canexit and canenter methods.  You can access the context objext from your controller via: `WizardHandler.wizard().context`
 
