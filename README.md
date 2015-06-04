@@ -15,12 +15,12 @@ You can download this by:
 
 ````html
 <!-- Use LATEST folder to always get the latest version-->
-<script type="text/javascript" src="http://cdn.jsdelivr.net/angular-wizard/latest/angular-wizard.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular-wizard/latest/angular-wizard.min.css">
+<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/latest/angular-wizard.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/latest/angular-wizard.min.css">
 
 <!-- Or use TAG number for specific version -->
-<script type="text/javascript" src="http://cdn.jsdelivr.net/angular-wizard/0.5.0/angular.wizard.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular-wizard/0.5.0/angular-wizard.min.css">
+<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/0.5.1/angular.wizard.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/0.5.1/angular-wizard.min.css">
 ````
 
 The dist folder contains the following files:
