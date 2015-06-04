@@ -307,7 +307,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
         }]
     };
 });
-
 function wizardButtonDirective(action) {
     angular.module('mgo-angular-wizard')
         .directive(action, function() {
