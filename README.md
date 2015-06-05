@@ -38,7 +38,7 @@ Angular-wizard depends on Angular and Lodash (or Underscore).
 
 The first thing we need to do is add a dependency to angular-wizard module which is called `mgo-angular-wizard`.
 
-We can do this simply by doing: 
+We can do this simply by doing:
 
 ````js
 angular.module('your-app', ['mgo-angular-wizard']);
@@ -47,7 +47,7 @@ angular.module('your-app', ['mgo-angular-wizard']);
 Now, in some HTML for a controller, you can just add a wizard as follows:
 
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard()">
     <wz-step title="Starting">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
@@ -100,10 +100,10 @@ The wzStep directive has the following options as attributes:
 * **canenter**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move into this step.   Promises are supported but must resolve with a thruthy value.  If it is ommitted no validation will be required.
 
  **Example**
- 
+
 HTML
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard()">
     <wz-step title="Starting" canexit="exitValidation">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
@@ -185,6 +185,47 @@ The navigation bar shown below works in the following way:
 
 All of those colors are variables in the `angular-wizard.less`. You can easily change them by changing the colors in that file
 
+### Personalize the navigation bar
+
+By default, the navigation bar can't be easily personalized. The title of the step will be the text displayed. To remedy this, you will have to use your own custom template of navigation bar ([default here](https://github.com/mgonto/angular-wizard/blob/master/src/wizard.html)).
+
+Use the step directive's attribute `extra-data` to have more control inside your template like this:
+
+In your controller:
+
+````js
+$scope.stepData = {
+    'icon': 'fa-book',
+    'displayName': 'My really cool step',
+    'customClass': 'my-custom-class',
+    'hide': true
+};
+````
+In your main view:
+
+````html
+<wz-step title="Cool step" extra-data="stepData">
+    <input type="submit" ng-click="changeLabelAndGoNext()" />
+</wz-step>
+````
+
+In your custom navigation bar template (wizard.html):
+
+````html
+...
+<li class="{{step.extraData.customClass}}"
+    ng-hide="{{step.extraData.hide}}"
+    ng-class="{default: !step.completed && ...}"
+    ng-repeat="step in steps">
+
+        <a ng-click="goTo(step)">
+            <i class="fa {{step.extraData.icon}}"></i>
+            {{step.extraData.displayName || step.title || step.wzTitle}}
+        </a>
+      </li>
+...
+````
+
 # Contributors
 
 * @sebazelonka helped me with all of the styles in the Wizard.
@@ -211,4 +252,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mgonto/angular-wizard/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
