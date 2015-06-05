@@ -6,6 +6,7 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         scope: {
             wzTitle: '@',
             title: '@',
+            extraData: '=',
             canenter : '=',
             canexit : '='
         },
