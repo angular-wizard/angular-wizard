@@ -241,8 +241,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 }
             };
 
-            //cancel is alias for previous.
-            this.cancel = this.previous = function() {
+            
+            this.previous = function() {
                 //getting index of current step
                 var index = _.indexOf($scope.steps , $scope.selectedStep);
                 //ensuring you aren't trying to go back from the first step
@@ -251,6 +251,19 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 } else {
                     //go back one step from current step
                     $scope.goTo($scope.steps[index - 1]);
+                }
+            };
+
+            //cancel is alias for previous.
+            this.cancel = function() {
+                //getting index of current step
+                var index = _.indexOf($scope.steps , $scope.selectedStep);
+                //ensuring you aren't trying to go back from the first step
+                if (index === 0) {
+                    throw new Error("Can't go back. It's already in step 0");
+                } else {
+                    //go back one step from current step
+                    $scope.goTo($scope.steps[0]);
                 }
             };
         }]
