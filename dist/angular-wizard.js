@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.5.1 - 2015-06-04 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.5.2 - 2015-06-08 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -292,8 +292,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 }
             };
 
-            //cancel is alias for previous.
-            this.cancel = this.previous = function() {
+            
+            this.previous = function() {
                 //getting index of current step
                 var index = _.indexOf($scope.steps , $scope.selectedStep);
                 //ensuring you aren't trying to go back from the first step
@@ -302,6 +302,19 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 } else {
                     //go back one step from current step
                     $scope.goTo($scope.steps[index - 1]);
+                }
+            };
+
+            //cancel is alias for previous.
+            this.cancel = function() {
+                //getting index of current step
+                var index = _.indexOf($scope.steps , $scope.selectedStep);
+                //ensuring you aren't trying to go back from the first step
+                if (index === 0) {
+                    throw new Error("Can't go back. It's already in step 0");
+                } else {
+                    //go back one step from current step
+                    $scope.goTo($scope.steps[0]);
                 }
             };
         }]
