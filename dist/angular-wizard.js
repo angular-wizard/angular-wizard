@@ -1,10 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
-<<<<<<< HEAD
- * @version v0.5.3 - 2015-06-11 * @link https://github.com/mgonto/angular-wizard
-=======
- * @version v0.4.1 - 2014-11-17 * @link https://github.com/mgonto/angular-wizard
->>>>>>> update build
+ * @version v0.5.3 - 2015-06-25 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -124,12 +120,12 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 }
             };
 
-<<<<<<< HEAD
             this.context = $scope.context;
 
             $scope.getStepNumber = function(step) {
                 return _.indexOf($scope.steps, step) + 1;
-=======
+            };
+
             this.removeStep = function(step) {
                 if(step > 0) {
                   $scope.steps.splice(step, 1);
@@ -137,11 +133,9 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                       $scope.goTo($scope.steps[0]);
                   }
                 }
->>>>>>> add method to remove a step
             };
 
             $scope.goTo = function(step) {
-<<<<<<< HEAD
                 //if this is the first time the wizard is loading it bi-passes step validation
                 if(firstRun){
                     //deselect all steps so you can set fresh below
@@ -185,13 +179,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                             //$log.log('current step number: ', $scope.currentStepNumber());
                         }
                     });
-=======
-              console.log('scope.goTo');
-                unselectAll();
-                $scope.selectedStep = step;
-                if (!_.isUndefined($scope.currentStep)) {
-                    $scope.currentStep = step.title || step.wzTitle;
->>>>>>> add test for remove method
                 }
             };
 
@@ -295,7 +282,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             //used to traverse to any step, step number placed as argument
             this.goTo = function(step) {
-              console.log('goTo');
                 var stepTo;
                 //checking that step is a Number
                 if (_.isNumber(step)) {
@@ -343,6 +329,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
         }]
     };
 });
+
 function wizardButtonDirective(action) {
     angular.module('mgo-angular-wizard')
         .directive(action, function() {
