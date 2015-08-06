@@ -24,7 +24,12 @@ module.exports = function(grunt) {
     ],
     concat: {
       options: {
-        banner: '<%= meta.banner %>'
+        banner: '<%= meta.banner %>\n\n'+
+                'if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports){\n'+
+                '  module.exports = \'mgo-angular-wizard\';\n'+
+                '}\n\n'+
+                '(function (window, angular, undefined) {\n',
+        footer: '})(window, window.angular);'
       },
       dist: {
         src: ['src/*.js'],

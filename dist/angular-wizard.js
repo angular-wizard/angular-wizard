@@ -1,9 +1,16 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.5.3 - 2015-06-11 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.5.3 - 2015-08-06 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
+
+
+if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports){
+  module.exports = 'mgo-angular-wizard';
+}
+
+(function (window, angular, undefined) {
 angular.module('templates-angularwizard', ['step.html', 'wizard.html']);
 
 angular.module("step.html", []).run(["$templateCache", function($templateCache) {
@@ -372,3 +379,4 @@ angular.module('mgo-angular-wizard').factory('WizardHandler', function() {
    
    return service;
 });
+})(window, window.angular);
