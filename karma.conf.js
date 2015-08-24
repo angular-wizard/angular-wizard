@@ -14,7 +14,7 @@ module.exports = function(config) {
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.js',
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular-mocks.js',
       'http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js',
-      'dist/*.js',
+      'dist/*.min.js',
       'test/*.js'
     ],
 

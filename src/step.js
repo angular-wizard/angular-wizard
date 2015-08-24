@@ -7,7 +7,8 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
             wzTitle: '@',
             title: '@',
             canenter : '=',
-            canexit : '='
+            canexit : '=',
+            disabled: '@?wzDisabled'
         },
         require: '^wizard',
         templateUrl: function(element, attributes) {
