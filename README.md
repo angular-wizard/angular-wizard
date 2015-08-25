@@ -95,6 +95,37 @@ All of this attributes can receive an optional function to be called before chan
 
 In this case, the `setMode` function will be called before going to the next step.
 
+## Wizard Dynamic Steps
+A step can be conditionally disabled and may change at any time either adding it or removing it from the wizard step flow.
+
+ **Example**
+ 
+HTML
+````html
+<wizard on-finish="finishedWizard()"> 
+    <wz-step title="Starting" wz-disabled="{{disabled}}">
+        <h1>This is the first step</h1>
+        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
+        <input type="submit" wz-next value="Continue" />
+    </wz-step>
+    <wz-step title="Continuing">
+        <h1>Continuing</h1>
+        <p>You have continued here!</p>
+        <input type="submit" wz-next value="Go on" />
+    </wz-step>
+    <wz-step title="More steps">
+        <p>Even more steps!!</p>
+        <input type="submit" wz-next value="Finish now" />
+    </wz-step>
+</wizard>
+````
+Controller
+````javascript
+//this will cause the step to be hidden
+$scope.disabled = 'true';
+````
+
+
 ## Wizard Step Validation
 The wzStep directive has the following options as attributes:
 * **canexit**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move to the next step. Promises are supported but must resolve with a thruthy value.  If it is ommitted no validation will be required.
