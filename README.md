@@ -19,7 +19,7 @@ You can download this by:
 <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/latest/angular-wizard.min.css">
 
 <!-- Or use TAG number for specific version -->
-<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/0.5.4/angular.wizard.min.js"></script>
+<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/0.5.4/angular-wizard.min.js"></script>
 <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/0.5.4/angular-wizard.min.css">
 ````
 
