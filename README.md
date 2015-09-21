@@ -19,8 +19,8 @@ You can download this by:
 <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/latest/angular-wizard.min.css">
 
 <!-- Or use TAG number for specific version -->
-<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/0.5.4/angular-wizard.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/0.5.4/angular-wizard.min.css">
+<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/0.5.5/angular-wizard.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/0.5.5/angular-wizard.min.css">
 ````
 
 The dist folder contains the following files:
@@ -204,6 +204,7 @@ The functions available in the `wizard()` are:
 * **finish**: Finishes the wizard.
 * **goTo(number|title)**: This goes to the indicated step. It can receive either the number of the step (starting from 0) or the title of the step to go to.
 * **currentStepNumber()**: This returns a Number which is the current step number you are on.
+* **currentStepTitle()**: This returns a String which is the title of the step you are on.
 
 ## Navigation bar
 
