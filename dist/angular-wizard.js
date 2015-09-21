@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.5.4 - 2015-08-24 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.5.5 - 2015-09-21 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -242,6 +242,10 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             }
 
             //ALL METHODS ATTACHED TO this ARE ACCESSIBLE VIA WizardHandler.wizard().methodName()
+
+            this.currentStepTitle = function(){
+                return $scope.selectedStep.title;
+            };
 
             //Access to current step number from outside
             this.currentStepNumber = function(){
