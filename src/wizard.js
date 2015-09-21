@@ -191,6 +191,10 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             //ALL METHODS ATTACHED TO this ARE ACCESSIBLE VIA WizardHandler.wizard().methodName()
 
+            this.currentStepTitle = function(){
+                return $scope.selectedStep.title;
+            };
+
             //Access to current step number from outside
             this.currentStepNumber = function(){
                 return $scope.currentStepNumber();
