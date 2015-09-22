@@ -216,7 +216,36 @@ The navigation bar shown below works in the following way:
 * Editing step (Modifying a step already completed in the past) is painted as red
 * You can click in any completed step to go back to that step. You can't click in the current step nor in the future ones unless you've already completed a future step before (for example in EditMode all steps are completed by default)
 
-All of those colors are variables in the `angular-wizard.less`. You can easily change them by changing the colors in that file
+These colors may be overriden using the following variables.
+```css
+/* angular-wizard.less */
+@color-default: #E6E6E6;
+@color-current: #808080;
+@color-done:    #339933;
+@color-editing: #FF0000;
+```
+You can override the look and feel of the navbar yourself. For example, to change the colors and make the indicators rectangles
+```css
+ul.steps-indicator {
+  li.default a:before {
+    background-color: red;
+  }
+  li.current a:before {
+    background-color: green;
+  }
+  li.done a:before {
+    background-color: yellow;
+  }
+  li.editing a:before {
+    background-color: orange;
+  }
+  a:before{
+    border-radius: 0;
+    width: 95%;
+    left: 0;
+  }
+}
+```
 
 # Contributors
 
