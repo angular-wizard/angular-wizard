@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.5.5 - 2015-09-21 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.5.5 - 2015-10-07 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -8,8 +8,9 @@ angular.module('templates-angularwizard', ['step.html', 'wizard.html']);
 
 angular.module("step.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("step.html",
-    "<section ng-show=\"selected\" ng-class=\"{current: selected, done: completed}\" class=\"step\" ng-transclude>\n" +
-    "</section>");
+    "<section ng-if=\"selected\" ng-class=\"{current: selected, done: completed}\" class=\"step\" ng-transclude>\n" +
+    "</section>\n" +
+    "");
 }]);
 
 angular.module("wizard.html", []).run(["$templateCache", function($templateCache) {
