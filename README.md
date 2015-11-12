@@ -128,8 +128,8 @@ $scope.disabled = 'true';
 
 ## Wizard Step Validation
 The wzStep directive has the following options as attributes:
-* **canexit**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move to the next step. Promises are supported but must resolve with a thruthy value.  If it is ommitted no validation will be required.
-* **canenter**: Here you can reference a function from your controller.  If this attribute is listed the funtion must return true in order for the wizard to move into this step.   Promises are supported but must resolve with a thruthy value.  If it is ommitted no validation will be required.
+* **canexit**: Here you can reference a function from your controller.  If this attribute is listed the function must return true in order for the wizard to move to the next step. Promises are supported but must resolve with a thruthy value.  If it is ommitted no validation will be required.
+* **canenter**: Here you can reference a function from your controller.  If this attribute is listed the function must return true in order for the wizard to move into this step.   Promises are supported but must resolve with a thruthy value.  If it is ommitted no validation will be required.
 
  **Example**
  
