@@ -85,7 +85,7 @@ Let's go step by step to see how this works.
 
 3) Inside the step, we now see a button which has a `wz-next` attribute. That means that clicking that button will send the user to the next step of wizard. Similar to `wz-next`, we have the following attributes:
 * **wz-previous**: Goes to the previous step
-* **wz-cancel**: Goes back to the first step
+* **wz-cancel**: Calls on-cancel if defined, otherwise the default action is to go back to the first step
 * **wz-finish**: Finishes the wizard and calls the on-finish later on. It's important to note that if we're in the last step and we put `wz-next` it'll be the same as putting `wz-finish` as the wizard will know we're at the last screen.
 
 All of this attributes can receive an optional function to be called before changing the step. Something like:
@@ -136,7 +136,7 @@ The wzStep directive has the following options as attributes:
  
 HTML
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard() on-cancel="cancelledWizard()"> 
     <wz-step title="Starting" canexit="exitValidation">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
