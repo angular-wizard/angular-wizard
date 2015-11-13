@@ -47,7 +47,7 @@ angular.module('your-app', ['mgo-angular-wizard']);
 Now, in some HTML for a controller, you can just add a wizard as follows:
 
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard()" on-cancel="cancelledWizard()"> 
     <wz-step title="Starting">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
@@ -73,6 +73,7 @@ Let's go step by step to see how this works.
 
 1) You need to declare a master `wizard` directive. This wizard directive, has the following options as attributes:
 * **on-finish**: Here you can put a function to be called when the wizard is finished. The syntax here is very similar to `ng-click`
+* **on-cancel**: Here you can put a function to be called when the wizard is cancelled. The syntax here is very similar to `ng-click`
 * **name**: The name of the wizard. By default, it's called "Default wizard". It's used for the `WizardHandler` which we'll explain later.
 * **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed and the user can now navigate to and modify any step. Defaults to false.
 * **hide-indicators**: If set to true, the indicators in the bottom of the page showing the current page and allowing navigation for the wizard will be hidden. Defaults to false.
@@ -102,7 +103,7 @@ A step can be conditionally disabled and may change at any time either adding it
  
 HTML
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard() on-cancel="cancelledWizard()"> 
     <wz-step title="Starting" wz-disabled="{{disabled}}">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>

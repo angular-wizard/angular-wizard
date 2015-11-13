@@ -270,8 +270,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             //cancel is alias for previous.
             this.cancel = function() {
             	if ($scope.onCancel) {
-                    //onCancel is linked to controller via wizard directive:
-            		$scope.onCancel();
+            		//onCancel is linked to controller via wizard directive:
+        			$scope.onCancel();
                 } else {
                     //getting index of current step
                     var index = _.indexOf($scope.getEnabledSteps() , $scope.selectedStep);
