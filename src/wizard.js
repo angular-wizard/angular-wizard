@@ -118,6 +118,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                             //emit event upwards with data on goTo() invoktion
                             $scope.$emit('wizard:stepChanged', {step: step, index: _.indexOf($scope.getEnabledSteps(), step)});
                             //$log.log('current step number: ', $scope.currentStepNumber());
+                        } else {
+                            $scope.$emit('wizard:stepChangeFailed', {step: step, index: _.indexOf($scope.getEnabledSteps(), step)});
                         }
                     });
                 }
