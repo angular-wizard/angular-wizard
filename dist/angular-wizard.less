@@ -1,10 +1,11 @@
+@wz-color-default: #E6E6E6;
+@wz-color-current: #808080;
+@wz-color-done:    #339933;
+@wz-color-editing: #FF0000;
+
 .steps-indicator {
   /* ---- steps quantity ---- */
 
-  @color-default: #E6E6E6;
-  @color-current: #808080;
-  @color-done:    #339933;
-  @color-editing: #FF0000;
 
   right: 0;
   bottom: 0;
@@ -17,7 +18,7 @@
 
 
   &:before {
-    background-color: @color-default;
+    background-color: @wz-color-default;
     content: '';
     position: absolute;
     height: 1px;
@@ -86,7 +87,7 @@
     line-height: 15px;
 
     a {
-      color: @color-current;
+      color: @wz-color-current;
       text-decoration: none;
       text-transform: uppercase;
       font-weight: bold;
@@ -100,13 +101,13 @@
         width: 14px;
         height: 14px;
         border-radius: 100%;
-        background-color: @color-default;
+        background-color: @wz-color-default;
         content: '';
         transition: 0.25s;
       }
 
       &:hover {
-        color: darken(@color-current, 20%);
+        color: darken(@wz-color-current, 20%);
       }
     }
   }
@@ -155,7 +156,7 @@
     pointer-events: none;
 
     a:hover {
-      color: @color-current;
+      color: @wz-color-current;
     }
   }
 
@@ -165,14 +166,14 @@
   }
 
   li.current a:before {
-    background-color: @color-current;
+    background-color: @wz-color-current;
   }
 
   li.done a:before {
-    background-color: @color-done;
+    background-color: @wz-color-done;
   }
 
   li.editing a:before {
-    background-color: @color-editing;
+    background-color: @wz-color-editing;
   }
 }

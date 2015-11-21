@@ -19,7 +19,7 @@ module.exports = function(grunt) {
     dirs: {
       dest: 'dist'
     },
-    clean: [ 
+    clean: [
       '<%= dirs.dest %>'
     ],
     concat: {
@@ -78,14 +78,25 @@ module.exports = function(grunt) {
     copy: {
       less_files: {
         files: [
-          { 
+          {
             src: [ 'src/angular-wizard.less' ],
             dest: '<%= dirs.dest %>',
             cwd: '.',
             expand: true,
             flatten: true
           }
-       ]   
+       ]
+      },
+      sass_files: {
+        files: [
+          {
+            src: [ 'src/angular-wizard.scss' ],
+            dest: '<%= dirs.dest %>',
+            cwd: '.',
+            expand: true,
+            flatten: true
+          }
+        ]
       }
     },
     bowerInstall: {
@@ -163,17 +174,17 @@ module.exports = function(grunt) {
   // Build task.
   grunt.registerTask('build', [
     'clean',
-    'bowerInstall', 
+    'bowerInstall',
     'copy',
     'less',
     'cssmin',
     'html2js',
-    'concat', 
-    'uglify', 
+    'concat',
+    'uglify',
     'karma:build']);
 
   grunt.registerTask('test', ['build']);
-  
+
   grunt.registerTask('travis', ['build']);
 
   // Provides the "bump" task.

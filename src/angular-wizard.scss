@@ -1,0 +1,108 @@
+$wz-color-default: #E6E6E6;
+$wz-color-current: #337AB7;
+$wz-color-done:    #339933;
+$wz-color-editing: #FF0000;
+
+$wz-max-number-of-steps: 10;
+
+.steps-indicator {
+  /* ---- steps quantity ---- */
+
+
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 20px 0 0 0;
+  height: 30px;
+  list-style: none;
+
+
+
+  &:before {
+    background-color: $wz-color-default;
+    content: '';
+    position: absolute;
+    height: 1px;
+  }
+
+  @for $i from 2 through $wz-max-number-of-steps {
+    &.steps-#{$i}:before {
+      left: unquote('calc(100% / '+ #{$i} +' / 2)');
+    }
+  }
+
+  /* --- http://www.paulirish.com/2012/box-sizing-border-box-ftw/ ---- */
+  * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+
+  li {
+    position: relative;
+    float: left;
+    margin: 0;
+    padding: 0;
+    padding-top: 10px;
+    text-align: center;
+    line-height: 15px;
+
+    a {
+      color: $wz-color-current;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: bold;
+      transition: 0.25s;
+      cursor: pointer;
+
+      &:before {
+        position: absolute;
+        top: -7px;
+        left: unquote('calc(50% - 7px)');
+        width: 14px;
+        height: 14px;
+        border-radius: 100%;
+        background-color: $wz-color-default;
+        content: '';
+        transition: 0.25s;
+      }
+
+      &:hover {
+        color: darken($wz-color-current, 20%);
+      }
+    }
+  }
+
+  @for $i from 2 through $wz-max-number-of-steps+1 {
+    &.steps-#{$i} {
+      left: unquote('calc(100% / '+ #{$i} +')');
+    }
+  }
+
+  li.default {
+    pointer-events: none;
+
+    a:hover {
+      color: $wz-color-current;
+    }
+  }
+
+  li.current,
+  li.editing {
+    pointer-events: none;
+  }
+
+  li.current a:before {
+    background-color: $wz-color-current;
+  }
+
+  li.done a:before {
+    background-color: $wz-color-done;
+  }
+
+  li.editing a:before {
+    background-color: $wz-color-editing;
+  }
+}
