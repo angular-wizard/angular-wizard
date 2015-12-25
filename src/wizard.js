@@ -138,8 +138,9 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                         defer.resolve(response);
                     });
                     return defer.promise;
+                } else {
+                    return canEnter === true;
                 }
-                return step.canenter($scope.context) === true;
             }
 
             function canExitStep(step, stepTo) {
