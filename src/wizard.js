@@ -213,6 +213,12 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             this.currentStepNumber = function(){
                 return $scope.currentStepNumber();
             };
+
+            //Access to current step number from outside
+            this.getStepCount = function(){
+                return $scope.getEnabledSteps().length;
+            };
+
             //method used for next button within step
             this.next = function(callback) {
                 var enabledSteps = $scope.getEnabledSteps();
