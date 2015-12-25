@@ -161,8 +161,9 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                         defer.resolve(response);
                     });
                     return defer.promise;
+                } else {
+                    return canExit === true;
                 }
-                return step.canexit($scope.context) === true;
             }
 
             $scope.currentStepNumber = function() {
