@@ -81,10 +81,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     //deselect all steps so you can set fresh below
                     unselectAll();
                     $scope.selectedStep = step;
-                    //making sure current step is not undefined
-                    if (!_.isUndefined($scope.currentStep)) {
-                        $scope.currentStep = step.title || step.wzTitle;
-                    }
+                    $scope.currentStep = step.title || step.wzTitle;
                     //setting selected step to argument passed into goTo()
                     step.selected = true;
                     //emit event upwards with data on goTo() invoktion
