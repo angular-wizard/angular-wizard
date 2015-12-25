@@ -17,6 +17,9 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         link: function($scope, $element, $attrs, wizard) {
             $scope.title = $scope.title || $scope.wzTitle;
             wizard.addStep($scope);
+            $scope.$on('$destroy', function(){
+                wizard.removeStep($scope);
+            })
         }
     };
 });

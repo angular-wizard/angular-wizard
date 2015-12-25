@@ -68,6 +68,16 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     $scope.goTo($scope.getEnabledSteps()[0]);
                 }
             };
+            
+            // called each time step diretive is destroyed
+            this.removeStep = function (step) {
+                //
+                var index = $scope.steps.indexOf(step);
+                if (index > 0) {
+                    $scope.steps.splice(index, 1);
+                }
+
+            }
 
             this.context = $scope.context;
 
