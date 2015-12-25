@@ -296,4 +296,15 @@ describe( 'AngularWizard', function() {
         var view = createGenericView(scope);
         expect(view.isolateScope().steps[0].description).toEqual('Step description');
     });
+    it("should create and delete dynamic steps", function () {
+        // sorry don't know how to test this.
+        var scope = $rootScope.$new();
+        scope.steps = ["1", "2", "3", "4"];
+        var element = angular.element('<wizard><wz-step ng-repeat="step in stpes" title="{{step}}">{{step}}</wz-step></wizard>');
+        var elementCompiled = $compile(element)(scope);
+        console.log(elementCompiled);
+        scope.steps = ["5", "6", "7"];
+        $rootScope.$digest();
+        console.log(elementCompiled);
+    });    
 });
