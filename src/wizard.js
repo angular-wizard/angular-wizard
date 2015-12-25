@@ -55,6 +55,13 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     _.each($scope.getEnabledSteps(), function(step) {
                         step.completed = true;
                     });
+                } else {
+                    var completedStepsIndex = $scope.currentStepNumber() - 1;
+                    angular.forEach($scope.getEnabledSteps(), function(step, stepIndex) {
+                        if(stepIndex >= completedStepsIndex) {
+                            step.completed = false;
+                        }
+                    });
                 }
             }, true);
 
