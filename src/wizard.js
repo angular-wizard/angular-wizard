@@ -284,6 +284,16 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     $scope.goTo($scope.getEnabledSteps()[0]);
                 }
             };
+
+            //reset
+            this.reset = function(){
+                //traverse steps array and set each "completed" property to false
+                angular.forEach($scope.getEnabledSteps(), function (step) {
+                    step.completed = false;
+                });
+                //go to first step
+                this.goTo(0);
+            };
         }]
     };
 });
