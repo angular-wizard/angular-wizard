@@ -1,6 +1,6 @@
 {
   "name": "angular-wizard",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "main": [
     "./dist/angular-wizard.min.js",
     "./dist/angular-wizard.min.css"
