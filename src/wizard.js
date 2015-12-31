@@ -238,6 +238,11 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 return $scope.getEnabledSteps().length;
             }
 
+            //Access to enabled steps from outside
+            this.getEnabledSteps = function(){
+                return $scope.getEnabledSteps();
+            };
+
             //Access to current step number from outside
             this.currentStepNumber = function(){
                 return $scope.currentStepNumber();
