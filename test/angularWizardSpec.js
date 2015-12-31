@@ -13,14 +13,14 @@ describe( 'AngularWizard', function() {
     }));
 
     /**
-     * Create the view with wizard to test
+     * Create the generic view with wizard to test
      * @param  {Scope} scope         A scope to bind to
      * @return {[DOM element]}       A DOM element compiled
      */
-    function createView(scope) {
+    function createGenericView(scope) {
         scope.referenceCurrentStep = null;
         var element = angular.element('<wizard on-finish="finishedWizard()" current-step="referenceCurrentStep" ng-init="msg = 14" >'
-                + '    <wz-step wz-title="Starting" canenter="enterValidation">'
+                + '    <wz-step wz-title="Starting" canenter="enterValidation" description="Step description">'
                 + '        <h1>This is the first step</h1>'
                 + '        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>'
                 + '        <input type="submit" wz-next value="Continue" />'
@@ -47,7 +47,7 @@ describe( 'AngularWizard', function() {
 
     it("should correctly create the wizard", function() {
         var scope = $rootScope.$new();
-        var view = createView(scope);
+        var view = createGenericView(scope);
         expect(WizardHandler).toBeTruthy();
         expect(view.find('section').length).toEqual(4);
         // expect the correct step to be desirable one
@@ -55,7 +55,7 @@ describe( 'AngularWizard', function() {
     });
     it( "should go to the next step", function() {
         var scope = $rootScope.$new();
-        var view = createView(scope);
+        var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().next();
         $rootScope.$digest();
@@ -64,7 +64,7 @@ describe( 'AngularWizard', function() {
     it( "should render only those steps which are enabled", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().next();
         $rootScope.$digest();
@@ -72,7 +72,7 @@ describe( 'AngularWizard', function() {
     });
     it( "should enable or disable dynamic steps based on conditions", function() {
         var scope = $rootScope.$new();
-        var view = createView(scope);
+        var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         scope.dynamicStepDisabled = 'Y';
         $rootScope.$digest();
@@ -83,7 +83,7 @@ describe( 'AngularWizard', function() {
     it( "should return to a previous step", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().next();
         $rootScope.$digest();
@@ -95,7 +95,7 @@ describe( 'AngularWizard', function() {
     it( "should go to a step specified by name", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().goTo('More steps');
         $rootScope.$digest();
@@ -104,7 +104,7 @@ describe( 'AngularWizard', function() {
     it( "should go to a step specified by index", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().goTo(2);
         $rootScope.$digest();
@@ -113,7 +113,7 @@ describe( 'AngularWizard', function() {
     it( "should go to next step becasue callback is truthy", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().next(function(){
             return true
@@ -124,7 +124,7 @@ describe( 'AngularWizard', function() {
     it( "should NOT go to next step because callback is falsey", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().next(function(){
             return false
@@ -135,7 +135,7 @@ describe( 'AngularWizard', function() {
     it( "should go to next step because CANEXIT is UNDEFINED", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().next();
         $rootScope.$digest();
@@ -144,7 +144,7 @@ describe( 'AngularWizard', function() {
     it( "should go to next step because CANEXIT is TRUE", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         scope.stepValidation = function(){
             return true;
         };
@@ -159,7 +159,7 @@ describe( 'AngularWizard', function() {
     it( "should NOT go to next step because CANEXIT is FALSE", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         scope.stepValidation = function(){
             return false;
         };
@@ -174,7 +174,7 @@ describe( 'AngularWizard', function() {
     it( "should go to next step because CANENTER is TRUE", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         scope.enterValidation = function(){
             return true;
         };
@@ -189,7 +189,7 @@ describe( 'AngularWizard', function() {
     it( "should NOT go to next step because CANENTER is FALSE", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         scope.enterValidation = function(){
             return false;
         };
@@ -204,7 +204,7 @@ describe( 'AngularWizard', function() {
     it( "should NOT return to a previous step. Although CANEXIT is false and we are heading to a previous state, the can enter validation is false", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         scope.stepValidation = function(){
             return false;
         };
@@ -222,7 +222,7 @@ describe( 'AngularWizard', function() {
     it( "should return to a previous step even though CANEXIT is false", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         scope.stepValidation = function(){
             return false;
         };
@@ -237,7 +237,7 @@ describe( 'AngularWizard', function() {
     it( "should go to the next step because the promise that CANENTER returns resolves to true", function(done) {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         scope.enterValidation = function(){
             var deferred = $q.defer();
             $timeout(function () {
@@ -257,7 +257,7 @@ describe( 'AngularWizard', function() {
     it( "should go to the next step because CANEXIT is set to true", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
-        var view = createView(scope);
+        var view = createGenericView(scope);
         scope.exitValidation = true;
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().next();
@@ -272,10 +272,28 @@ describe( 'AngularWizard', function() {
         scope.dynamicStepDisabled = 'Y';
         var flag = false;
         scope.finishedWizard = function() { flag = true; };
-        var view = createView(scope);
+        var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().finish();
         expect(flag).toBeTruthy();
         $rootScope.$digest();
+    });
+    it( "should go to first step when reset is called", function() {
+        var scope = $rootScope.$new();
+        scope.dynamicStepDisabled = 'Y';
+        var view = createGenericView(scope);
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().goTo(2);
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('More steps');
+        WizardHandler.wizard().reset();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+    });
+    it( "step description should be accessible", function() {
+        var scope = $rootScope.$new();
+        scope.dynamicStepDisabled = 'Y';
+        var view = createGenericView(scope);
+        expect(view.isolateScope().steps[0].description).toEqual('Step description');
     });
 });
