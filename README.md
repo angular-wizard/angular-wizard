@@ -8,8 +8,8 @@ Angular-wizard is a component that will make it easy for you to create wizards i
 # How do I add this to my project?
 You can download this by:
 
-* Using bower and running bower install angular-wizard
-* Using npm and running npm install angular-wizard
+* Using bower and running `bower install angular-wizard`
+* Using npm and running `npm install angular-wizard`
 * Downloading it manually by getting the files from the dist folder
 * Using JsDelivr CDN files:
 
@@ -19,8 +19,8 @@ You can download this by:
 <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/latest/angular-wizard.min.css">
 
 <!-- Or use TAG number for specific version -->
-<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/0.5.5/angular-wizard.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/0.5.5/angular-wizard.min.css">
+<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/0.6.1/angular-wizard.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/0.6.1/angular-wizard.min.css">
 ````
 
 The dist folder contains the following files:
@@ -30,7 +30,7 @@ The dist folder contains the following files:
 * LESS file with styles for the directive. If you have less in your project, I recommend using the less instead of the CSS since it has variables to configure Wizard colors.
 
 # Dependencies
-Angular-wizard depends on Angular and Lodash (or Underscore).
+Angular-wizard depends on Angular.
 
 # Starter Guide
 
@@ -78,14 +78,20 @@ Let's go step by step to see how this works.
 * **hide-indicators**: If set to true, the indicators in the bottom of the page showing the current page and allowing navigation for the wizard will be hidden. Defaults to false.
 * **current-step**: You need to set here a property from your scope (similar to `ng-model`) and that property will always have the name of the current step being shown on the screen.
 * **template**: Path to a custom template.
-* **wz-disabled**: expression that when evaluated to `true` will remove said step from the wizard
 
-2) Inside the wizard, we can have as many steps as we want. Each step MUST have a title which is going to be used to identify it. Inside each step, we can put whatever we want. Other directives, bindings, controls, forms, etc.
+2) Inside the wizard, we can have as many steps as we want. Each step MUST have a title which is going to be used to identify it. Inside each step, we can put whatever we want. Other directives, bindings, controls, forms, etc.  Each step can have the following attributes (we will go into detail on each further below):
+* **wz-title:** A unique title used for identifying each step.
+* **canenter**
+* **canexit**
+* **wz-disabled**
+* **description:** A description available to use in each step's UI.
+* **wz-data** Data you wish to make available to the steps scope.
 
 3) Inside the step, we now see a button which has a `wz-next` attribute. That means that clicking that button will send the user to the next step of wizard. Similar to `wz-next`, we have the following attributes:
 * **wz-previous**: Goes to the previous step
 * **wz-cancel**: Goes back to the first step
 * **wz-finish**: Finishes the wizard and calls the on-finish later on. It's important to note that if we're in the last step and we put `wz-next` it'll be the same as putting `wz-finish` as the wizard will know we're at the last screen.
+* **wz-reset**: This will reset the wizard meaning bring the user to the first step and reset each step to being incomplete.
 
 All of this attributes can receive an optional function to be called before changing the step. Something like:
 
@@ -199,16 +205,22 @@ $scope.changeLabelAndGoNext = function() {
 
 In this case, we're changing a label and moving forward on the steps.
 The functions available in the `wizard()` are:
-* **next**: Goes to the next step
-* **previous**: Goes to the previous step
+* **next**: Goes to the next step.
+* **previous**: Goes to the previous step.
+* **cancel**: Goes to the previous step.
+* **reset**: Goes to the first step and resets all steps to incomplete.
 * **finish**: Finishes the wizard.
 * **goTo(number|title)**: This goes to the indicated step. It can receive either the number of the step (starting from 0) or the title of the step to go to.
 * **currentStepNumber()**: This returns a Number which is the current step number you are on.
 * **currentStepTitle()**: This returns a String which is the title of the step you are on.
+* **currentStepDescription()**: This returns a String which is the description of the step you are on.
+* **currentStep()**: This returns an Object which is the current step you are on.
+* **totalStepCount()**: This returns an Number which is the total number of **enabled** steps.
+* **getEnabledSteps()**: This returns an Array which is the **enabled** steps.
 
 ## Navigation bar
 
-The navigation bar shown below works in the following way:
+Any changed you wish to make to the navigation bar can be done by overwritting the CSS.  Because everyone wants the navigation bar in a different location and in a different style we have provided a default which you can change via your own HTML and CSS. The navigation bar shown below works in the following way:
 
 * Completed steps are painted as green
 * Current step is painted as dark grey
