@@ -1,83 +1,71 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Angular-wizard : Easy to use Wizard library for AngularJS" />
-
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
     <link rel="stylesheet" type="text/css" href="dist/angular-wizard.css">
-
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
-
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
-
-    <script type="text/javascript" src="dist/angular-wizard.js"></script>
-
-    <script type="text/javascript" src="javascripts/main.js"></script>
-
-    
-
-
-
     <title>Angular-wizard</title>
   </head>
-
   <body>
-
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/mgonto/angular-wizard">View on GitHub</a>
-
           <h1 id="project_title">Angular-Wizard</h1>
           <h2 id="project_tagline">Easy to use Wizard library for AngularJS</h2>
-
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/mgonto/angular-wizard/zipball/master">Download this project as a .zip file</a>
               <a class="tar_download_link" href="https://github.com/mgonto/angular-wizard/tarball/master">Download this project as a tar.gz file</a>
             </section>
         </header>
     </div>
-
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner main-inner" ng-app="wizard-sample" ng-controller="WizardCtrl">
+        <button ng-click="stepToggle()">Clicking Me Will Toggle Steps On and Off Dynamically</button>
         <wizard on-finish="finished()">
-          <wz-step title="Start">
+          <wz-step wz-title="Start" canexit="exitWithAPromise">
             <h1>Start</h1>
             <p>Hey guys, welcome to the wizard :). If you want to check out the documentation on how to use it, <a href="https://github.com/mgonto/angular-wizard/blob/master/README.md">please click here.</a></p>
+            <p><strong>This step is an example of using <em>canexit</em> validation.  Here we will use a promise with a timeout to simulate an async server call.  Give the wizard 1 second to progress after clicking next!</strong></p>
             <p>Otherwise, let's continue with the wizard. Please <a href="" wz-next>click here to continue</a></p>
             <input type="submit" wz-next value="Or click here"/>
           </wz-step>
-          <wz-step title="Liking it">
+          <wz-step wz-title="Liking it" canexit="exitValidation">
             <h1>Liking it</h1>
             <p>You're now in the second step of this wizard.</p>
-            <p>Magic things can happen here.</p>
-            <input type="button" wz-next="logStep()" value="Click here to continue" />
+            <p><strong>This step is an example of using <em>canexit</em> validation with no server call, toggle the value to true or false using the button below to see an example of being allowed to exit and being restricted.</strong></p>
+            <button ng-click="exitToggle()">Toggle Validation!</button> Value is currently: {{canExit}}<br><br>
+            <input type="button" wz-previous="logStep()" value="BACK" />
+            <input type="button" wz-next="logStep()" value="NEXT" />
           </wz-step>
-          <wz-step title="More steps">
+          <wz-step wz-title="More steps" wz-disabled="{{!stepActive}}">
             <h1>More steps</h1>
             <p>Click on the bottom navigation on Liking it to go back to that step for example</p>
-            <input type="button" wz-next value="Click here to continue" />
+            <input type="button" wz-previous="logStep()" value="BACK" />
+            <input type="button" wz-next="logStep()" value="NEXT" />
           </wz-step>
-          <wz-step title="Even more">
+          <wz-step wz-title="Even more">
             <h1>Even More steps</h1>
             <p>I can't deal with so many steps. ARGH</p>
-            <input type="button" wz-next value="Click here to continue" />
+            <input type="button" wz-previous="logStep()" value="BACK" />
+            <input type="button" wz-next="logStep()" value="NEXT" />
           </wz-step>
-          <wz-step title="Sup?">
+          <wz-step wz-title="Sup?">
             <h1>Sup?</h1>
             <p>I don't even know what to write!</p>
-            <input type="button" wz-next value="Click here to continue" />
+            <input type="button" wz-previous="logStep()" value="BACK" />
+            <input type="button" wz-next="logStep()" value="NEXT" />
           </wz-step>
-          <wz-step title="Finish him">
+          <wz-step wz-title="Finish him">
             <h1>Finish him</h1>
             <p>Finally this ends!</p>
-            <input type="button" wz-next value="Click here to end" />
+            <input type="button" wz-previous="logStep()" value="BACK" />
+            <input type="button" wz-next="logStep()" value="END" />
             <input type="button" ng-click="goBack()" value="Click here to start again" />
+            <input type="button" wz-reset value="Click here to reset" />
           </wz-step>
         </wizard>
       </section>
@@ -91,6 +79,9 @@
       </footer>
     </div>
 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script type="text/javascript" src="dist/angular-wizard.js"></script>
+    <script type="text/javascript" src="javascripts/main.js"></script>
     
 
   </body>
