@@ -45,9 +45,7 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
           return attributes.template || "step.html";
         },
         link: function($scope, $element, $attrs, wizard) {
-            $attrs.$observe('wzTitle', function(newVal){
-                $scope.title = newVal;
-            });
+            $scope.title = $scope.wzTitle;
             wizard.addStep($scope);
         }
     };
