@@ -1,14 +1,14 @@
 {
-  "name": "angular-wizard",
-  "version": "0.6.1",
+  "name": "angular-wizard-stylish",
+  "version": "0.0.1",
   "main": [
     "./dist/angular-wizard.min.js",
     "./dist/angular-wizard.min.css"
   ],
-  "description": "Easy to use Wizard library for AngularJS ",
+  "description": "Easy to use and stylish Wizard library for AngularJS ",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mgonto/angular-wizard.git"
+    "url": "git://github.com/meanhub/angular-wizard-stylish.git"
   },
   "dependencies": {
     "angular": "*"
