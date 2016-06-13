@@ -1,27 +1,15 @@
 # Angular-Wizard
 
-[![PayPal donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=martin%40gon%2eto&lc=US&item_name=Martin%20Gontovnikas&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted "Donate once-off to this project using PayPal")
-[![Donate on Gratipay](http://img.shields.io/gratipay/mgonto.svg)](https://gratipay.com/mgonto/)
-
-Angular-wizard is a component that will make it easy for you to create wizards in your app. You can check a running example of the wizard [by clicking here](http://mgonto.github.io/angular-wizard/)
+Angular-wizard is a component that will make it easy for you to create wizards in your app. 
+This work is a fork from https://github.com/mgonto/angular-wizard
+Credits to the original author who created angular-wizard durective. I have only made it more stylish :) 
 
 # How do I add this to my project?
 You can download this by:
 
-* Using bower and running `bower install angular-wizard`
-* Using npm and running `npm install angular-wizard`
+* Using bower and running `bower install angular-wizard-stylish`
+* Using npm and running `npm install angular-wizard-stylish`
 * Downloading it manually by getting the files from the dist folder
-* Using JsDelivr CDN files:
-
-````html
-<!-- Use LATEST folder to always get the latest version-->
-<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/latest/angular-wizard.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/latest/angular-wizard.min.css">
-
-<!-- Or use TAG number for specific version -->
-<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/0.6.1/angular-wizard.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/0.6.1/angular-wizard.min.css">
-````
 
 The dist folder contains the following files:
 
@@ -30,7 +18,7 @@ The dist folder contains the following files:
 * LESS file with styles for the directive. If you have less in your project, I recommend using the less instead of the CSS since it has variables to configure Wizard colors.
 
 # Dependencies
-Angular-wizard depends on Angular.
+Angular-wizard-stylish depends on Angular.
 
 # Starter Guide
 
