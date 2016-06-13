@@ -1,7 +1,7 @@
 /**
- * Easy to use Wizard library for AngularJS
- * @version v0.6.0 - 2015-12-31 * @link https://github.com/mgonto/angular-wizard
- * @author Martin Gontovnikas <martin@gon.to>
+ * Easy to use and stylish Wizard library for AngularJS
+ * @version v0.0.1 - 2016-06-13 * @link https://github.com/meanhub/angular-wizard-stylish
+ * @author MeanHub
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 angular.module('templates-angularwizard', ['step.html', 'wizard.html']);
@@ -15,12 +15,12 @@ angular.module("step.html", []).run(["$templateCache", function($templateCache) 
 angular.module("wizard.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("wizard.html",
     "<div>\n" +
-    "    <div class=\"steps\" ng-transclude></div>\n" +
     "    <ul class=\"steps-indicator steps-{{getEnabledSteps().length}}\" ng-if=\"!hideIndicators\">\n" +
-    "      <li ng-class=\"{default: !step.completed && !step.selected, current: step.selected && !step.completed, done: step.completed && !step.selected, editing: step.selected && step.completed}\" ng-repeat=\"step in getEnabledSteps()\">\n" +
-    "        <a ng-click=\"goTo(step)\">{{step.title || step.wzTitle}}</a>\n" +
-    "      </li>\n" +
+    "        <li ng-class=\"{default: !step.completed && !step.selected, current: step.selected && !step.completed, done: step.completed && !step.selected, editing: step.selected && step.completed}\" ng-repeat=\"step in getEnabledSteps()\">\n" +
+    "            <a ng-click=\"goTo(step)\">{{step.title || step.wzTitle}}</a>\n" +
+    "        </li>\n" +
     "    </ul>\n" +
+    "    <div class=\"steps\" ng-transclude></div>\n" +
     "</div>\n" +
     "");
 }]);
