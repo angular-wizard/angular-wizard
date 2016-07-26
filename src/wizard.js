@@ -16,14 +16,17 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
         },
 
         //controller for wizard directive, treat this just like an angular controller
-        controller: ['$scope', '$element', '$log', 'WizardHandler', '$q', function($scope, $element, $log, WizardHandler, $q) {
+        controller: ['$scope', '$element', '$log', 'WizardHandler', '$q','$state', function($scope, $element, $log, WizardHandler, $q,$state) {
             //this variable allows directive to load without having to pass any step validation
             var firstRun = true;
             //creating instance of wizard, passing this as second argument allows access to functions attached to this via Service
             WizardHandler.addWizard($scope.name || WizardHandler.defaultName, this);
 
             $scope.$on('$destroy', function() {
-                WizardHandler.removeWizard($scope.name || WizardHandler.defaultName);
+                //If two view use the same controller, switching between the two view will result in the initialization and delete operation simultaneously.
+                //Now enter the controller at the same time to assign the name of the current route, you can solve the problem
+                if($state.current.name != $scope.name)
+                    WizardHandler.removeWizard($scope.name || WizardHandler.defaultName);
             });
 
             //steps array where all the scopes of each step are added
