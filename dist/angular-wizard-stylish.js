@@ -1,6 +1,6 @@
 /**
  * Easy to use and stylish Wizard library for AngularJS
- * @version v0.0.2 - 2016-07-31 * @link https://github.com/meanhub/angular-wizard-stylish
+ * @version v0.0.3 - 2016-07-31 * @link https://github.com/meanhub/angular-wizard-stylish
  * @author MeanHub
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
