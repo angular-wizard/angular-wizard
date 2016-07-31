@@ -10,7 +10,7 @@
   /* --- http://www.paulirish.com/2012/box-sizing-border-box-ftw/ ---- */
 }
 .steps-indicator:before {
-  background-color: #e6e6e6;
+  background-color: #ffffff;
   content: '';
   position: absolute;
   height: 1px;
@@ -64,9 +64,10 @@
   padding-top: 10px;
   text-align: center;
   line-height: 15px;
+  top: 18px;
 }
 .steps-indicator li a {
-  color: #808080;
+  color: #61ff8a;
   text-decoration: none;
   text-transform: uppercase;
   font-weight: bold;
@@ -75,17 +76,19 @@
 }
 .steps-indicator li a:before {
   position: absolute;
-  top: -7px;
-  left: calc(50% - 7px);
-  width: 14px;
-  height: 14px;
-  border-radius: 100%;
-  background-color: #e6e6e6;
+  top: -40px;
+  left: calc(50% - 20px);
+  left: calc(30%);
+  width: 42px;
+  height: 42px;
+  border-radius: 20%;
+  background-color: #ffffff;
+  border: solid 1px #e4dede;
   content: '';
   transition: 0.25s;
 }
 .steps-indicator li a:hover {
-  color: #4d4d4d;
+  color: #00fa41;
 }
 .steps-indicator.steps-2 li {
   width: calc(100% / 2);
@@ -121,18 +124,27 @@
   pointer-events: none;
 }
 .steps-indicator li.default a:hover {
-  color: #808080;
+  color: #61ff8a;
+  border: solid 1px gray;
 }
 .steps-indicator li.current,
 .steps-indicator li.editing {
   pointer-events: none;
 }
 .steps-indicator li.current a:before {
-  background-color: #808080;
+  background-color: #61ff8a;
+  border: none;
 }
 .steps-indicator li.done a:before {
-  background-color: #339933;
+  background-color: #23cf58;
+  background-image: url(done-transparent.png);
+  background-repeat: no-repeat;
+  background-size: 31px;
+  background-position-x: 5px;
+  background-position-y: 4px;
+  border: none;
 }
 .steps-indicator li.editing a:before {
-  background-color: #ff0000;
+  background-color: #61ff8a;
+  border: none;
 }
