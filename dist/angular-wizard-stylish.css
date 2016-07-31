@@ -10,7 +10,7 @@
   /* --- http://www.paulirish.com/2012/box-sizing-border-box-ftw/ ---- */
 }
 .steps-indicator:before {
-  background-color: #ffffff;
+  background-color: #e4dede;
   content: '';
   position: absolute;
   height: 1px;
@@ -67,7 +67,7 @@
   top: 18px;
 }
 .steps-indicator li a {
-  color: #61ff8a;
+  color: #808080;
   text-decoration: none;
   text-transform: uppercase;
   font-weight: bold;
@@ -78,7 +78,6 @@
   position: absolute;
   top: -40px;
   left: calc(50% - 20px);
-  left: calc(30%);
   width: 42px;
   height: 42px;
   border-radius: 20%;
@@ -88,7 +87,7 @@
   transition: 0.25s;
 }
 .steps-indicator li a:hover {
-  color: #00fa41;
+  color: #343434;
 }
 .steps-indicator.steps-2 li {
   width: calc(100% / 2);
@@ -124,7 +123,7 @@
   pointer-events: none;
 }
 .steps-indicator li.default a:hover {
-  color: #61ff8a;
+  color: #343434;
   border: solid 1px gray;
 }
 .steps-indicator li.current,

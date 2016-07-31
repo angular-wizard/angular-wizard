@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="angular.js"></script>
+    <script src="angular-wizard-stylish.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,400" rel="stylesheet">
+    <link rel="stylesheet" href="angular-wizard-stylish.min.css" />
+    <style>
+        body {
+            font-family: 'Roboto';
+            font-weight: 100;
+            padding: 100px;
+        }
+        .panel {
+            margin-top: 50px;
+        }
+        h1 {
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body ng-app="wizard-demo">
+<wizard on-finish="finishedWizard()">
+    <wz-step wz-title="Starting">
+        <div class="panel">
+            <h1>This is the first step</h1>
+            <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
+            <input type="submit" wz-next value="Continue" />
+        </div>
+    </wz-step>
+    <wz-step wz-title="Continuing">
+        <div class="panel">
+            <h1>Continuing</h1>
+            <p>You have continued here!</p>
+            <input type="submit" wz-next value="Go on" />
+        </div>
+    </wz-step>
+    <wz-step wz-title="More steps">
+        <div class="panel">
+            <p>Even more steps!!</p>
+            <input type="submit" wz-next value="Finish now" />
+        </div>
+    </wz-step>
+</wizard>
+
+<script>
+    (function() {
+        'use strict';
+
+        angular.module('wizard-demo', [
+            'mgo-angular-wizard'
+        ]);
+    })();
+</script>
+</body>
+</html>
