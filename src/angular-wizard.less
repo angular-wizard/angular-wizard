@@ -1,7 +1,7 @@
-@wz-color-default: #E6E6E6;
-@wz-color-current: #808080;
-@wz-color-done:    #339933;
-@wz-color-editing: #FF0000;
+@wz-color-default: #fff;
+@wz-color-current: #61ff8a;
+@wz-color-done:    #23cf58;
+@wz-color-editing: #61ff8a;
 
 .steps-indicator {
   /* ---- steps quantity ---- */
@@ -85,6 +85,7 @@
     padding-top: 10px;
     text-align: center;
     line-height: 15px;
+    top: 18px;
 
     a {
       color: @wz-color-current;
@@ -96,12 +97,14 @@
 
       &:before {
         position: absolute;
-        top: -7px;
-        left: ~'calc(50% - 7px)';
-        width: 14px;
-        height: 14px;
-        border-radius: 100%;
+        top: -40px;
+        left: ~'calc(50% - 20px)';
+        left: calc(50% - 20px);
+        width: 42px;
+        height: 42px;
+        border-radius: 20%;
         background-color: @wz-color-default;
+        border: solid 1px #e4dede;
         content: '';
         transition: 0.25s;
       }
@@ -157,6 +160,7 @@
 
     a:hover {
       color: @wz-color-current;
+      border: solid 1px gray;
     }
   }
 
@@ -167,13 +171,21 @@
 
   li.current a:before {
     background-color: @wz-color-current;
+    border: none;
   }
 
   li.done a:before {
     background-color: @wz-color-done;
+    background-image: url(done-transparent.png);
+    background-repeat: no-repeat;
+    background-size: 31px;
+    background-position-x: 5px;
+    background-position-y: 4px;
+    border: none;
   }
 
   li.editing a:before {
     background-color: @wz-color-editing;
+    border: none;
   }
 }
