@@ -9,14 +9,16 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             onFinish: '&',
             hideIndicators: '=',
             editMode: '=',
-            name: '@'
+            name: '@',
+            indicatorsPosition: '@?'
         },
         templateUrl: function(element, attributes) {
             return attributes.template || "wizard.html";
         },
 
         //controller for wizard directive, treat this just like an angular controller
-        controller: ['$scope', '$element', '$log', 'WizardHandler', '$q', function($scope, $element, $log, WizardHandler, $q) {
+        controller: ['$scope', '$element', '$log', 'WizardHandler', '$q', function ($scope, $element, $log, WizardHandler, $q) {
+            if ($scope.indicatorsPosition == undefined) $scope.indicatorsPosition = 'top';
             //this variable allows directive to load without having to pass any step validation
             var firstRun = true;
             //creating instance of wizard, passing this as second argument allows access to functions attached to this via Service
