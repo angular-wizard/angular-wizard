@@ -1,0 +1,9 @@
+{
+  "name": "angular-wizard-gh-pages",
+  "version": "0.7.0",
+  "description": "Easy to use Wizard library for AngularJS ",
+  "dependencies": {
+    "angular": "*",
+    "angular-wizard": "*"
+  }
+}

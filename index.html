@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Angular-wizard : Easy to use Wizard library for AngularJS" />
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="dist/angular-wizard.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-wizard/dist/angular-wizard.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <title>Angular-wizard</title>
   </head>
   <body>
@@ -24,17 +25,18 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner main-inner" ng-app="wizard-sample" ng-controller="WizardCtrl">
+        <h2>Basic Wizard Example</h2>
         <button ng-click="stepToggle()">Clicking Me Will Toggle Steps On and Off Dynamically</button>
-        <wizard on-finish="finished()">
+        <wizard on-finish="finished()" indicators-position="bottom" name="topWizard">
           <wz-step wz-title="Start" canexit="exitWithAPromise">
-            <h1>Start</h1>
+            <h3>Start</h3>
             <p>Hey guys, welcome to the wizard :). If you want to check out the documentation on how to use it, <a href="https://github.com/mgonto/angular-wizard/blob/master/README.md">please click here.</a></p>
             <p><strong>This step is an example of using <em>canexit</em> validation.  Here we will use a promise with a timeout to simulate an async server call.  Give the wizard 1 second to progress after clicking next!</strong></p>
             <p>Otherwise, let's continue with the wizard. Please <a href="" wz-next>click here to continue</a></p>
             <input type="submit" wz-next value="Or click here"/>
           </wz-step>
           <wz-step wz-title="Liking it" canexit="exitValidation">
-            <h1>Liking it</h1>
+            <h3>Liking it</h3>
             <p>You're now in the second step of this wizard.</p>
             <p><strong>This step is an example of using <em>canexit</em> validation with no server call, toggle the value to true or false using the button below to see an example of being allowed to exit and being restricted.</strong></p>
             <button ng-click="exitToggle()">Toggle Validation!</button> Value is currently: {{canExit}}<br><br>
@@ -42,32 +44,54 @@
             <input type="button" wz-next="logStep()" value="NEXT" />
           </wz-step>
           <wz-step wz-title="More steps" wz-disabled="{{!stepActive}}">
-            <h1>More steps</h1>
+            <h3>More steps</h3>
             <p>Click on the bottom navigation on Liking it to go back to that step for example</p>
             <input type="button" wz-previous="logStep()" value="BACK" />
             <input type="button" wz-next="logStep()" value="NEXT" />
           </wz-step>
           <wz-step wz-title="Even more">
-            <h1>Even More steps</h1>
-            <p>I can't deal with so many steps. ARGH</p>
+            <h3>Even More steps</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. </p>
             <input type="button" wz-previous="logStep()" value="BACK" />
             <input type="button" wz-next="logStep()" value="NEXT" />
           </wz-step>
           <wz-step wz-title="Sup?">
-            <h1>Sup?</h1>
-            <p>I don't even know what to write!</p>
+            <h3>Sup?</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. </p>
             <input type="button" wz-previous="logStep()" value="BACK" />
             <input type="button" wz-next="logStep()" value="NEXT" />
           </wz-step>
           <wz-step wz-title="Finish him">
-            <h1>Finish him</h1>
-            <p>Finally this ends!</p>
+            <h3>Finish him</h3>
+            <p><strong>Finally this ends!</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. </p>
             <input type="button" wz-previous="logStep()" value="BACK" />
             <input type="button" wz-next="logStep()" value="END" />
             <input type="button" ng-click="goBack()" value="Click here to start again" />
             <input type="button" wz-reset value="Click here to reset" />
           </wz-step>
         </wizard>
+        <h2 style="margin-top:100px;">ngRepeat Wizard Example</h2>
+        <wizard indicators-position="bottom">
+          <wz-step wz-title="{{step.title}}" ng-repeat="step in wizardSteps">
+            <h3>{{step.title}}</h3>
+            <p>{{step.content}}</p>
+            <input type="submit" wz-next value="NEXT"/>
+          </wz-step>
+        </wizard>
+        <h2 style="margin-top:50px;">Add and remove steps to ngRepeat</h2>
+        <div class="row">
+          <div class="col-sm-6">
+            <input ng-model="stepToAdd.title" placeholder="New Step Title">
+            <br>
+            <input ng-model="stepToAdd.content" placeholder="New Step Content">
+            <br>
+            <button ng-click="addStep()">Add Step</button>
+          </div>
+          <div class="col-sm-6">
+            <div ng-repeat="step in wizardSteps">
+              <p>{{step.title}} <a ng-click="removeStep($index)">Click To Remove</a></p>
+            </div>
+        </div>
       </section>
     </div>
 
@@ -79,8 +103,8 @@
       </footer>
     </div>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
-    <script type="text/javascript" src="dist/angular-wizard.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-wizard/dist/angular-wizard.min.js"></script>
     <script type="text/javascript" src="javascripts/main.js"></script>
     
 
