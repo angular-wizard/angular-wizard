@@ -20,7 +20,7 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
             wizard.addStep($scope);
             $scope.$on('$destroy', function(){
                 wizard.removeStep($scope);
-            })
+            });
         }
     };
 });

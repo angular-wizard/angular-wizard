@@ -17,8 +17,11 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
         },
 
         //controller for wizard directive, treat this just like an angular controller
-        controller: ['$scope', '$element', '$log', 'WizardHandler', '$q', function ($scope, $element, $log, WizardHandler, $q) {
-            if ($scope.indicatorsPosition == undefined) $scope.indicatorsPosition = 'top';
+        controller: ['$scope', '$element', '$log', 'WizardHandler', '$q', '$timeout', function ($scope, $element, $log, WizardHandler, $q, $timeout) {
+            //setting default step position if none declared.
+            if ($scope.indicatorsPosition == undefined) {
+                $scope.indicatorsPosition = 'bottom';
+            }
             //this variable allows directive to load without having to pass any step validation
             var firstRun = true;
             //creating instance of wizard, passing this as second argument allows access to functions attached to this via Service
@@ -66,7 +69,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     //invoking goTo() with step title as argument
                     $scope.goTo(stepByTitle($scope.currentStep));
                 }
-
             });
 
             //watching steps array length and editMode value, if edit module is undefined or null the nothing is done
@@ -100,14 +102,12 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 }
             };
             
-            // called each time step diretive is destroyed
+            //called each time step diretive is destroyed
             this.removeStep = function (step) {
-                //
                 var index = $scope.steps.indexOf(step);
                 if (index > 0) {
                     $scope.steps.splice(index, 1);
                 }
-
             }
 
             this.context = $scope.context;
@@ -293,17 +293,20 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             //used to traverse to any step, step number placed as argument
             this.goTo = function(step) {
-                var enabledSteps = $scope.getEnabledSteps();
-                var stepTo;
-                //checking that step is a Number
-                if (angular.isNumber(step)) {
-                    stepTo = enabledSteps[step];
-                } else {
-                    //finding the step associated with the title entered as goTo argument
-                    stepTo = stepByTitle(step);
-                }
-                //going to step
-                $scope.goTo(stepTo);
+                //wrapped inside $timeout so newly enabled steps are included.
+                $timeout(function() {
+                    var enabledSteps = $scope.getEnabledSteps();
+                    var stepTo;
+                    //checking that step is a Number
+                    if (angular.isNumber(step)) {
+                        stepTo = enabledSteps[step];
+                    } else {
+                        //finding the step associated with the title entered as goTo argument
+                        stepTo = stepByTitle(step);
+                    }
+                    //going to step
+                    $scope.goTo(stepTo);
+                });
             };
 
             //calls finish() which calls onFinish() which is declared on an attribute and linked to controller via wizard directive.
