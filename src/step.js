@@ -9,7 +9,8 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
             canexit : '=',
             disabled: '@?wzDisabled',
             description: '@',
-            wzData: '='
+            wzData: '=',
+            wzOrder: '@?'
         },
         require: '^wizard',
         templateUrl: function(element, attributes) {

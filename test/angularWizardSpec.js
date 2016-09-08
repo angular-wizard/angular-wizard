@@ -311,5 +311,39 @@ describe( 'AngularWizard', function() {
         view.isolateScope().steps = ["5", "6", "7"];
         view.isolateScope().$digest();
         expect(WizardHandler.wizard().getEnabledSteps().length).toBe(3);
-    });    
+    });
+    it("should add steps based on order", function () {
+        var scope = $rootScope.$new();
+        scope.steps = [{title: "One", order: 1}, {title: "Zero", order: 0}];
+        var element = angular.element('<wizard><wz-step ng-repeat="step in steps" wz-title="{{step.title}}" wz-order="{{step.order}}">{{step.title}}</wz-step></wizard>');
+        var view = $compile(element)(scope);
+        $rootScope.$digest();
+        expect(WizardHandler.wizard().totalStepCount()).toBe(2);
+        expect(view.isolateScope().steps[0].wzTitle).toEqual(scope.steps[1].title);
+    });
+    it("should append step to end if step at order exists", function () {
+        var scope = $rootScope.$new();
+        scope.steps = [{title: "One", order: 1}, {title: "Zero", order: 0}];
+        var element = angular.element('<wizard><wz-step ng-repeat="step in steps" wz-title="{{step.title}}" wz-order="{{step.order}}">{{step.title}}</wz-step></wizard>');
+        var view = $compile(element)(scope);
+        $rootScope.$digest();
+        var newStep = $rootScope.$new();
+        newStep.wzTitle = 'New Step';
+        newStep.wzOrder = 0;
+        WizardHandler.wizard().addStep(newStep);
+        $rootScope.$digest();
+        expect(WizardHandler.wizard().totalStepCount()).toBe(3);
+        expect(view.isolateScope().steps[2].wzTitle).toEqual(newStep.wzTitle);
+    });
+    it("should always append to end if no order defined", function () {
+        var scope = $rootScope.$new();
+        scope.steps = [{title: "One"}, {title: "Zero"}, {title: "Two"}];
+        var element = angular.element('<wizard><wz-step ng-repeat="step in steps" wz-title="{{step.title}}">{{step.title}}</wz-step></wizard>');
+        var view = $compile(element)(scope);
+        $rootScope.$digest();
+        expect(WizardHandler.wizard().totalStepCount()).toBe(3);
+        scope.steps.forEach(function (step, index) {
+            expect(view.isolateScope().steps[index].wzTitle).toEqual(step.title);
+        });
+    });
 });
