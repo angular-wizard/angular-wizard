@@ -87,6 +87,7 @@ Let's go step by step to see how this works.
 * **wz-disabled**
 * **description:** A description available to use in each step's UI.
 * **wz-data** Data you wish to make available to the steps scope.
+* **wz-order** The order in which the steps should be in. If no order or duplicated order it will add the step to the end.
 
 3) Inside the step, we now see a button which has a `wz-next` attribute. That means that clicking that button will send the user to the next step of wizard. Similar to `wz-next`, we have the following attributes:
 * **wz-previous**: Goes to the previous step
