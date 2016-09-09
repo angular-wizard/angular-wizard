@@ -93,12 +93,11 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             //called each time step directive is loaded
             this.addStep = function(step) {
-                var wzOrder = (step.wzOrder >= 0 && !$scope.steps[step.wzOrder]) ? step.wzOrder : $scope.steps.length,
-                    currentFirstStepIdx = stepIdx($scope.getEnabledSteps()[0]);
+                var wzOrder = (step.wzOrder >= 0 && !$scope.steps[step.wzOrder]) ? step.wzOrder : $scope.steps.length;
                 //adding the scope of directive onto step array
                 $scope.steps[wzOrder] = step;
                 //if this step is the new first then goTo it
-                if (wzOrder === 0 || stepIdx(step) < currentFirstStepIdx) {
+                if ($scope.getEnabledSteps()[0] === step) {
                     //goTo first step
                     $scope.goTo($scope.getEnabledSteps()[0]);
                 }
