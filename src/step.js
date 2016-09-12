@@ -15,7 +15,6 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         templateUrl: function(element, attributes) {
           return attributes.template || "step.html";
         },
-        link: function($scope, $element, $attrs, wizard) {
             $scope.title = $scope.wzTitle;
             wizard.addStep($scope);
             $scope.$on('$destroy', function(){
