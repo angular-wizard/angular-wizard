@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.6.0 - 2015-12-31 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.7.1 - 2016-09-07 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -15,12 +15,13 @@ angular.module("step.html", []).run(["$templateCache", function($templateCache) 
 angular.module("wizard.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("wizard.html",
     "<div>\n" +
-    "    <div class=\"steps\" ng-transclude></div>\n" +
+    "    <div class=\"steps\" ng-if=\"indicatorsPosition === 'bottom'\" ng-transclude></div>\n" +
     "    <ul class=\"steps-indicator steps-{{getEnabledSteps().length}}\" ng-if=\"!hideIndicators\">\n" +
     "      <li ng-class=\"{default: !step.completed && !step.selected, current: step.selected && !step.completed, done: step.completed && !step.selected, editing: step.selected && step.completed}\" ng-repeat=\"step in getEnabledSteps()\">\n" +
     "        <a ng-click=\"goTo(step)\">{{step.title || step.wzTitle}}</a>\n" +
     "      </li>\n" +
     "    </ul>\n" +
+    "    <div class=\"steps\" ng-if=\"indicatorsPosition === 'top'\" ng-transclude></div>\n" +
     "</div>\n" +
     "");
 }]);
@@ -47,6 +48,9 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
         link: function($scope, $element, $attrs, wizard) {
             $scope.title = $scope.wzTitle;
             wizard.addStep($scope);
+            $scope.$on('$destroy', function(){
+                wizard.removeStep($scope);
+            });
         }
     };
 });
@@ -62,14 +66,19 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             onFinish: '&',
             hideIndicators: '=',
             editMode: '=',
-            name: '@'
+            name: '@',
+            indicatorsPosition: '@?'
         },
         templateUrl: function(element, attributes) {
             return attributes.template || "wizard.html";
         },
 
         //controller for wizard directive, treat this just like an angular controller
-        controller: ['$scope', '$element', '$log', 'WizardHandler', '$q', function($scope, $element, $log, WizardHandler, $q) {
+        controller: ['$scope', '$element', '$log', 'WizardHandler', '$q', '$timeout', function ($scope, $element, $log, WizardHandler, $q, $timeout) {
+            //setting default step position if none declared.
+            if ($scope.indicatorsPosition == undefined) {
+                $scope.indicatorsPosition = 'bottom';
+            }
             //this variable allows directive to load without having to pass any step validation
             var firstRun = true;
             //creating instance of wizard, passing this as second argument allows access to functions attached to this via Service
@@ -117,7 +126,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     //invoking goTo() with step title as argument
                     $scope.goTo(stepByTitle($scope.currentStep));
                 }
-
             });
 
             //watching steps array length and editMode value, if edit module is undefined or null the nothing is done
@@ -150,6 +158,14 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     $scope.goTo($scope.getEnabledSteps()[0]);
                 }
             };
+            
+            //called each time step diretive is destroyed
+            this.removeStep = function (step) {
+                var index = $scope.steps.indexOf(step);
+                if (index > 0) {
+                    $scope.steps.splice(index, 1);
+                }
+            }
 
             this.context = $scope.context;
 
@@ -334,17 +350,20 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             //used to traverse to any step, step number placed as argument
             this.goTo = function(step) {
-                var enabledSteps = $scope.getEnabledSteps();
-                var stepTo;
-                //checking that step is a Number
-                if (angular.isNumber(step)) {
-                    stepTo = enabledSteps[step];
-                } else {
-                    //finding the step associated with the title entered as goTo argument
-                    stepTo = stepByTitle(step);
-                }
-                //going to step
-                $scope.goTo(stepTo);
+                //wrapped inside $timeout so newly enabled steps are included.
+                $timeout(function() {
+                    var enabledSteps = $scope.getEnabledSteps();
+                    var stepTo;
+                    //checking that step is a Number
+                    if (angular.isNumber(step)) {
+                        stepTo = enabledSteps[step];
+                    } else {
+                        //finding the step associated with the title entered as goTo argument
+                        stepTo = stepByTitle(step);
+                    }
+                    //going to step
+                    $scope.goTo(stepTo);
+                });
             };
 
             //calls finish() which calls onFinish() which is declared on an attribute and linked to controller via wizard directive.

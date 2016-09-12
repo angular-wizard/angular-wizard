@@ -78,6 +78,7 @@ describe( 'AngularWizard', function() {
         $rootScope.$digest();
         WizardHandler.wizard().goTo(2);
         $rootScope.$digest();
+        $timeout.flush();
         expect(scope.referenceCurrentStep).toEqual('More steps');
     });
     it( "should return to a previous step", function() {
@@ -99,6 +100,7 @@ describe( 'AngularWizard', function() {
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().goTo('More steps');
         $rootScope.$digest();
+        $timeout.flush()
         expect(scope.referenceCurrentStep).toEqual('More steps');
     });
     it( "should go to a step specified by index", function() {
@@ -108,6 +110,7 @@ describe( 'AngularWizard', function() {
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().goTo(2);
         $rootScope.$digest();
+        $timeout.flush();
         expect(scope.referenceCurrentStep).toEqual('More steps');
     });
     it( "should go to next step becasue callback is truthy", function() {
@@ -285,9 +288,11 @@ describe( 'AngularWizard', function() {
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().goTo(2);
         $rootScope.$digest();
+        $timeout.flush();
         expect(scope.referenceCurrentStep).toEqual('More steps');
         WizardHandler.wizard().reset();
         $rootScope.$digest();
+        $timeout.flush();
         expect(scope.referenceCurrentStep).toEqual('Starting');
     });
     it( "step description should be accessible", function() {
@@ -296,4 +301,15 @@ describe( 'AngularWizard', function() {
         var view = createGenericView(scope);
         expect(view.isolateScope().steps[0].description).toEqual('Step description');
     });
+    it("should create and delete dynamic steps", function () {
+        var scope = $rootScope.$new();
+        scope.steps = ["1", "2", "3", "4"];
+        var element = angular.element('<wizard><wz-step ng-repeat="step in steps" title="{{step}}">{{step}}</wz-step></wizard>');
+        var view = $compile(element)(scope);
+        $rootScope.$digest();
+        expect(WizardHandler.wizard().getEnabledSteps().length).toBe(4);
+        view.isolateScope().steps = ["5", "6", "7"];
+        view.isolateScope().$digest();
+        expect(WizardHandler.wizard().getEnabledSteps().length).toBe(3);
+    });    
 });
