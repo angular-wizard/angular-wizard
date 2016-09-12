@@ -221,7 +221,7 @@ The functions available in the `wizard()` are:
 
 ## Navigation bar
 
-Any changed you wish to make to the navigation bar can be done by overwritting the CSS.  Because everyone wants the navigation bar in a different location and in a different style we have provided a default which you can change via your own HTML and CSS. The navigation bar shown below works in the following way:
+Any changes you wish to make to the navigation bar can be done by overwritting the CSS.  Because everyone wants the navigation bar in a different location and in a different style we have provided a default which you can change via your own HTML and CSS. The navigation bar shown below works in the following way:
 
 * Completed steps are painted as green
 * Current step is painted as dark grey
