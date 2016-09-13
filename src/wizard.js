@@ -93,22 +93,23 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             //called each time step directive is loaded
             this.addStep = function(step) {
-                //pushing the scope of directive onto step array
-                $scope.steps.push(step);
-                //if this is first step being pushed then goTo that first step
-                if ($scope.getEnabledSteps().length === 1) {
+                var wzOrder = (step.wzOrder >= 0 && !$scope.steps[step.wzOrder]) ? step.wzOrder : $scope.steps.length;
+                //adding the scope of directive onto step array
+                $scope.steps[wzOrder] = step;
+                //if this step is the new first then goTo it
+                if ($scope.getEnabledSteps()[0] === step) {
                     //goTo first step
                     $scope.goTo($scope.getEnabledSteps()[0]);
                 }
             };
             
-            //called each time step diretive is destroyed
+            //called each time step directive is destroyed
             this.removeStep = function (step) {
                 var index = $scope.steps.indexOf(step);
                 if (index > 0) {
                     $scope.steps.splice(index, 1);
                 }
-            }
+            };
 
             this.context = $scope.context;
 
@@ -218,7 +219,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             $scope.getEnabledSteps = function() {
                 return $scope.steps.filter(function(step){
-                    return step.disabled !== 'true';
+                    return step && step.disabled !== 'true';
                 });
             };
 
@@ -248,7 +249,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             this.totalStepCount = function() {
                 return $scope.getEnabledSteps().length;
-            }
+            };
 
             //Access to enabled steps from outside
             this.getEnabledSteps = function(){
