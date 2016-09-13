@@ -92,6 +92,56 @@
               <p>{{step.title}} <a ng-click="removeStep($index)">Click To Remove</a></p>
             </div>
         </div>
+        <br style="clear:both">
+        <div class="row">
+          <h2 style="margin-top:100px;">Custom Step Order Wizard Example</h2>
+          <wizard on-finish="finished()" indicators-position="bottom" name="customOrderWizard">
+            <wz-step wz-title="STEP 3" wz-order="3">
+              <h3>First Step in HTML</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. </p>
+              <input type="submit" wz-next value="NEXT"/>
+            </wz-step>
+            <wz-step wz-title="STEP 1" wz-order="1">
+              <h3>Second Step in HTML</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. </p>
+              <input type="submit" wz-next value="NEXT"/>
+            </wz-step>
+            <wz-step wz-title="STEP 4" wz-order="4">
+              <h3>Third Step in HTML</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. </p>
+              <input type="submit" wz-next value="NEXT"/>
+            </wz-step>
+            <wz-step wz-title="STEP 2" wz-order="2">
+              <h3>Fourth Step in HTML</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. </p>
+              <input type="submit" wz-next value="NEXT"/>
+            </wz-step>
+          </wizard>
+          <br style="clear:both">
+          <h4 style="margin-top:50px;">HTML for Custom Step Order Wizard</h4>
+          <pre>&lt;wizard on-finish="finished()" indicators-position="bottom" name="customOrderWizard"&gt;
+  &lt;wz-step wz-title="STEP 3" wz-order="3"&gt;
+    &lt;h3&gt;First Step in HTML&lt;/h3&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. &lt;/p&gt;
+    &lt;input type="submit" wz-next value="NEXT"/&gt;
+  &lt;/wz-step&gt;
+  &lt;wz-step wz-title="STEP 1" wz-order="1"&gt;
+    &lt;h3&gt;Second Step in HTML&lt;/h3&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. &lt;/p&gt;
+    &lt;input type="submit" wz-next value="NEXT"/&gt;
+  &lt;/wz-step&gt;
+  &lt;wz-step wz-title="STEP 4" wz-order="4"&gt;
+    &lt;h3&gt;Third Step in HTML&lt;/h3&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. &lt;/p&gt;
+    &lt;input type="submit" wz-next value="NEXT"/&gt;
+  &lt;/wz-step&gt;
+  &lt;wz-step wz-title="STEP 2" wz-order="2"&gt;
+    &lt;h3&gt;Fourth Step in HTML&lt;/h3&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nunc arcu, sodales nec molestie ut, posuere vitae justo. Praesent sed lectus nisi. Maecenas fringilla fermentum volutpat. &lt;/p&gt;
+    &lt;input type="submit" wz-next value="NEXT"/&gt;
+  &lt;/wz-step&gt;
+&lt;/wizard&gt;</pre>
+        </div>
       </section>
     </div>
 
