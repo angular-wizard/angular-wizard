@@ -1,3 +1,10 @@
+<a name="0.8.0"></a>
+# 0.8.0 (2016-09-12)
+
+## Updates
+
+- **wizard-order:** the `wizard-order` attribute affects the order in which the steps should be in. If no order or duplicated order it will add the step to the end.
+
 <a name="0.7.1"></a>
 # 0.7.1 (2016-09-07)
 
