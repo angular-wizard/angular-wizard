@@ -13,6 +13,11 @@
   "engines": {
     "node": ">= 0.9"
   },
+  "scripts": {
+    "test": "grunt build",
+    "coveralls": "cat ./coverage/lcov/lcov.info | coveralls",
+    "codacy": "cat ./coverage/lcov/lcov.info | codacy-coverage --verbose"
+  },
   "keywords": [
     "angular",
     "client",
@@ -29,6 +34,8 @@
   ],
   "dependencies": {},
   "devDependencies": {
+    "codacy-coverage": "*",
+    "coveralls": "*",
     "grunt": "~0.4.1",
     "grunt-bower": "*",
     "grunt-bower-task": "*",
@@ -43,6 +50,7 @@
     "grunt-conventional-changelog": "~0.1.1",
     "grunt-html2js": "~0.1.3",
     "grunt-karma": "~0.9.x",
+    "karma-coverage": "*",
     "grunt-ng-annotate": "^0.6.0",
     "grunt-zip": "*",
     "jasmine-core": "^2.1.3",
