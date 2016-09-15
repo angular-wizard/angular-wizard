@@ -1,4 +1,4 @@
-  'use strict';
+'use strict';
 
 module.exports = function(grunt) {
 
@@ -118,11 +118,6 @@ module.exports = function(grunt) {
         singleRun: true,
         autoWatch: false
       },
-      travis: {
-        singleRun: true,
-        autoWatch: false,
-        browsers: ['Firefox']
-      },
       dev: {
         autoWatch: true
       }
@@ -139,16 +134,10 @@ module.exports = function(grunt) {
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
-
   grunt.loadNpmTasks('grunt-bower-task');
-
   grunt.renameTask("bower", "bowerInstall");
-
   grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-karma');
-
   grunt.loadNpmTasks('grunt-conventional-changelog');
-
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-clean');
