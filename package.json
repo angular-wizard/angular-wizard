@@ -1,6 +1,6 @@
 {
   "name": "angular-wizard",
-  "description": "Easy to use Wizard library for AngularJS",
+  "description": "Easy to use Wizard library for Angular JS",
   "version": "0.8.0",
   "filename": "angular-wizard.min.js",
   "main": "./dist/angular-wizard.js",
