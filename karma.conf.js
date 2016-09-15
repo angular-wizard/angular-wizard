@@ -14,21 +14,36 @@ module.exports = function(config) {
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.js',
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular-mocks.js',
       'http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js',
-      'dist/*.min.js',
+      'src/*.js',
       'test/*.js'
     ],
 
+    plugins: [
+      "karma-phantomjs-launcher",
+      "karma-jasmine",
+      "karma-coverage"
+    ],
+
+    preprocessors: {
+      "src/*.js": ["coverage"]
+    },
+
+    // optionally, configure the reporter
+    coverageReporter: {
+      dir : "coverage/",
+      reporters: [
+        {type: "lcov", subdir: "lcov"}
+      ]
+    },
+
+    // test results reporter to use
+    // possible values: "dots", "progress", "junit"
+    reporters: ["dots", "coverage"],
 
     // list of files to exclude
     exclude: [
 
     ],
-
-
-    // test results reporter to use
-    // possible values: 'dots', 'progress', 'junit'
-    reporters: ['progress'],
-
 
     // web server port
     port: 9876,
@@ -59,7 +74,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome', 'Firefox'],
+    browsers: ['PhantomJS'],
 
 
     // If browser does not capture in given timeout [ms], kill it
@@ -71,10 +86,6 @@ module.exports = function(config) {
     singleRun: false
 
   };
-
-  if (process.env.TRAVIS) {
-    configuration.browsers = ['Firefox', 'PhantomJS'];
-  }
 
   config.set(configuration);
 };
