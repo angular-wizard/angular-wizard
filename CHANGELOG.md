@@ -1,3 +1,11 @@
+<a name="0.9.0"></a>
+# 0.9.0 (2016-09-19)
+
+## Updates
+
+- Fix for Issue [#184](https://github.com/angular-wizard/angular-wizard/issues/184).
+- Step title updates on change.
+
 <a name="0.8.0"></a>
 # 0.8.0 (2016-09-12)
 
