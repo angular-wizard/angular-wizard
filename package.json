@@ -1,7 +1,7 @@
 {
   "name": "angular-wizard",
   "description": "Easy to use Wizard library for Angular JS",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "filename": "angular-wizard.min.js",
   "main": "./dist/angular-wizard.js",
   "homepage": "https://github.com/mgonto/angular-wizard",
@@ -14,9 +14,7 @@
     "node": ">= 0.9"
   },
   "scripts": {
-    "test": "grunt build",
-    "coveralls": "cat ./coverage/lcov/lcov.info | coveralls",
-    "codacy": "cat ./coverage/lcov/lcov.info | codacy-coverage --verbose"
+    "test": "grunt travis --verbose"
   },
   "keywords": [
     "angular",
@@ -58,9 +56,6 @@
     "karma-firefox-launcher": "~0.1.x",
     "karma-jasmine": "~0.3.x",
     "karma-phantomjs-launcher": "~0.1.x"
-  },
-  "scripts": {
-    "test": "grunt travis --verbose"
   },
   "license": "MIT"
 }
