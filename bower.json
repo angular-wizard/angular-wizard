@@ -11,7 +11,8 @@
     "url": "git://github.com/mgonto/angular-wizard.git"
   },
   "dependencies": {
-    "angular": "*"
+    "angular": "*",
+    "angular-ui-router":"*"
   },
   "ignore": [
     "node_modules",
