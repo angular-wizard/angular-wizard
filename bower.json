@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "angular": "*",
-    "angular-ui-router": ">=0.2.0"
+    "angular-ui-router": "0.2.18"
   },
   "ignore": [
     "node_modules",
