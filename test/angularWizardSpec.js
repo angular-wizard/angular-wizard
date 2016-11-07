@@ -1,15 +1,16 @@
 describe( 'AngularWizard', function() {
-    var $compile, $q, $rootScope, $timeout, WizardHandler;
+    var $compile, $q, $rootScope, $timeout, WizardHandler, $state;
 
     beforeEach(module('mgo-angular-wizard'));
 
 
-    beforeEach(inject(function(_$compile_, _$q_, _$rootScope_, _$timeout_, _WizardHandler_) {
+    beforeEach(inject(function(_$compile_, _$q_, _$rootScope_, _$timeout_, _WizardHandler_,__$state__) {
         $compile = _$compile_;
         $q = _$q_;
         $rootScope = _$rootScope_;
         $timeout = _$timeout_;
         WizardHandler = _WizardHandler_;
+        $state = __$state__;
     }));
 
     /**
