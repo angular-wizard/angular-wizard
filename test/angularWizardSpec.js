@@ -1,6 +1,7 @@
 describe( 'AngularWizard', function() {
     var $compile, $q, $rootScope, $timeout, WizardHandler, $state;
 
+    beforeEach(module('ui.router'));
     beforeEach(module('mgo-angular-wizard'));
 
 
