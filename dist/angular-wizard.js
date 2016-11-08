@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for Angular JS
- * @version v0.9.0 - 2016-09-20 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.9.0 - 2016-11-07 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -26,7 +26,7 @@ angular.module("wizard.html", []).run(["$templateCache", function($templateCache
     "");
 }]);
 
-angular.module('mgo-angular-wizard', ['templates-angularwizard']);
+angular.module('mgo-angular-wizard', ['templates-angularwizard','ui.router']);
 
 angular.module('mgo-angular-wizard').directive('wzStep', function() {
     return {
@@ -78,7 +78,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
         },
 
         //controller for wizard directive, treat this just like an angular controller
-        controller: ['$scope', '$element', '$log', 'WizardHandler', '$q', '$timeout','$state', function ($scope, $element, $log, WizardHandler, $q, $timeout, $state) {
+        controller: ['$scope', '$element', '$log', 'WizardHandler', '$q', '$timeout', '$state',function ($scope, $element, $log, WizardHandler, $q, $timeout, $state) {
             //setting default step position if none declared.
             if ($scope.indicatorsPosition == undefined) {
                 $scope.indicatorsPosition = 'bottom';
