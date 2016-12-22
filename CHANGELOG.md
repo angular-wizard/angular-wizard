@@ -1,3 +1,11 @@
+<a name="0.10.0"></a>
+# 0.10.0 (2016-12-22)
+
+## Updates
+
+- Fix for Issue [#210](https://github.com/angular-wizard/angular-wizard/issues/210).
+- Newly enabled steps are set to complete.
+
 <a name="0.9.0"></a>
 # 0.9.0 (2016-09-19)
 
