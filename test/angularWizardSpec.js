@@ -257,6 +257,27 @@ describe( 'AngularWizard', function() {
         $timeout.flush();
         expect(scope.referenceCurrentStep).toEqual('More steps');
     });
+    it( "should go to the next step because the promise that the evaluated string of CANENTER resolves to true", function(done) {
+        var scope = $rootScope.$new();
+        scope.dynamicStepDisabled = 'Y';
+        var view = createGenericView(scope);
+        scope.enterValidation = 'stringEnterValidation()'
+        scope.stringEnterValidation = function(){
+            var deferred = $q.defer();
+            $timeout(function () {
+                deferred.resolve(true);
+                done();
+            });
+            return deferred.promise;
+        };
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+        WizardHandler.wizard().next();
+        $timeout.flush();
+        expect(scope.referenceCurrentStep).toEqual('More steps');
+    });
     it( "should go to the next step because CANEXIT is set to true", function() {
         var scope = $rootScope.$new();
         scope.dynamicStepDisabled = 'Y';
@@ -268,6 +289,27 @@ describe( 'AngularWizard', function() {
         expect(scope.referenceCurrentStep).toEqual('Continuing');
         WizardHandler.wizard().next();
         $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('More steps');
+    });
+    it( "should go to the next step because the promise that the evaluated string of CANEXIT resolves to true", function(done) {
+        var scope = $rootScope.$new();
+        scope.dynamicStepDisabled = 'Y';
+        var view = createGenericView(scope);
+        scope.stepValidation = 'stringStepValidation()'
+        scope.stringStepValidation = function(){
+            var deferred = $q.defer();
+            $timeout(function () {
+                deferred.resolve(true);
+                done();
+            });
+            return deferred.promise;
+        };
+        expect(scope.referenceCurrentStep).toEqual('Starting');
+        WizardHandler.wizard().next();
+        $rootScope.$digest();
+        expect(scope.referenceCurrentStep).toEqual('Continuing');
+        WizardHandler.wizard().next();
+        $timeout.flush();
         expect(scope.referenceCurrentStep).toEqual('More steps');
     });
     it( "should finish", function() {
