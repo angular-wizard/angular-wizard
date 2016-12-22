@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for Angular JS
- * @version v0.9.0 - 2016-09-20 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.10.0 - 2016-12-22 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -138,15 +138,17 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 var editMode = $scope.editMode;
                 if (angular.isUndefined(editMode) || (editMode === null)) return;
 
-                if (editMode) {
-                    angular.forEach($scope.getEnabledSteps(), function(step) {
-                        step.completed = true;
-                    });
-                } else {
-                    var completedStepsIndex = $scope.currentStepNumber() - 1;
+                //Set completed for all steps to the value of editMode
+                angular.forEach($scope.steps, function (step) {
+                    step.completed = editMode;
+                });
+
+                //If editMode is false, set ONLY ENABLED steps with index lower then completedIndex to completed
+                if (!editMode) {
+                   var completedStepsIndex = $scope.currentStepNumber() - 1;
                     angular.forEach($scope.getEnabledSteps(), function(step, stepIndex) {
-                        if(stepIndex >= completedStepsIndex) {
-                            step.completed = false;
+                        if(stepIndex < completedStepsIndex) {
+                            step.completed = true;
                         }
                     });
                 }
