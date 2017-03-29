@@ -56,6 +56,28 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
               return foundStep;
             };
 
+
+            //update completed state for each step based on the editMode and current step number
+            var handleEditModeChange = function() {
+                var editMode = $scope.editMode;
+                if (angular.isUndefined(editMode) || (editMode === null)) return;
+
+                //Set completed for all steps to the value of editMode
+                angular.forEach($scope.steps, function (step) {
+                    step.completed = editMode;
+                });
+
+                //If editMode is false, set ONLY ENABLED steps with index lower then completedIndex to completed
+                if (!editMode) {
+                    var completedStepsIndex = $scope.currentStepNumber() - 1;
+                    angular.forEach($scope.getEnabledSteps(), function(step, stepIndex) {
+                        if(stepIndex < completedStepsIndex) {
+                            step.completed = true;
+                        }
+                    });
+                }
+            }
+
             //access to context object for step validation
             $scope.context = {};
 
@@ -217,27 +239,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 });
                 //set selectedStep variable to null
                 $scope.selectedStep = null;
-            }
-
-            //update completed state for each step based on the editMode and current step number
-            function handleEditModeChange() {
-                var editMode = $scope.editMode;
-                if (angular.isUndefined(editMode) || (editMode === null)) return;
-
-                //Set completed for all steps to the value of editMode
-                angular.forEach($scope.steps, function (step) {
-                    step.completed = editMode;
-                });
-
-                //If editMode is false, set ONLY ENABLED steps with index lower then completedIndex to completed
-                if (!editMode) {
-                    var completedStepsIndex = $scope.currentStepNumber() - 1;
-                    angular.forEach($scope.getEnabledSteps(), function(step, stepIndex) {
-                        if(stepIndex < completedStepsIndex) {
-                            step.completed = true;
-                        }
-                    });
-                }
             }
 
             //ALL METHODS ATTACHED TO this ARE ACCESSIBLE VIA WizardHandler.wizard().methodName()
