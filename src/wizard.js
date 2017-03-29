@@ -76,7 +76,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                         }
                     });
                 }
-            }
+            };
 
             //access to context object for step validation
             $scope.context = {};
