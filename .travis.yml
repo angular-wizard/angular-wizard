@@ -1,6 +1,6 @@
 nguage: node_js
 node_js:
-  - "4.6.0"
+  - "4.4.x"
 
 before_script:
   - npm install -g npm
