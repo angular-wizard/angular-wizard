@@ -3,6 +3,8 @@ node_js:
   - "5"
 
 before_script:
+  - npm install -g npm
+  - npm install
   - npm install -g bower
   - npm install -g grunt
 
