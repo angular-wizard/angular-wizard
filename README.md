@@ -219,6 +219,7 @@ The functions available in the `wizard()` are:
 * **currentStep()**: This returns an Object which is the current step you are on.
 * **totalStepCount()**: This returns an Number which is the total number of **enabled** steps.
 * **getEnabledSteps()**: This returns an Array which is the **enabled** steps.
+* **setEditMode(mode)**: Set the edit mode of the wizard.
 
 ## Navigation bar
 
