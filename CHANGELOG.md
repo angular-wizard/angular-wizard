@@ -1,5 +1,11 @@
+<a name="1.0.2"></a>
+# 1.0.2 (2017-06-06)
+
+- Update README.md to update Repository URLs
+
+
 <a name="1.0.1"></a>
-# 1.0.1 (2017-06-06)
+# 1.0.2 (2017-06-06)
 
 - Update CDN instructions on README.md
 

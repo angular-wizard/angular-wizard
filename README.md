@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/angular-wizard/angular-wizard.svg?branch=master)](https://travis-ci.org/angular-wizard/angular-wizard)  [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8a488d7e632d4d1ea973bfcd25ea15a0)](https://www.codacy.com/app/jc_2/angular-wizard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=angular-wizard/angular-wizard&amp;utm_campaign=Badge_Grade)    [![Coverage Status](https://coveralls.io/repos/github/angular-wizard/angular-wizard/badge.svg?branch=master)](https://coveralls.io/github/angular-wizard/angular-wizard?branch=master)  [![npm version](https://badge.fury.io/js/angular-wizard.svg)](https://badge.fury.io/js/angular-wizard)  [![PayPal donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=martin%40gon%2eto&lc=US&item_name=Martin%20Gontovnikas&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted "Donate once-off to this project using PayPal")
 [![Donate on Gratipay](http://img.shields.io/gratipay/mgonto.svg)](https://gratipay.com/mgonto/)
 
-Angular-wizard is a component that will make it easy for you to create wizards in your app. You can check a running example of the wizard [by clicking here](http://mgonto.github.io/angular-wizard/)
+Angular-wizard is a component that will make it easy for you to create wizards in your app. You can check a running example of the wizard [by clicking here](http://angular-wizard.github.io/angular-wizard/)
 
 # How do I add this to my project?
 You can download this by:
@@ -19,8 +19,8 @@ You can download this by:
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/angular-wizard@latest/dist/angular-wizard.min.css">
 
 <!-- Or use TAG number for specific version -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/angular-wizard@1.0.1/dist/angular-wizard.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/angular-wizard@1.0.1/dist/angular-wizard.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/angular-wizard@1.0.2/dist/angular-wizard.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/angular-wizard@1.0.2/dist/angular-wizard.min.css">
 ````
 
 The dist folder contains the following files:
@@ -247,10 +247,10 @@ The available variables are:
 
 # Live sample
 
-You can check out a live sample of the Wizard [clicking here](http://mgonto.github.io/angular-wizard/)
+You can check out a live sample of the Wizard [clicking here](http://angular-wizard.github.io/angular-wizard/)
 
 # Releases Notes
-Releases notes are together with releases in GitHub at: https://github.com/mgonto/angular-wizard/releases
+Releases notes are together with releases in GitHub at: https://github.com/angular-wizard/angular-wizard/releases
 
 
 # License
@@ -265,5 +265,5 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mgonto/angular-wizard/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/angular-wizard/angular-wizard/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
