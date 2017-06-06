@@ -2,8 +2,8 @@
   "name": "angular-wizard",
   "version": "0.10.0",
   "main": [
-    "./dist/angular-wizard.min.js",
-    "./dist/angular-wizard.min.css"
+    "./dist/angular-wizard.js",
+    "./dist/angular-wizard.css"
   ],
   "description": "Easy to use Wizard library for AngularJS ",
   "repository": {
