@@ -56,7 +56,7 @@
     "karma-chrome-launcher": "^0.1.7",
     "karma-firefox-launcher": "~0.1.x",
     "karma-jasmine": "~0.3.x",
-    "karma-phantomjs-launcher": "~0.1.x"
+    "karma-phantomjs-launcher": "~1.0.x"
   },
   "license": "MIT"
 }
