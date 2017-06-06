@@ -176,8 +176,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             };
 
             function canEnterStep(step) {
-                var defer,
-                    canEnter;
+                var defer;
+                var canEnter;
                 //If no validation function is provided, allow the user to enter the step
                 if(step.canenter === undefined){
                     return true;
@@ -186,7 +186,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 if(typeof step.canenter === 'boolean'){
                     return step.canenter;
                 }
-                var canEnter;
                 //If canenter is a string instead of a function, evaluate the function
                 if(typeof step.canenter === 'string'){
                     var splitFunction = step.canenter.split('(');
@@ -207,8 +206,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             }
 
             function canExitStep(step, stepTo) {
-                var defer,
-                    canExit;
+                var defer;
+                var canExit;
                 //Exiting the step should be allowed if no validation function was provided or if the user is moving backwards
                 if(typeof(step.canexit) === 'undefined' || $scope.getStepNumber(stepTo) < $scope.currentStepNumber()){
                     return true;
@@ -217,7 +216,6 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 if(typeof step.canexit === 'boolean'){
                     return step.canexit;
                 }
-                var canExit;
                 //If canenter is a string instead of a function, evaluate the function
                 if(typeof step.canexit === 'string'){
                     var splitFunction = step.canexit.split('(');
