@@ -6,6 +6,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
         transclude: true,
         scope: {
             currentStep: '=',
+            onCancel: '&',
             onFinish: '&',
             hideIndicators: '=',
             editMode: '=',
@@ -167,6 +168,8 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                             //emit event upwards with data on goTo() invoktion
                             $scope.$emit('wizard:stepChanged', {step: step, index: stepIdx(step)});
                             //$log.log('current step number: ', $scope.currentStepNumber());
+                        } else {
+                            $scope.$emit('wizard:stepChangeFailed', {step: step, index: _.indexOf($scope.getEnabledSteps(), step)});
                         }
                     });
                 }
@@ -339,14 +342,19 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             //cancel is alias for previous.
             this.cancel = function() {
-                //getting index of current step
-                var index = stepIdx($scope.selectedStep);
-                //ensuring you aren't trying to go back from the first step
-                if (index === 0) {
-                    throw new Error("Can't go back. It's already in step 0");
+            	if ($scope.onCancel) {
+                    //onCancel is linked to controller via wizard directive:
+                    $scope.onCancel();
                 } else {
-                    //go back one step from current step
-                    $scope.goTo($scope.getEnabledSteps()[0]);
+                    //getting index of current step
+                    var index = stepIdx($scope.selectedStep);
+                    //ensuring you aren't trying to go back from the first step
+                    if (index === 0) {
+                        throw new Error("Can't go back. It's already in step 0");
+                    } else {
+                        //go back one step from current step
+                        $scope.goTo($scope.getEnabledSteps()[0]);
+                    }                	
                 }
             };
 

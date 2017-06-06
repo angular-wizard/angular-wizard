@@ -47,7 +47,7 @@ angular.module('your-app', ['mgo-angular-wizard']);
 Now, in some HTML for a controller, you can just add a wizard as follows:
 
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard()" on-cancel="cancelledWizard()"> 
     <wz-step wz-title="Starting">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
@@ -73,6 +73,7 @@ Let's go step by step to see how this works.
 
 1) You need to declare a master `wizard` directive. This wizard directive, has the following options as attributes:
 * **on-finish**: Here you can put a function to be called when the wizard is finished. The syntax here is very similar to `ng-click`
+* **on-cancel**: Here you can put a function to be called when the wizard is cancelled. The syntax here is very similar to `ng-click`
 * **name**: The name of the wizard. By default, it's called "Default wizard". It's used for the `WizardHandler` which we'll explain later.
 * **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed and the user can now navigate to and modify any step. Defaults to false.
 * **hide-indicators**: If set to true, the indicators in the bottom of the page showing the current page and allowing navigation for the wizard will be hidden. Defaults to false.
@@ -91,7 +92,7 @@ Let's go step by step to see how this works.
 
 3) Inside the step, we now see a button which has a `wz-next` attribute. That means that clicking that button will send the user to the next step of wizard. Similar to `wz-next`, we have the following attributes:
 * **wz-previous**: Goes to the previous step
-* **wz-cancel**: Goes back to the first step
+* **wz-cancel**: Calls on-cancel if defined, otherwise the default action is to go back to the first step
 * **wz-finish**: Finishes the wizard and calls the on-finish later on. It's important to note that if we're in the last step and we put `wz-next` it'll be the same as putting `wz-finish` as the wizard will know we're at the last screen.
 * **wz-reset**: This will reset the wizard meaning bring the user to the first step and reset each step to being incomplete.
 
@@ -110,7 +111,7 @@ A step can be conditionally disabled and may change at any time either adding it
  
 HTML
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard()" on-cancel="cancelledWizard()"> 
     <wz-step wz-title="Starting" wz-disabled="{{disabled}}">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
@@ -143,7 +144,7 @@ The wzStep directive has the following options as attributes:
  
 HTML
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard()" on-cancel="cancelledWizard()"> 
     <wz-step wz-title="Starting" canexit="exitValidation">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
