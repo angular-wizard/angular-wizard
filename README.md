@@ -83,6 +83,7 @@ Let's go step by step to see how this works.
 
 2) Inside the wizard, we can have as many steps as we want. Each step MUST have a title which is going to be used to identify it. Inside each step, we can put whatever we want. Other directives, bindings, controls, forms, etc.  Each step can have the following attributes (we will go into detail on each further below):
 * **wz-title:** A unique title used for identifying each step.
+* **wz-heading-title** A heading title display above step indicators
 * **canenter**
 * **canexit**
 * **wz-disabled**
