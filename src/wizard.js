@@ -111,7 +111,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     $scope.goTo($scope.getEnabledSteps()[0]);
                 }
             };
-            
+
             //called each time step directive is destroyed
             this.removeStep = function (step) {
                 var index = $scope.steps.indexOf(step);
@@ -186,8 +186,15 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 if(typeof step.canenter === 'boolean'){
                     return step.canenter;
                 }
+                var canEnter;
+                //If canenter is a string instead of a function, evaluate the function
+                if(typeof step.canenter === 'string'){
+                    var splitFunction = step.canenter.split('(');
+                    canEnter = eval('$scope.$parent.' + splitFunction[0] + '($scope.context' + splitFunction[1])
+                } else {
+                    canEnter = step.canenter($scope.context);
+                }
                 //Check to see if the canenter function is a promise which needs to be returned
-                canEnter = step.canenter($scope.context);
                 if(angular.isFunction(canEnter.then)){
                     defer = $q.defer();
                     canEnter.then(function(response){
@@ -210,8 +217,15 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 if(typeof step.canexit === 'boolean'){
                     return step.canexit;
                 }
+                var canExit;
+                //If canenter is a string instead of a function, evaluate the function
+                if(typeof step.canexit === 'string'){
+                    var splitFunction = step.canexit.split('(');
+                    canExit = eval('$scope.$parent.' + splitFunction[0] + '($scope.context' + splitFunction[1])
+                } else {
+                    canExit = step.canexit($scope.context);
+                }
                 //Check to see if the canexit function is a promise which needs to be returned
-                canExit = step.canexit($scope.context);
                 if(angular.isFunction(canExit.then)){
                     defer = $q.defer();
                     canExit.then(function(response){
@@ -327,7 +341,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     $scope.onFinish();
                 }
             };
-            
+
             this.previous = function() {
                 //getting index of current step
                 var index = stepIdx($scope.selectedStep);
