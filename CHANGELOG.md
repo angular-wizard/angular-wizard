@@ -1,3 +1,10 @@
+<a name="1.1.0"></a>
+# 1.1.0 (2017-06-07)
+
+- Update README.md to explain Edit Mode.
+- Add `wz-heading-title` attribute to each step.
+
+
 <a name="1.0.2"></a>
 # 1.0.2 (2017-06-06)
 
