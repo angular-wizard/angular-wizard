@@ -19,8 +19,8 @@ You can download this by:
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/angular-wizard@latest/dist/angular-wizard.min.css">
 
 <!-- Or use TAG number for specific version -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/angular-wizard@1.0.2/dist/angular-wizard.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/angular-wizard@1.0.2/dist/angular-wizard.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/angular-wizard@1.1.1/dist/angular-wizard.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/angular-wizard@1.1.1/dist/angular-wizard.min.css">
 ````
 
 The dist folder contains the following files:

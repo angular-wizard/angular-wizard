@@ -1,3 +1,9 @@
+<a name="1.1.1"></a>
+# 1.1.1 (2017-06-07)
+
+- Update README.md to expose $broadcasts the Wizard offers.
+
+
 <a name="1.1.0"></a>
 # 1.1.0 (2017-06-07)
 
