@@ -222,6 +222,16 @@ The functions available in the `wizard()` are:
 * **getEnabledSteps()**: This returns an Array which is the **enabled** steps.
 * **setEditMode(mode)**: Set the edit mode of the wizard.
 
+## Events
+Angular Wizard emits the following events on the `scope` and pass an object with the step info and the index as argument:
+- `wizard:stepChanged`: When succeed changing the current step
+- `wizard:stepChangeFailed`: When changing step and either fails `canexit` of leaving step or `canenter` of arriving step.
+````javascript
+$scope.$on('wizard:stepChanged',function(event, args) {
+    console.log(args);
+}
+````
+
 ## Navigation bar
 
 Any changes you wish to make to the navigation bar can be done by overwritting the CSS.  Because everyone wants the navigation bar in a different location and in a different style we have provided a default which you can change via your own HTML and CSS. The navigation bar shown below works in the following way:
