@@ -29,7 +29,7 @@ A fail does not necessarily mean a PR should be rejected, but it is a red flag t
 3. Update CHANGELOG.md with release notes for the changes in the this release
 4. Update version with `grunt bump` add the type flag otherwise a "patch" version change will be applied.  e.g. `grunt bump --type=minor`
 5. Run `$ grunt build` and commit, this time including the new dist files.
-6. Tag the commit as a new release (like v2.18.0)
+6. Tag the commit as a new release (like v2.18.0) (eg. `$ git tag -a v0.0.2 -m "Release version 0.0.2"`)
 7. Push all the changes including tags (eg. `$ git push --tags`)
 8. Publish to npm with `$ npm publish ./`
 9. Add a new [Release in GitHub](https://github.com/angular-wizard/angular-wizard/releases)

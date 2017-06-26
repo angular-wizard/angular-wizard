@@ -1,3 +1,42 @@
+<a name="1.1.1"></a>
+# 1.1.1 (2017-06-07)
+
+- Update README.md to expose $broadcasts the Wizard offers.
+
+
+<a name="1.1.0"></a>
+# 1.1.0 (2017-06-07)
+
+- Update README.md to explain Edit Mode.
+- Add `wz-heading-title` attribute to each step.
+
+
+<a name="1.0.2"></a>
+# 1.0.2 (2017-06-06)
+
+- Update README.md to update Repository URLs
+
+
+<a name="1.0.1"></a>
+# 1.0.2 (2017-06-06)
+
+- Update CDN instructions on README.md
+
+
+<a name="1.0.0"></a>
+# 1.0.0 (2017-06-06)
+
+- `canExit` and `canEnter` functions may now be strings.
+- `setEditMode(mode)` methoda added to wizard so a user can explicitly set the edit mode on a wizard.
+- Main files in bower.json no longer reference minified files.
+- Travis CI config files updated to allow CI automated testing to pass
+- npm package versions updated.
+
+## Updates
+
+- Fix for Issue [#210](https://github.com/angular-wizard/angular-wizard/issues/210).
+- Newly enabled steps are set to complete.
+
 <a name="0.10.0"></a>
 # 0.10.0 (2016-12-22)
 

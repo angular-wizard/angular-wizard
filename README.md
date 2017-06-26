@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/angular-wizard/angular-wizard.svg?branch=master)](https://travis-ci.org/angular-wizard/angular-wizard)  [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8a488d7e632d4d1ea973bfcd25ea15a0)](https://www.codacy.com/app/jc_2/angular-wizard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=angular-wizard/angular-wizard&amp;utm_campaign=Badge_Grade)    [![Coverage Status](https://coveralls.io/repos/github/angular-wizard/angular-wizard/badge.svg?branch=master)](https://coveralls.io/github/angular-wizard/angular-wizard?branch=master)  [![npm version](https://badge.fury.io/js/angular-wizard.svg)](https://badge.fury.io/js/angular-wizard)  [![PayPal donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=martin%40gon%2eto&lc=US&item_name=Martin%20Gontovnikas&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted "Donate once-off to this project using PayPal")
 [![Donate on Gratipay](http://img.shields.io/gratipay/mgonto.svg)](https://gratipay.com/mgonto/)
 
-Angular-wizard is a component that will make it easy for you to create wizards in your app. You can check a running example of the wizard [by clicking here](http://mgonto.github.io/angular-wizard/)
+Angular-wizard is a component that will make it easy for you to create wizards in your app. You can check a running example of the wizard [by clicking here](http://angular-wizard.github.io/angular-wizard/)
 
 # How do I add this to my project?
 You can download this by:
@@ -15,12 +15,12 @@ You can download this by:
 
 ````html
 <!-- Use LATEST folder to always get the latest version-->
-<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/latest/angular-wizard.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/latest/angular-wizard.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/angular-wizard@latest/dist/angular-wizard.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/angular-wizard@latest/dist/angular-wizard.min.css">
 
 <!-- Or use TAG number for specific version -->
-<script type="text/javascript" src="http://cdn.jsdelivr.net/angular.wizard/0.6.1/angular-wizard.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/angular.wizard/0.6.1/angular-wizard.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/angular-wizard@1.1.1/dist/angular-wizard.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/angular-wizard@1.1.1/dist/angular-wizard.min.css">
 ````
 
 The dist folder contains the following files:
@@ -47,7 +47,7 @@ angular.module('your-app', ['mgo-angular-wizard']);
 Now, in some HTML for a controller, you can just add a wizard as follows:
 
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard()" on-cancel="cancelledWizard()"> 
     <wz-step wz-title="Starting">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
@@ -73,6 +73,7 @@ Let's go step by step to see how this works.
 
 1) You need to declare a master `wizard` directive. This wizard directive, has the following options as attributes:
 * **on-finish**: Here you can put a function to be called when the wizard is finished. The syntax here is very similar to `ng-click`
+* **on-cancel**: Here you can put a function to be called when the wizard is cancelled. The syntax here is very similar to `ng-click`
 * **name**: The name of the wizard. By default, it's called "Default wizard". It's used for the `WizardHandler` which we'll explain later.
 * **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed and the user can now navigate to and modify any step. Defaults to false.
 * **hide-indicators**: If set to true, the indicators in the bottom of the page showing the current page and allowing navigation for the wizard will be hidden. Defaults to false.
@@ -82,6 +83,7 @@ Let's go step by step to see how this works.
 
 2) Inside the wizard, we can have as many steps as we want. Each step MUST have a title which is going to be used to identify it. Inside each step, we can put whatever we want. Other directives, bindings, controls, forms, etc.  Each step can have the following attributes (we will go into detail on each further below):
 * **wz-title:** A unique title used for identifying each step.
+* **wz-heading-title** A heading title display above step indicators
 * **canenter**
 * **canexit**
 * **wz-disabled**
@@ -91,7 +93,7 @@ Let's go step by step to see how this works.
 
 3) Inside the step, we now see a button which has a `wz-next` attribute. That means that clicking that button will send the user to the next step of wizard. Similar to `wz-next`, we have the following attributes:
 * **wz-previous**: Goes to the previous step
-* **wz-cancel**: Goes back to the first step
+* **wz-cancel**: Calls on-cancel if defined, otherwise the default action is to go back to the first step
 * **wz-finish**: Finishes the wizard and calls the on-finish later on. It's important to note that if we're in the last step and we put `wz-next` it'll be the same as putting `wz-finish` as the wizard will know we're at the last screen.
 * **wz-reset**: This will reset the wizard meaning bring the user to the first step and reset each step to being incomplete.
 
@@ -110,7 +112,7 @@ A step can be conditionally disabled and may change at any time either adding it
  
 HTML
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard()" on-cancel="cancelledWizard()"> 
     <wz-step wz-title="Starting" wz-disabled="{{disabled}}">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
@@ -143,7 +145,7 @@ The wzStep directive has the following options as attributes:
  
 HTML
 ````html
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish="finishedWizard()" on-cancel="cancelledWizard()"> 
     <wz-step wz-title="Starting" canexit="exitValidation">
         <h1>This is the first step</h1>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
@@ -219,6 +221,17 @@ The functions available in the `wizard()` are:
 * **currentStep()**: This returns an Object which is the current step you are on.
 * **totalStepCount()**: This returns an Number which is the total number of **enabled** steps.
 * **getEnabledSteps()**: This returns an Array which is the **enabled** steps.
+* **setEditMode(boolean)**: Set the edit mode of the wizard. Setting editMode to `true` will make ALL steps accessible, setting edit mode to `false` will make all steps with an index lower than the latest "completed" step accessible.
+
+## Events
+Angular Wizard emits the following events on the `scope` and pass an object with the step info and the index as argument:
+- `wizard:stepChanged`: When succeed changing the current step
+- `wizard:stepChangeFailed`: When changing step and either fails `canexit` of leaving step or `canenter` of arriving step.
+````javascript
+$scope.$on('wizard:stepChanged',function(event, args) {
+    console.log(args);
+}
+````
 
 ## Navigation bar
 
@@ -245,10 +258,10 @@ The available variables are:
 
 # Live sample
 
-You can check out a live sample of the Wizard [clicking here](http://mgonto.github.io/angular-wizard/)
+You can check out a live sample of the Wizard [clicking here](http://angular-wizard.github.io/angular-wizard/)
 
 # Releases Notes
-Releases notes are together with releases in GitHub at: https://github.com/mgonto/angular-wizard/releases
+Releases notes are together with releases in GitHub at: https://github.com/angular-wizard/angular-wizard/releases
 
 
 # License
@@ -263,5 +276,5 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mgonto/angular-wizard/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/angular-wizard/angular-wizard/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
