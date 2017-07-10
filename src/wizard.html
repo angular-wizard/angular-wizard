@@ -1,5 +1,5 @@
 <div>
-    <h2 ng-show="selectedStep.wzHeadingTitle != ''">{{ selectedStep.wzHeadingTitle }}</h2>
+    <h2 ng-if="selectedStep.wzHeadingTitle != ''">{{ selectedStep.wzHeadingTitle }}</h2>
 
     <div class="steps" ng-if="indicatorsPosition === 'bottom'" ng-transclude></div>
     <ul class="steps-indicator steps-{{getEnabledSteps().length}}" ng-if="!hideIndicators">
