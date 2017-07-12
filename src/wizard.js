@@ -87,10 +87,12 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 //checking to make sure currentStep is truthy value
                 if (!step) return;
                 //setting stepTitle equal to current step title or default title
-                var stepTitle = $scope.selectedStep.wzTitle;
-                if ($scope.selectedStep && stepTitle !== $scope.currentStep) {
-                    //invoking goTo() with step title as argument
-                    $scope.goTo(stepByTitle($scope.currentStep));
+                if($scope.selectedStep) {
+                    var stepTitle = $scope.selectedStep.title || $scope.selectedStep.wzTitle;
+                    if (stepTitle !== $scope.currentStep) {
+                        //invoking goTo() with step title as argument
+                        $scope.goTo(_.findWhere($scope.steps, {title: $scope.currentStep}));
+                    }
                 }
             });
 
