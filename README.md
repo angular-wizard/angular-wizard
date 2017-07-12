@@ -253,7 +253,7 @@ The available variables are:
 
 # Contributors
 
-* @sebazelonka helped me with all of the styles in the Wizard.
+* [@sebazelonka](https://github.com/sebazelonka) helped me with all of the styles in the Wizard.
 * [@jacobscarter](https://github.com/jacobscarter) is helping with manteinance, PRS merging and adding new features
 
 # Live sample
