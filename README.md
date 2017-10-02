@@ -201,10 +201,27 @@ The main function of this service is the `wizard(name)` which will let you get t
 
 ````js
 // In your controller
+
+//No name passed, assuming there is only one wizard in the view. 
 $scope.changeLabelAndGoNext = function() {
     $scope.model.label = "Hola Gonto";
     WizardHandler.wizard().next();
 }
+
+//Passing a name to the wizard function, referencing a specific wizard
+<wizard name="wizard-001" > 
+   ...
+</wizard>
+<wizard name="wizard-002"> 
+    ...
+</wizard>
+
+$scope.changeLabelAndGoNext = function() {
+    $scope.model.label = "Hola Gonto";
+    //Pass a specific name value to the wizard function
+    WizardHandler.wizard("wizard-001").next();
+}
+
 ````
 
 In this case, we're changing a label and moving forward on the steps.
