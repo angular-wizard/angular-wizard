@@ -201,10 +201,44 @@ The main function of this service is the `wizard(name)` which will let you get t
 
 ````js
 // In your controller
+
+//No name passed, assuming there is only one wizard in the view. 
 $scope.changeLabelAndGoNext = function() {
     $scope.model.label = "Hola Gonto";
     WizardHandler.wizard().next();
 }
+
+//Passing a name to the wizard function, referencing a specific wizard
+<wizard name="wizard-001" on-finish="finishedWizard()" on-cancel="cancelledWizard()"> 
+    <wz-step wz-title="Starting" canexit="exitValidation">
+        <h1>This is the first step</h1>
+        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
+        <input type="submit" wz-next value="Continue" />
+    </wz-step>
+    <wz-step wz-title="Continuing" canenter="enterValidation">
+        <h1>Continuing</h1>
+        <p>You have continued here!</p>
+        <input type="submit" wz-next value="Go on" />
+    </wz-step>
+    <wz-step wz-title="More steps">
+        <p>Even more steps!!</p>
+        <input type="submit" wz-next value="Finish now" />
+    </wz-step>
+</wizard>
+<wizard name="wizard-002" on-finish="finishedWizard()" on-cancel="cancelledWizard()"> 
+    <wz-step wz-title="Starting" canexit="exitValidation">
+        <h1>This is the first step</h1>
+        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
+        <input type="submit" wz-next value="Continue" />
+    </wz-step>
+</wizard>
+
+$scope.changeLabelAndGoNext = function() {
+    $scope.model.label = "Hola Gonto";
+    //Pass a specific name value to the wizard function
+    WizardHandler.wizard("wizard-001").next();
+}
+
 ````
 
 In this case, we're changing a label and moving forward on the steps.
