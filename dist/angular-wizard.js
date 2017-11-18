@@ -343,6 +343,14 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                 return $scope.getEnabledSteps();
             };
 
+            this.setHideIndicators = function(hide) {
+                $scope.hideIndicators = hide;
+            }
+
+            this.getIndicatorsHidden = function() {
+                return $scope.hideIndicators;
+            }
+
             //Access to current step number from outside
             this.currentStepNumber = function(){
                 return $scope.currentStepNumber();
