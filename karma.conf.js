@@ -20,25 +20,26 @@ module.exports = function(config) {
 
     plugins: [
       "karma-phantomjs-launcher",
+      "karma-chrome-launcher",
       "karma-jasmine",
       "karma-coverage"
     ],
 
-    preprocessors: {
-      "src/*.js": ["coverage"]
-    },
+    // preprocessors: {
+    //   "src/*.js": ["coverage"]
+    // },
 
-    // optionally, configure the reporter
-    coverageReporter: {
-      dir : "coverage/",
-      reporters: [
-        {type: "lcov", subdir: "lcov"}
-      ]
-    },
+    // // optionally, configure the reporter
+    // coverageReporter: {
+    //   dir : "coverage/",
+    //   reporters: [
+    //     {type: "lcov", subdir: "lcov"}
+    //   ]
+    // },
 
-    // test results reporter to use
-    // possible values: "dots", "progress", "junit"
-    reporters: ["dots", "coverage"],
+    // // test results reporter to use
+    // // possible values: "dots", "progress", "junit"
+    // reporters: ["dots", "coverage"],
 
     // list of files to exclude
     exclude: [
@@ -74,7 +75,14 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['PhantomJS'],
+    browsers: ['ChromeDebugging'],
+
+    customLaunchers: {
+      ChromeDebugging: {
+        base: 'Chrome',
+        flags: [ '--remote-debugging-port=9333' ]
+      }
+    },
 
 
     // If browser does not capture in given timeout [ms], kill it
