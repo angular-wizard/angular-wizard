@@ -320,9 +320,8 @@ describe( 'AngularWizard', function() {
         var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().finish();
-        $timeout.flush();
-        expect(flag).toBeTruthy();
         $rootScope.$digest();
+        expect(flag).toBeTruthy();        
     });
     it( "should go to first step when reset is called", function() {
         var scope = $rootScope.$new();
