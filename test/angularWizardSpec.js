@@ -320,6 +320,7 @@ describe( 'AngularWizard', function() {
         var view = createGenericView(scope);
         expect(scope.referenceCurrentStep).toEqual('Starting');
         WizardHandler.wizard().finish();
+        $timeout.flush();
         expect(flag).toBeTruthy();
         $rootScope.$digest();
     });

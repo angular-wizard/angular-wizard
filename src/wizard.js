@@ -335,9 +335,17 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
 
             //calls finish() which calls onFinish() which is declared on an attribute and linked to controller via wizard directive.
             this.finish = function() {
-                if ($scope.onFinish) {
-                    $scope.onFinish();
-                }
+                var thisStepNumber = $scope.currentStepNumber() - 1;
+                thisStepNumber = thisStepNumber < 0 ? 0 : thisStepNumber;
+                var thisStep = $scope.getEnabledSteps()[thisStepNumber];
+
+                $q.when(canExitStep(thisStep, thisStep)).then(function(result) {
+                    if ($scope.onFinish) {
+                        $scope.onFinish();
+                    }
+                }, function(error){
+                    $scope.$emit('wizard:finishFailed', {step: thisStep, index: _.indexOf($scope.getEnabledSteps(), thisStep)});                    
+                });                
             };
 
             this.previous = function() {
