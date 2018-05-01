@@ -313,7 +313,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
             //unSelect All Steps
             function unselectAll() {
                 //traverse steps array and set each "selected" property to false
-                angular.forEach($scope.getEnabledSteps(), function (step) {
+                angular.forEach($scope.steps, function (step) {
                     step.selected = false;
                 });
                 //set selectedStep variable to null
