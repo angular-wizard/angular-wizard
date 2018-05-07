@@ -388,4 +388,15 @@ describe( 'AngularWizard', function() {
             expect(view.isolateScope().steps[index].wzTitle).toEqual(step.title);
         });
     });
+    it( "should mark visited steps as visited on first run and other runs", function() {
+        var scope = $rootScope.$new();
+        var view = createGenericView(scope);
+        var currentStep = WizardHandler.wizard().currentStep()
+        expect(currentStep.visited).toEqual(true);
+        WizardHandler.wizard().goTo(2);
+        $rootScope.$digest();
+        $timeout.flush();
+        currentStep = WizardHandler.wizard().currentStep()
+        expect(currentStep.visited).toEqual(true);
+    });
 });

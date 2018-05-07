@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for Angular JS
- * @version v1.1.1 - 2017-06-07 * @link https://github.com/mgonto/angular-wizard
+ * @version v1.1.2 - 2018-05-07 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -19,7 +19,7 @@ angular.module("wizard.html", []).run(["$templateCache", function($templateCache
     "\n" +
     "    <div class=\"steps\" ng-if=\"indicatorsPosition === 'bottom'\" ng-transclude></div>\n" +
     "    <ul class=\"steps-indicator steps-{{getEnabledSteps().length}}\" ng-if=\"!hideIndicators\">\n" +
-    "      <li ng-class=\"{default: !step.completed && !step.selected, current: step.selected && !step.completed, done: step.completed && !step.selected, editing: step.selected && step.completed}\" ng-repeat=\"step in getEnabledSteps()\">\n" +
+    "      <li ng-class=\"{default: !step.completed && !step.selected && !step.visited, current: step.selected && !step.completed, done: (step.completed || step.visited) && !step.selected, editing: step.selected && step.completed}\" ng-repeat=\"step in getEnabledSteps()\">\n" +
     "        <a ng-click=\"goTo(step)\">{{step.title || step.wzTitle}}</a>\n" +
     "      </li>\n" +
     "    </ul>\n" +
@@ -202,6 +202,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     }
                     //setting selected step to argument passed into goTo()
                     step.selected = true;
+                    step.visited = true;
                     //emit event upwards with data on goTo() invoktion
                     $scope.$emit('wizard:stepChanged', {step: step, index: stepIdx(step)});
                     //setting variable to false so all other step changes must pass validation
@@ -229,6 +230,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                             }
                             //setting selected step to argument passed into goTo()
                             step.selected = true;
+                            step.visited = true;
                             //emit event upwards with data on goTo() invoktion
                             $scope.$emit('wizard:stepChanged', {step: step, index: stepIdx(step)});
                             //$log.log('current step number: ', $scope.currentStepNumber());
@@ -430,7 +432,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     } else {
                         //go back one step from current step
                         $scope.goTo($scope.getEnabledSteps()[0]);
-                    }                	
+                    }
                 }
             };
 

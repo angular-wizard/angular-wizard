@@ -138,6 +138,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     }
                     //setting selected step to argument passed into goTo()
                     step.selected = true;
+                    step.visited = true;
                     //emit event upwards with data on goTo() invoktion
                     $scope.$emit('wizard:stepChanged', {step: step, index: stepIdx(step)});
                     //setting variable to false so all other step changes must pass validation
@@ -165,6 +166,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                             }
                             //setting selected step to argument passed into goTo()
                             step.selected = true;
+                            step.visited = true;
                             //emit event upwards with data on goTo() invoktion
                             $scope.$emit('wizard:stepChanged', {step: step, index: stepIdx(step)});
                             //$log.log('current step number: ', $scope.currentStepNumber());
@@ -366,7 +368,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function() {
                     } else {
                         //go back one step from current step
                         $scope.goTo($scope.getEnabledSteps()[0]);
-                    }                	
+                    }
                 }
             };
 
