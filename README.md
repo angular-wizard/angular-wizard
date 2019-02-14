@@ -230,7 +230,7 @@ Angular Wizard emits the following events on the `scope` and pass an object with
 ````javascript
 $scope.$on('wizard:stepChanged',function(event, args) {
     console.log(args);
-}
+});
 ````
 
 ## Navigation bar
