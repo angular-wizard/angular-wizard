@@ -169,7 +169,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function () {
                             $scope.$emit('wizard:stepChanged', { step: step, index: stepIdx(step) });
                             //$log.log('current step number: ', $scope.currentStepNumber());
                         } else {
-                            $scope.$emit('wizard:stepChangeFailed', { step: step, index: _.indexOf($scope.getEnabledSteps(), step) });
+                            $scope.$emit('wizard:stepChangeFailed', { step: step, index: $scope.getEnabledSteps().indexOf(step) });
                         }
                     });
                 }
@@ -352,7 +352,7 @@ angular.module('mgo-angular-wizard').directive('wizard', function () {
                         }
                     }
                 }, function (error) {
-                    $scope.$emit('wizard:finishFailed', { step: thisStep, index: _.indexOf($scope.getEnabledSteps(), thisStep) });
+                    $scope.$emit('wizard:finishFailed', { step: thisStep, index: $scope.getEnabledSteps().indexOf(thisStep) });
                 });
             };
 
