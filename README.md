@@ -72,30 +72,30 @@ This will look like the following when you're in the second step:
 Let's go step by step to see how this works.
 
 1) You need to declare a master `wizard` directive. This wizard directive, has the following options as attributes:
-* **on-finish**: Here you can put a function to be called when the wizard is finished. The syntax here is very similar to `ng-click`
-* **on-cancel**: Here you can put a function to be called when the wizard is cancelled. The syntax here is very similar to `ng-click`
-* **name**: The name of the wizard. By default, it's called "Default wizard". It's used for the `WizardHandler` which we'll explain later.
-* **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed and the user can now navigate to and modify any step. Defaults to false.
-* **hide-indicators**: If set to true, the indicators in the bottom of the page showing the current page and allowing navigation for the wizard will be hidden. Defaults to false.
-* **current-step**: You need to set here a property from your scope (similar to `ng-model`) and that property will always have the name of the current step being shown on the screen.
-* **template**: Path to a custom template.
-* **indicators-position**: Can use "top" or "bottom" to specify default position for steps.
+    * **on-finish**: Here you can put a function to be called when the wizard is finished. The syntax here is very similar to `ng-click`
+    * **on-cancel**: Here you can put a function to be called when the wizard is cancelled. The syntax here is very similar to `ng-click`
+    * **name**: The name of the wizard. By default, it's called "Default wizard". It's used for the `WizardHandler` which we'll explain later.
+    * **edit-mode**: If set to true, this will set the wizard as edit mode. Edit mode means that all steps have been completed and the user can now navigate to and modify any step. Defaults to false.
+    * **hide-indicators**: If set to true, the indicators in the bottom of the page showing the current page and allowing navigation for the wizard will be hidden. Defaults to false.
+    * **current-step**: You need to set here a property from your scope (similar to `ng-model`) and that property will always have the name of the current step being shown on the screen.
+    * **template**: Path to a custom template.
+    * **indicators-position**: Can use "top" or "bottom" to specify default position for steps.
 
 2) Inside the wizard, we can have as many steps as we want. Each step MUST have a title which is going to be used to identify it. Inside each step, we can put whatever we want. Other directives, bindings, controls, forms, etc.  Each step can have the following attributes (we will go into detail on each further below):
-* **wz-title:** A unique title used for identifying each step.
-* **wz-heading-title** A heading title display above step indicators
-* **canenter**
-* **canexit**
-* **wz-disabled**
-* **description:** A description available to use in each step's UI.
-* **wz-data** Data you wish to make available to the steps scope.
-* **wz-order** The order in which the steps should be in. If no order or duplicated order it will add the step to the end.
+    * **wz-title:** A unique title used for identifying each step.
+    * **wz-heading-title** A heading title display above step indicators
+    * **canenter**
+    * **canexit**
+    * **wz-disabled**
+    * **description:** A description available to use in each step's UI.
+    * **wz-data** Data you wish to make available to the steps scope.
+    * **wz-order** The order in which the steps should be in. If no order or duplicated order it will add the step to the end.
 
 3) Inside the step, we now see a button which has a `wz-next` attribute. That means that clicking that button will send the user to the next step of wizard. Similar to `wz-next`, we have the following attributes:
-* **wz-previous**: Goes to the previous step
-* **wz-cancel**: Calls on-cancel if defined, otherwise the default action is to go back to the first step
-* **wz-finish**: Finishes the wizard and calls the on-finish later on. It's important to note that if we're in the last step and we put `wz-next` it'll be the same as putting `wz-finish` as the wizard will know we're at the last screen.
-* **wz-reset**: This will reset the wizard meaning bring the user to the first step and reset each step to being incomplete.
+    * **wz-previous**: Goes to the previous step
+    * **wz-cancel**: Calls on-cancel if defined, otherwise the default action is to go back to the first step
+    * **wz-finish**: Finishes the wizard and calls the on-finish later on. It's important to note that if we're in the last step and we put `wz-next` it'll be the same as putting `wz-finish` as the wizard will know we're at the last screen.
+    * **wz-reset**: This will reset the wizard meaning bring the user to the first step and reset each step to being incomplete.
 
 All of this attributes can receive an optional function to be called before changing the step. Something like:
 
